@@ -1,1 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
+/* nunito-200 - cyrillic_latin_latin-ext */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Nunito';
+	font-style: normal;
+	font-weight: 200;
+	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.woff2') format('woff2'),
+		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.woff') format('woff'),
+		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.ttf') format('truetype'),
+		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.svg#Nunito') format('svg');
+	/* Legacy iOS */
+}
+
+/* nunito-regular - cyrillic_latin_latin-ext */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Nunito';
+	font-style: normal;
+	font-weight: 400;
+	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.woff2') format('woff2'),
+		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.woff') format('woff'),
+		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.ttf') format('truetype'),
+		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.svg#Nunito') format('svg');
+	/* Legacy iOS */
+}
+
+/* nunito-600 - cyrillic_latin_latin-ext */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Nunito';
+	font-style: normal;
+	font-weight: 600;
+	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.woff2') format('woff2'),
+		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.woff') format('woff'),
+		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.ttf') format('truetype'),
+		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.svg#Nunito') format('svg');
+	/* Legacy iOS */
+}
+
+/* nunito-700 - cyrillic_latin_latin-ext */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Nunito';
+	font-style: normal;
+	font-weight: 700;
+	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.woff2') format('woff2'),
+		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.woff') format('woff'),
+		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.ttf') format('truetype'),
+		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.svg#Nunito') format('svg');
+	/* Legacy iOS */
+}
+
+* {
+	margin: 0;
+}
+
+body {
+	font-family: 'Nunito';
+	font-size: 20px;
+	background-color: #ECEEFE;
+}

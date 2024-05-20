@@ -1,0 +1,77 @@
+@import '../../shared/mixin.scss';
+
+.site-menu {
+	max-width: 366px;
+	width: 100%;
+	background-color: #FFFFFF;
+	border-radius: 30px;
+	margin-left: 16px;
+
+	>* {
+		padding: 32px
+	}
+}
+
+.devspace-container {
+	@include displayFlex($jc: space-between);
+
+	.devspace {
+		@include displayFlex();
+		gap: 16px;
+	}
+}
+
+.overview {
+	@include displayFlex($jc: space-between);
+
+	.left {
+		@include displayFlex();
+		gap: 16px;
+	}
+
+	.title {
+		@include displayFlex();
+		gap: 8px;
+	}
+}
+
+.team,
+.add-channel {
+	@include displayFlex($jc: flex-start);
+	margin-left: 45px;
+	margin-top: 24px;
+	gap: 8px;
+}
+
+.direct-messages {
+	.overview {
+		justify-content: flex-start;
+		margin-bottom: 24px;
+
+		.title {
+			margin-left: 16px;
+		}
+	}
+
+	.direct-message {
+		@include displayFlex($jc:flex-start);
+		gap: 16px;
+		margin-left: 40px;
+
+		.avatar {
+			position: relative;
+			width: 50px;
+
+			.online {
+				position: absolute;
+				bottom: 7px;
+				right: 0;
+				border: 2px solid #FFFFFF;
+				width: 12px;
+				height: 12px;
+				background-color: #92C83E;
+				border-radius: 50%;
+			}
+		}
+	}
+}
