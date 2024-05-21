@@ -1,0 +1,83 @@
+@import '../../shared/mixin.scss';
+
+.chat {
+	max-width: 990px;
+	width: 100%;
+	background-color: #FFFFFF;
+	border-radius: 30px;
+
+	>* {
+		padding: 32px
+	}
+}
+
+.info-top {
+	@include displayFlex();
+	gap: 24px;
+
+	.team-name {
+		@include displayFlex();
+		gap: 8px;
+	}
+
+	.members {
+		@include displayFlex();
+
+		.quantity {
+			margin: 0 16px 0 8px;
+		}
+
+		.avatars {
+			img {
+				width: 40px;
+				height: 40px;
+			}
+		}
+	}
+}
+
+.date-block {
+	@include displayFlex();
+	flex-direction: column;
+	position: relative;
+	margin: 0 auto;
+
+	.date {
+		border: 1px solid #ADB0D9;
+		border-radius: 30px;
+		margin: 0 auto;
+
+		&::before {
+			content: "";
+			height: 0.5px;
+			width: 100%;
+			background-color: #ADB0D9;
+			display: flex;
+			position: absolute;
+			left: 0;
+			top: 18px;
+		}
+
+		p {
+			position: relative;
+			background-color: #FFFFFF;
+			padding: 5px 16px;
+			border-radius: 30px;
+		}
+	}
+
+	.message-text {
+		margin-top: 32px;
+		margin-left: 32px;
+	}
+
+	.text {
+		p {
+			background-color: #ECEEFE;
+			border-radius: 0 30px 30px 30px;
+			padding: 15px;
+		}
+
+		margin: 8px 0;
+	}
+}
