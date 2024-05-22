@@ -1,0 +1,72 @@
+@import '../../shared/mixin.scss';
+
+.threads {
+	max-width: 485px;
+	width: 485px;
+	background-color: #FFFFFF;
+	border-radius: 30px;
+
+	>* {
+		padding: 32px;
+	}
+}
+
+.info-top {
+	@include displayFlex($jc: space-between);
+	gap: 24px;
+	box-shadow: 0px 2px 10px 0px #00000014;
+	border-radius: 30px;
+
+
+
+	.thread-name {
+		@include displayFlex();
+		gap: 8px;
+	}
+}
+
+.chat-block {
+	flex-direction: column;
+	gap: 24px;
+
+	.answer-number-text {
+		@include displayFlex($jc: space-between);
+		gap: 16px;
+		color: #ADB0D9;
+
+		&::after {
+			content: "";
+			width: 71%;
+			height: 1px;
+			background-color: #ADB0D9;
+			display: flex;
+		}
+	}
+}
+
+.date-block {
+	@include displayFlex();
+	flex-direction: column;
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+
+	.message {
+		width: 100%;
+	}
+
+	.message-text {
+		margin-top: 32px;
+		margin-left: 32px;
+	}
+
+	.text {
+		p {
+			background-color: #ECEEFE;
+			border-radius: 0 30px 30px 30px;
+			padding: 15px;
+		}
+
+		margin: 8px 0;
+	}
+}

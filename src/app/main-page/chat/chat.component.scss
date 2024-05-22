@@ -2,9 +2,11 @@
 
 .chat {
 	max-width: 990px;
-	width: 100%;
+	width: 990px;
 	background-color: #FFFFFF;
 	border-radius: 30px;
+	padding: 0 0 40px 0;
+
 
 	>* {
 		padding: 32px
@@ -12,8 +14,11 @@
 }
 
 .info-top {
-	@include displayFlex();
+	@include displayFlex($jc:space-between);
 	gap: 24px;
+	box-shadow: 0px 2px 10px 0px #00000014;
+	border-radius: 30px;
+
 
 	.team-name {
 		@include displayFlex();
@@ -36,11 +41,17 @@
 	}
 }
 
+.chat-block {
+    flex-direction: column;
+	gap: 24px;
+}
+
 .date-block {
 	@include displayFlex();
 	flex-direction: column;
 	position: relative;
 	margin: 0 auto;
+	width: 100%;
 
 	.date {
 		border: 1px solid #ADB0D9;
@@ -66,6 +77,10 @@
 		}
 	}
 
+	.message {
+		width: 100%;
+	}
+
 	.message-text {
 		margin-top: 32px;
 		margin-left: 32px;
@@ -79,5 +94,33 @@
 		}
 
 		margin: 8px 0;
+	}
+}
+
+.writing-box {
+	border: 1px solid #ADB0D9;
+	border-radius: 30px;
+	margin: 8px 32px;
+
+	input {
+		border: none;
+		width: 100%;
+
+		&:focus-visible {
+			border: none;
+			outline: none;
+		}
+	}
+
+	.bottom-icons {
+		@include displayFlex($jc: space-between);
+		margin-top: 40px;
+	}
+
+	.reactions img {
+
+		&:first-child {
+			border-right: 1px solid #ADB0D9;
+		}
 	}
 }
