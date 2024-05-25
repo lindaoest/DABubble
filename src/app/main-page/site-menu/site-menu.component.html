@@ -17,12 +17,14 @@
 			</div>
 			<img (click)="openDialog()" src="./assets/img/channels/add.svg" alt="">
 		</div>
-		<div class="team-container">
-			<div class="team">
-				<img src="./assets/img/channels/tag.svg" alt="">
-				<p>Entwicklerteam</p>
+		@for (channel of channels; track $index) {
+			<div class="team-container">
+				<div class="team">
+					<img src="./assets/img/channels/tag.svg" alt="">
+					<p>{{ channel.name }}</p>
+				</div>
 			</div>
-		</div>
+		}
 		<div class="add-channel">
 			<img src="./assets/img/channels/add_circle.svg" alt="">
 			<p>Channel hinzufügen</p>

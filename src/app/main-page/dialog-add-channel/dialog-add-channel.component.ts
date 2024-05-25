@@ -1,33 +1,23 @@
-import {Component, Inject} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
-  MatDialogTitle,
-  MatDialogContent,
-  MatDialogActions,
   MatDialogClose,
 } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {FormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { Channel } from '../../../models/channel.class';
+import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 
 export interface DialogData {
-  animal: string;
   name: string;
+  description: string;
 }
 
 @Component({
   selector: 'app-dialog-add-channel',
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
     FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
     MatDialogClose
   ],
   templateUrl: './dialog-add-channel.component.html',
@@ -37,10 +27,17 @@ export class DialogAddChannelComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddChannelComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  // saveChannel() {
+  //   const newChannel = new Channel({
+  //     name: this.data.name,
+  //     description: this.data.description
+  //   })
+  //   this.channelFirestore.addData(newChannel)
+  // }
 }

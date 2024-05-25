@@ -1,50 +1,42 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
-import {MatCardModule} from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterModule } from '@angular/router';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { Channel } from '../../../models/channel.class';
+import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 
 @Component({
   selector: 'app-site-menu',
   standalone: true,
-  imports: [
-    MatCardModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatTooltipModule
-  ],
+  imports: [],
   templateUrl: './site-menu.component.html',
   styleUrl: './site-menu.component.scss'
 })
 export class SiteMenuComponent {
 
-  animal: string = '';
   name: string = '';
+  description: string = '';
 
-  constructor(public dialog: MatDialog) { }
+  channels: Channel[] = [];
+
+  constructor(public dialog: MatDialog, public channelFirestore: FirestoreService) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddChannelComponent, {
-      data: { name: this.name, animal: this.animal },
+      data: { name: this.name, description: this.description },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      const newChannel = new Channel({
+        name: result.name,
+        description: result.description
+      })
+      this.channelFirestore.addData(newChannel);
     });
+  }
+
+  ngOnInit(): void {
+    this.channels = [];
+    this.channels = this.channelFirestore.channels;
+    console.log('from firestore', this.channels);
   }
 }

@@ -99,5 +99,29 @@ body {
 .font-weight-700 {
 	font-weight: 700;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.p-t-24 {
+	padding-top: 24px;
+}
+
+h3 {
+	font-size: 1.333rem;
+}
+
+.button1 {
+	border: none;
+    border-radius: 25px;
+    background-color: #444DF2;
+    padding: 12px 25px;
+    margin-top: 24px;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+	width: 45.416%;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+	border-radius: 30px!important;
+}

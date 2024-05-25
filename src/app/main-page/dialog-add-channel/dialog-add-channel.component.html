@@ -1,13 +1,18 @@
-<h2 mat-dialog-title>Channel erstellen</h2>
-<p>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein  #marketing zum Beispiel.</p>
-<mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput [(ngModel)]="data.animal">
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</mat-dialog-actions>
+<div class="dialog-add-channel">
+  <div class="headline">
+    <h3>Channel erstellen</h3>
+    <img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
+  </div>
+  <p class="p-t-24">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.</p>
+  <div class="content flex p-t-24">
+    <p>Channel Name</p>
+    <input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.name">
+  </div>
+  <div class="content flex p-t-24">
+    <p>Beschreibung (optional)</p>
+    <input type="text" placeholder="Dein Text hier" [(ngModel)]="data.description">
+  </div>
+  <div class="actions">
+    <button class="button1" [mat-dialog-close]="data">Erstellen</button>
+  </div>
+</div>
