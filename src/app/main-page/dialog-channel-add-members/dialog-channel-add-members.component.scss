@@ -1,0 +1,31 @@
+@import '../../shared/mixin.scss';
+
+.dialog-add-channel {
+	border-radius: 30px !important;
+	padding: 40px !important;
+	//width: 45.416%;
+}
+
+.headline {
+	@include displayFlex($jc: space-between);
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+	background-color: #FFFFFF;
+}
+
+.content {
+
+	p {
+		font-weight: 700;
+	}
+
+	input {
+		border-radius: 50%!important;
+		margin-right: 16px;
+}
+}
+
+.actions {
+	@include displayFlex($jc:flex-end);
+}

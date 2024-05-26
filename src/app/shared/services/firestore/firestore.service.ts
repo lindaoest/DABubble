@@ -28,7 +28,8 @@ export class FirestoreService {
   setObject(obj: any) {
     return {
       name: obj.name,
-      description: obj.description
+      description: obj.description,
+      members: obj.members
     }
   }
 

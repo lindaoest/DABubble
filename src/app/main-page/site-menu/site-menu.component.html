@@ -17,7 +17,7 @@
 			</div>
 			<img (click)="openDialog()" src="./assets/img/channels/add.svg" alt="">
 		</div>
-		@for (channel of channels; track $index) {
+		@for (channel of getList(); track $index) {
 			<div class="team-container">
 				<div class="team">
 					<img src="./assets/img/channels/tag.svg" alt="">
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 		}
-		<div class="add-channel">
+		<div (click)="openDialog()" class="add-channel">
 			<img src="./assets/img/channels/add_circle.svg" alt="">
 			<p>Channel hinzufügen</p>
 		</div>
@@ -43,7 +43,28 @@
 				<img src="./assets/img/channels/avatar-1.svg" alt="">
 				<div class="online"></div>
 			</div>
-			<p>Linda</p>
+			<p>Guest</p>
+		</div>
+		<div class="direct-message">
+			<div class="avatar">
+				<img src="./assets/img/channels/avatar-1.svg" alt="">
+				<div class="online"></div>
+			</div>
+			<p>Linda Österreicher</p>
+		</div>
+		<div class="direct-message">
+			<div class="avatar">
+				<img src="./assets/img/channels/avatar-1.svg" alt="">
+				<div class="online"></div>
+			</div>
+			<p>Annalena Pfitsch</p>
+		</div>
+		<div class="direct-message">
+			<div class="avatar">
+				<img src="./assets/img/channels/avatar-1.svg" alt="">
+				<div class="online"></div>
+			</div>
+			<p>Thomas Holzner</p>
 		</div>
 	</div>
 </div>

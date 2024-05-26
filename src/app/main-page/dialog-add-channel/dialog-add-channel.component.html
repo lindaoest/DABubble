@@ -13,6 +13,6 @@
     <input type="text" placeholder="Dein Text hier" [(ngModel)]="data.description">
   </div>
   <div class="actions">
-    <button class="button1" [mat-dialog-close]="data">Erstellen</button>
+    <button class="button1" (click)="openDialog()">Erstellen</button>
   </div>
 </div>

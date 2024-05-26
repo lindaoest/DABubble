@@ -1,0 +1,17 @@
+<div class="dialog-add-channel">
+	<div class="headline">
+	  <h3>Leute hinzufügen</h3>
+	  <img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
+	</div>
+	<div class="content flex p-t-24">
+	  <input type="checkbox" (click)="checkAllMembers()" [checked]="allMembers">
+	  <p>Alle Mitglieder von Office Team hinzufügen</p>
+	</div>
+	<div class="content flex p-t-24">
+		<input type="checkbox">
+	  <p>Bestimmte Leute hinzufügen</p>
+	</div>
+	<div class="actions">
+	  <button class="button1" [mat-dialog-close]="data">Erstellen</button>
+	</div>
+  </div>

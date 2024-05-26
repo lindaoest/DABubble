@@ -15,28 +15,17 @@ export class SiteMenuComponent {
 
   name: string = '';
   description: string = '';
-
-  channels: Channel[] = [];
+  members: string = '';
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService) { }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogAddChannelComponent, {
-      data: { name: this.name, description: this.description },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      const newChannel = new Channel({
-        name: result.name,
-        description: result.description
-      })
-      this.channelFirestore.addData(newChannel);
-    });
+  getList() {
+    return this.channelFirestore.channels;
   }
 
-  ngOnInit(): void {
-    this.channels = [];
-    this.channels = this.channelFirestore.channels;
-    console.log('from firestore', this.channels);
+  openDialog(): void {
+    this.dialog.open(DialogAddChannelComponent, {
+      data: { name: this.name, description: this.description, members: this.members},
+    });
   }
 }
