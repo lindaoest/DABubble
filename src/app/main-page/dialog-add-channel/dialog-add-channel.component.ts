@@ -47,6 +47,7 @@ export class DialogAddChannelComponent {
           members: result.members
         })
         this.channelFirestore.addData(newChannel);
+        console.log('result', result)
       });
     }
 

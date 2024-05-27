@@ -28,4 +28,8 @@ export class SiteMenuComponent {
       data: { name: this.name, description: this.description, members: this.members},
     });
   }
+
+  allMembers(members:boolean) {
+    console.log(members)
+  }
 }

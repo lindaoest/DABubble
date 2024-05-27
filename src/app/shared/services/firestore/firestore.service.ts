@@ -12,7 +12,9 @@ export class FirestoreService {
   firestore: Firestore = inject(Firestore);
 
   unsub:any;
-  channels: Channel[] = []
+  unsubMembers:any;
+  channels: Channel[] = [];
+  members: any[] = [];
 
   constructor() {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
@@ -22,7 +24,13 @@ export class FirestoreService {
       });
     });
 
-    console.log('channels firestore', this.channels)
+    this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
+      doc.forEach(element => {
+        this.members.push(element.data())
+      });
+    });
+
+    console.log('members', this.members)
   }
 
   setObject(obj: any) {
@@ -35,6 +43,7 @@ export class FirestoreService {
 
   ngOnDestroy(): void {
     this.unsub();
+    this.unsubMembers();
   }
 
   async addData(data: Channel) {

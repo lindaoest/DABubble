@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Output, EventEmitter } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -25,6 +25,9 @@ export interface DialogData {
 export class DialogChannelAddMembersComponent {
 
   allMembers: Boolean = false;
+  members: any[] = [];
+
+  @Output()addAllMembers = new EventEmitter<boolean>();
 
   constructor(
     public dialogRef: MatDialogRef<DialogChannelAddMembersComponent>,
@@ -36,6 +39,8 @@ export class DialogChannelAddMembersComponent {
 
   checkAllMembers() {
     this.allMembers = !this.allMembers;
-    console.log(this.allMembers);
+    if(this.allMembers) {
+      this.addAllMembers.emit(!!this.allMembers);
+    }
   }
 }
