@@ -1,7 +1,7 @@
 export class Channel {
 	name: string;
 	description: string;
-	members: string;
+	members: [];
 
 	constructor(obj:any) {
 		this.name = obj.name

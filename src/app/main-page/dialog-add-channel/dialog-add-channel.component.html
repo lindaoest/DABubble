@@ -6,13 +6,13 @@
   <p class="p-t-24">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.</p>
   <div class="content flex p-t-24">
     <p>Channel Name</p>
-    <input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="name">
+    <input type="text" placeholder="z.B. Kooperationsprojekte" (ngModelChange)="checkFields()" [(ngModel)]="name" required>
   </div>
   <div class="content flex p-t-24">
     <p>Beschreibung (optional)</p>
     <input type="text" placeholder="Dein Text hier" [(ngModel)]="description">
   </div>
   <div class="actions">
-    <button class="button1" (click)="openDialog()">Erstellen</button>
+    <button class="button1" (click)="openDialog()" [disabled]="disableButton">Erstellen</button>
   </div>
 </div>

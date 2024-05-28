@@ -1,17 +1,36 @@
 <div class="dialog-add-channel">
 	<div class="headline">
-	  <h3>Leute hinzufügen</h3>
-	  <img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
+		<h3>Leute hinzufügen</h3>
+		<img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
 	</div>
 	<div class="content flex p-t-24">
-	  <input type="checkbox" (click)="checkAllMembers()" [checked]="allMembers">
-	  <p>Alle Mitglieder von Office Team hinzufügen</p>
+		<input type="checkbox" (click)="checkAllMembers()" [checked]="allMembers">
+		<p>Alle Mitglieder von Office Team hinzufügen</p>
 	</div>
 	<div class="content flex p-t-24">
-		<input type="checkbox">
-	  <p>Bestimmte Leute hinzufügen</p>
+		<input type="checkbox" (click)="checkCertainMembers()" [checked]="certainMembers">
+		<p>Bestimmte Leute hinzufügen</p>
 	</div>
+	@if (certainMembers) {
+	<div class="certain-members-container">
+		<div class="input-box">
+			<div class="added-members">
+				<div class="member">
+					<img src="./assets/img/channels/avatar-1.svg" alt="">
+					<p>Linda</p>
+					<img src="./assets/img/thread/close.svg" alt="">
+				</div>
+			</div>
+			<input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input">
+		</div>
+		<div class="members-box">
+			@for (member of this.channelFirestore.members; track $index) {
+			<p (click)="addMember()">{{ member.member }}</p>
+			}
+		</div>
+	</div>
+	}
 	<div class="actions">
-	  <button class="button1" [mat-dialog-close]="data">Erstellen</button>
+		<button class="button1" [mat-dialog-close]="data">Erstellen</button>
 	</div>
-  </div>
+</div>

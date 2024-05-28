@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AddChannelService } from './add-channel.service';
+import { GlobalVariablesService } from './global-variables.service';
 
-describe('AddChannelService', () => {
-  let service: AddChannelService;
+describe('GlobalVariablesService', () => {
+  let service: GlobalVariablesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AddChannelService);
+    service = TestBed.inject(GlobalVariablesService);
   });
 
   it('should be created', () => {

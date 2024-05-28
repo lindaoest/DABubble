@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 
 export interface DialogData {
   name: string;
@@ -25,13 +26,16 @@ export interface DialogData {
 export class DialogChannelAddMembersComponent {
 
   allMembers: Boolean = false;
+  certainMembers: Boolean = false;
   members: any[] = [];
 
-  @Output()addAllMembers = new EventEmitter<boolean>();
+  certainMember_Array: [] = [];
 
   constructor(
     public dialogRef: MatDialogRef<DialogChannelAddMembersComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
+      console.log('channelFirestore', this.channelFirestore.members)
+    }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -39,8 +43,14 @@ export class DialogChannelAddMembersComponent {
 
   checkAllMembers() {
     this.allMembers = !this.allMembers;
-    if(this.allMembers) {
-      this.addAllMembers.emit(!!this.allMembers);
-    }
+    this.globalVariables.allMembers = this.allMembers;
+  }
+
+  checkCertainMembers() {
+    this.certainMembers = !this.certainMembers;
+  }
+
+  addMember() {
+    
   }
 }

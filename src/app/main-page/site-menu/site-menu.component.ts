@@ -15,7 +15,7 @@ export class SiteMenuComponent {
 
   name: string = '';
   description: string = '';
-  members: string = '';
+  members: [] = [];
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService) { }
 
@@ -27,9 +27,5 @@ export class SiteMenuComponent {
     this.dialog.open(DialogAddChannelComponent, {
       data: { name: this.name, description: this.description, members: this.members},
     });
-  }
-
-  allMembers(members:boolean) {
-    console.log(members)
   }
 }
