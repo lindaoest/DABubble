@@ -15,17 +15,19 @@
 	<div class="certain-members-container">
 		<div class="input-box">
 			<div class="added-members">
+				@for (item of certainMember_Array; track $index) {
 				<div class="member">
 					<img src="./assets/img/channels/avatar-1.svg" alt="">
-					<p>Linda</p>
+					<p>{{ item.member }}</p>
 					<img src="./assets/img/thread/close.svg" alt="">
 				</div>
+				}
 			</div>
 			<input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input">
 		</div>
 		<div class="members-box">
 			@for (member of this.channelFirestore.members; track $index) {
-			<p (click)="addMember()">{{ member.member }}</p>
+			<p (click)="addMember(member)">{{ member.member }}</p>
 			}
 		</div>
 	</div>

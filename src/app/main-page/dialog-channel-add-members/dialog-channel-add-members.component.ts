@@ -8,6 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 
+interface Member {
+  member: string,
+  email: string,
+  url?: string
+}
 export interface DialogData {
   name: string;
   description: string;
@@ -29,16 +34,16 @@ export class DialogChannelAddMembersComponent {
   certainMembers: Boolean = false;
   members: any[] = [];
 
-  certainMember_Array: [] = [];
+  certainMember_Array: Member[] = [];
 
   constructor(
-    public dialogRef: MatDialogRef<DialogChannelAddMembersComponent>,
+    public dialogRefMember: MatDialogRef<DialogChannelAddMembersComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
       console.log('channelFirestore', this.channelFirestore.members)
     }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRefMember.close();
   }
 
   checkAllMembers() {
@@ -50,7 +55,11 @@ export class DialogChannelAddMembersComponent {
     this.certainMembers = !this.certainMembers;
   }
 
-  addMember() {
-    
+  addMember(m:Member) {
+    let me = m;
+    const foundName = this.channelFirestore.members.find(obj => obj.member === me.member);
+    this.certainMember_Array.push(foundName);
+    console.log(foundName);
+    console.log('array', this.certainMember_Array);
   }
 }

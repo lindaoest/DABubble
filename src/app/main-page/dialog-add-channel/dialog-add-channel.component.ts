@@ -38,11 +38,13 @@ export class DialogAddChannelComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogChannelAddMembersComponent, {
+    this.dialogRef.close();
+
+    const dialogRefMember = this.dialog.open(DialogChannelAddMembersComponent, {
       data: { name: this.name, description: this.description, members: this.members },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRefMember.afterClosed().subscribe(result => {
       if (this.globalVariables.allMembers) {
         const newChannel = new Channel({
           name: result.name,
