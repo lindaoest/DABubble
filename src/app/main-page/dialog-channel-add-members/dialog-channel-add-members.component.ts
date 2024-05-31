@@ -34,13 +34,11 @@ export class DialogChannelAddMembersComponent {
   certainMembers: Boolean = false;
   members: any[] = [];
 
-  certainMember_Array: Member[] = [];
+  //certainMember_Array: Member[] = [];
 
   constructor(
     public dialogRefMember: MatDialogRef<DialogChannelAddMembersComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
-      console.log('channelFirestore', this.channelFirestore.members)
-    }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {}
 
   onNoClick(): void {
     this.dialogRefMember.close();
@@ -56,10 +54,8 @@ export class DialogChannelAddMembersComponent {
   }
 
   addMember(m:Member) {
-    let me = m;
-    const foundName = this.channelFirestore.members.find(obj => obj.member === me.member);
-    this.certainMember_Array.push(foundName);
-    console.log(foundName);
-    console.log('array', this.certainMember_Array);
+    const foundName = this.channelFirestore.members.find(obj => obj.member === m.member);
+    this.globalVariables.certainMember_Array.push(foundName);
+    console.log('certaimMember_array', this.globalVariables.certainMember_Array)
   }
 }

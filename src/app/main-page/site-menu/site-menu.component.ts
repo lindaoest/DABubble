@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 
 @Component({
   selector: 'app-site-menu',
@@ -17,7 +18,7 @@ export class SiteMenuComponent {
   description: string = '';
   members: [] = [];
 
-  constructor(public dialog: MatDialog, public channelFirestore: FirestoreService) { }
+  constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   getList() {
     return this.channelFirestore.channels;
@@ -27,5 +28,9 @@ export class SiteMenuComponent {
     this.dialog.open(DialogAddChannelComponent, {
       data: { name: this.name, description: this.description, members: this.members},
     });
+  }
+
+  openChat(channelName: string) {
+    this.globalVariables.activeChat = channelName;
   }
 }

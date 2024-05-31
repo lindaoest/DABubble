@@ -18,7 +18,7 @@
 			<img (click)="openDialog()" src="./assets/img/channels/add.svg" alt="">
 		</div>
 		@for (channel of getList(); track $index) {
-			<div class="team-container">
+			<div class="team-container" (click)="openChat(channel.name)">
 				<div class="team">
 					<img src="./assets/img/channels/tag.svg" alt="">
 					<p>{{ channel.name }}</p>

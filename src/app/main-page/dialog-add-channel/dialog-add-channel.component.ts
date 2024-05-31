@@ -52,7 +52,15 @@ export class DialogAddChannelComponent {
           members: this.channelFirestore.members
         })
         this.channelFirestore.addData(newChannel);
-        console.log('result', newChannel)
+      } else {
+        const newChannel = new Channel({
+          name: result.name,
+          description: result.description,
+          members: this.globalVariables.certainMember_Array
+        })
+        this.channelFirestore.addData(newChannel);
+
+        this.globalVariables.certainMember_Array = [];
       }
     });
   }

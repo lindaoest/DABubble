@@ -15,7 +15,7 @@
 	<div class="certain-members-container">
 		<div class="input-box">
 			<div class="added-members">
-				@for (item of certainMember_Array; track $index) {
+				@for (item of globalVariables.certainMember_Array; track $index) {
 				<div class="member">
 					<img src="./assets/img/channels/avatar-1.svg" alt="">
 					<p>{{ item.member }}</p>
