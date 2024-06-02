@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 interface Member {
   member: string,
@@ -12,8 +13,15 @@ interface Member {
 })
 export class GlobalVariablesService {
 
-  allMembers:Boolean = false;
+  allMembers: Boolean = false;
   certainMember_Array: Member[] = [];
-  activeChat: string = '';
+
+  private activeChatSubject = new Subject<string>();
+  activeChat$: Observable<string> = this.activeChatSubject.asObservable();
+
+
+  set activeChat(value: string) {
+    this.activeChatSubject.next(value);
+  }
 
 }
