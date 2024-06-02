@@ -10,22 +10,17 @@
 	@include displayFlex($jc: space-between);
 }
 
-mat-form-field {
-	border-radius: 40px;
-	border: 1px solid #ADB0D9;
-	background-color: #FFFFFF;
-}
-
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
 	background-color: #FFFFFF;
 }
 
 .content {
 	flex-direction: column;
-
-	p {
-		font-weight: 700;
-	}
+	width: auto;
+	border: 1px solid #ADB0D9;
+	border-radius: 30px;
+	padding: 16px 24px;
+	margin-top: 16px;
 
 	input {
 		width: auto;
@@ -34,8 +29,27 @@ mat-form-field {
 		padding: 16px 24px;
 		margin-top: 16px;
 	}
+
+	.edit {
+		@include displayFlex($jc: space-between)
+	}
+
+	.edit+p {
+		padding-top: 20px;
+	}
+}
+
+.created-by {
+	border-top: 1px solid #ADB0D9;
+	margin-top: 32px;
+	padding-top: 32px;
+
+	.name {
+		font-size: 1.333rem;
+		padding-top: 20px;
+	}
 }
 
 .actions {
-	@include displayFlex($jc:flex-end);
+	@include displayFlex($jc: flex-end);
 }

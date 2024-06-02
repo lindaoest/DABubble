@@ -28,11 +28,17 @@ export interface DialogData {
 })
 export class DialogOverviewChannelComponent {
 
+  editModus: Boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewChannelComponent>, public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  editChannel() {
+    this.editModus = true;
   }
 }

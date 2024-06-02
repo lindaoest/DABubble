@@ -1,18 +1,35 @@
 <div class="dialog-add-channel">
 	<div class="headline">
-	  <h3>Channel erstellen</h3>
-	  <img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
-	</div>
-	<p class="p-t-24">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.</p>
-	<div class="content flex p-t-24">
-	  <p>Channel Name</p>
-	  <input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.name" required>
+		<h3>#{{ data.name }}</h3>
+		<img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
 	</div>
 	<div class="content flex p-t-24">
-	  <p>Beschreibung (optional)</p>
-	  <input type="text" placeholder="Dein Text hier" [(ngModel)]="data.description">
+		<div class="edit">
+			<p class="font-weight-700">Channel Name</p>
+			<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+		</div>
+		@if (editModus) {
+			<input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.name" required>
+		} @else {
+			<p>#{{ data.name }}</p>
+		}
+	</div>
+	<div class="content flex p-t-24">
+		<div class="edit">
+			<p class="font-weight-700">Beschreibung</p>
+			<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+		</div>
+		@if (editModus) {
+			<input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.description" required>
+		} @else {
+			<p>{{ data.description }}</p>
+		}
+		<div class="created-by">
+			<p class="font-weight-700">Erstellt von</p>
+			<p class="name blue-font">Linda</p>
+		</div>
 	</div>
 	<div class="actions">
-	  <button class="button1" [mat-dialog-close]="data">Erstellen</button>
+		<button class="button1" (click)="onNoClick()">Channel verlassen</button>
 	</div>
-  </div>
+</div>
