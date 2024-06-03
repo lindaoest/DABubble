@@ -41,4 +41,8 @@ export class DialogOverviewChannelComponent {
   editChannel() {
     this.editModus = true;
   }
+
+  saveChanges() {
+    this.channelFirestore.updateData('channels')
+  }
 }

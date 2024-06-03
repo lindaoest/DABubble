@@ -6,7 +6,11 @@
 	<div class="content flex p-t-24">
 		<div class="edit">
 			<p class="font-weight-700">Channel Name</p>
-			<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+			@if (editModus) {
+				<p (click)="saveChanges()" class="blue-font">Speichern</p>
+			} @else {
+				<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+			}
 		</div>
 		@if (editModus) {
 			<input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.name" required>
@@ -17,7 +21,11 @@
 	<div class="content flex p-t-24">
 		<div class="edit">
 			<p class="font-weight-700">Beschreibung</p>
-			<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+			@if (editModus) {
+				<p (click)="saveChanges()" class="blue-font">Speichern</p>
+			} @else {
+				<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+			}
 		</div>
 		@if (editModus) {
 			<input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.description" required>
