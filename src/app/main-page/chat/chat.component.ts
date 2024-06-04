@@ -4,6 +4,7 @@ import { FirestoreService } from '../../shared/services/firestore/firestore.serv
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 import { Subscription } from 'rxjs';
 import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialog-overview-channel.component';
+import { Channel } from '../../../models/channel.class';
 
 @Component({
   selector: 'app-chat',
@@ -14,13 +15,20 @@ import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialo
 })
 export class ChatComponent {
 
-  name:string = ''
-  description: string = ''
+  name: string = '';
+  description: string = '';
+
+  activeChannel: Channel = {
+    id: '',
+    name: '',
+    members: [],
+    description: ''
+  };
 
   private activeChatSubscription: Subscription = new Subscription;
   activeChat: string = '';
 
-  constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) {}
+  constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
 
   ngOnInit() {
     this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
@@ -34,10 +42,21 @@ export class ChatComponent {
     }
   }
 
+  getMembers() {
+    return this.activeChannel.members;
+  }
+
   openDialog(): void {
-    const activeChannel = this.channelFirestore.channels.find(obj => obj.name === this.activeChat);
-    this.dialog.open(DialogOverviewChannelComponent, {
-      data: activeChannel
-    });
+    if (this.activeChannel) {
+      const foundChannel = this.channelFirestore.channels.find(obj => obj.name === this.activeChat);
+      if (foundChannel) {
+        this.activeChannel = foundChannel;
+      } else {
+        console.warn('Channel not found');
+      }
+      this.dialog.open(DialogOverviewChannelComponent, {
+        data: this.activeChannel
+      });
+    }
   }
 }

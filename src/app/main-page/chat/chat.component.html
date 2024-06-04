@@ -7,12 +7,12 @@
 		</div>
 		<div class="members">
 			<div class="avatars">
-				<img src="./assets/img/channels/avatar-1.svg" alt="">
-				<img src="./assets/img/channels/avatar-1.svg" alt="">
-				<img src="./assets/img/channels/avatar-1.svg" alt="">
+				@for (avatar of getMembers(); track $index) {
+					<img src="./assets/img/channels/avatar-1.svg" alt="">
+				}
 			</div>
 			<div class="quantity">
-				<p>3</p>
+				<p>{{ getMembers().length }}</p>
 			</div>
 			<div class="add-member">
 				<img src="./assets/img/chat/chat-add-member.svg" alt="">

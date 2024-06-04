@@ -47,6 +47,7 @@ export class DialogAddChannelComponent {
     dialogRefMember.afterClosed().subscribe(result => {
       if (this.globalVariables.allMembers) {
         const newChannel = new Channel({
+          id: result.id,
           name: result.name,
           description: result.description,
           members: this.channelFirestore.members
@@ -54,11 +55,13 @@ export class DialogAddChannelComponent {
         this.channelFirestore.addData(newChannel);
       } else {
         const newChannel = new Channel({
+          id: result.id,
           name: result.name,
           description: result.description,
           members: this.globalVariables.certainMember_Array
         })
         this.channelFirestore.addData(newChannel);
+        console.log(result);
 
         this.globalVariables.certainMember_Array = [];
       }

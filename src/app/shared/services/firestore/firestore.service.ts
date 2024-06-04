@@ -29,8 +29,6 @@ export class FirestoreService {
         this.members.push(element.data())
       });
     });
-
-    console.log('members', this.members)
   }
 
   setObject(obj: any, id:string) {
@@ -48,13 +46,11 @@ export class FirestoreService {
   }
 
   async addData(data: Channel) {
-    await addDoc(this.getDocRef('channels'), this.setObject(data));
+    await addDoc(this.getDocRef('channels'), this.setObject(data, ''));
   }
 
-  async updateData(colId:string, docId:string) {
-    await updateDoc(this.getSingleDocRef(colId, docId), {
-      capital: true
-    });
+  async updateData(colId:string, data:Channel) {
+    await updateDoc(this.getSingleDocRef(colId, data.id), {data});
   }
 
   getDocRef(colId:string) {
