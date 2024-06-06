@@ -1,0 +1,63 @@
+@import './../shared/mixin.scss';
+
+.log-in {
+	background-color: #FFFFFF;
+	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+	border-radius: 30px;
+	width: auto;
+	@include displayFlex($jc:flex-start);
+	flex-direction: column;
+	padding: 50px 60px;
+}
+
+.input-element {
+	margin-top: 40px;
+	padding: 12px 32px;
+	background-color: #ECEEFE;
+	border-radius: 30px;
+	@include displayFlex($jc:flex-start);
+	width: 100%;
+
+	input {
+		border: none;
+		background-color: transparent;
+		padding-left: 32px;
+	}
+
+	p {
+		padding-left: 24px;
+	}
+}
+
+.or-container {
+	position: relative;
+	width: 100%;
+	@include displayFlex();
+
+	p {
+		background-color: #FFFFFF;
+		position: relative;
+		z-index: 1;
+		padding: 0 16px;
+	}
+
+	.line {
+		height: 1px;
+		background-color: #ADB0D9;
+		position: absolute;
+		width: 100%;
+	}
+}
+
+.google-login {
+	justify-content: center;
+}
+
+.buttons {
+	gap: 32px;
+	margin-top: 40px;
+
+	button {
+		margin: 0;
+	}
+}

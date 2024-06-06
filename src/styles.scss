@@ -104,6 +104,14 @@ body {
 	padding-top: 24px;
 }
 
+.p-t-32 {
+	padding-top: 32px;
+}
+
+.p-t-40 {
+	padding-top: 40px;
+}
+
 h3 {
 	font-size: 1.333rem;
 }
@@ -118,14 +126,41 @@ h3 {
     font-weight: 700;
 }
 
+.button2 {
+	border: 1px solid #444DF2;
+    border-radius: 25px;
+    background-color: transparent;
+    padding: 12px 25px;
+    margin-top: 24px;
+    color: #444DF2;
+    font-weight: 700;
+}
+
 button:disabled {
 	opacity: 0.6;
+}
+
+.tac {
+	text-align: center;
 }
 
 .cdk-overlay-pane.mat-mdc-dialog-panel {
 	width: 45.416%;
 }
 
+.mat-mdc-dialog-container {
+	width: auto;
+}
+
 .mat-mdc-dialog-container .mdc-dialog__surface {
 	border-radius: 30px!important;
+}
+
+app-log-in {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	max-width: 606px;
+	height: 100%;
+    margin: 32px auto;
 }

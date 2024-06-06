@@ -5,6 +5,7 @@ import { GlobalVariablesService } from '../../shared/services/global-variables/g
 import { Subscription } from 'rxjs';
 import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialog-overview-channel.component';
 import { Channel } from '../../../models/channel.class';
+import { DialogMemberExistingChannelComponent } from '../dialog-member-existing-channel/dialog-member-existing-channel.component';
 
 @Component({
   selector: 'app-chat',
@@ -58,5 +59,11 @@ export class ChatComponent {
         data: this.activeChannel
       });
     }
+  }
+
+  addMembers() {
+    this.dialog.open(DialogMemberExistingChannelComponent, {
+      data: this.activeChannel
+    });
   }
 }
