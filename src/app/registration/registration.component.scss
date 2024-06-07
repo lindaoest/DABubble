@@ -1,0 +1,39 @@
+@import './../shared/mixin.scss';
+
+.registration {
+	background-color: #FFFFFF;
+	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+	border-radius: 30px;
+	width: auto;
+	@include displayFlex($jc:flex-start);
+	flex-direction: column;
+	padding: 50px 60px;
+}
+
+.input-element {
+	margin-top: 40px;
+	padding: 12px 32px;
+	background-color: #ECEEFE;
+	border-radius: 30px;
+	@include displayFlex($jc:flex-start);
+	width: 100%;
+
+	input {
+		border: none;
+		background-color: transparent;
+		padding-left: 32px;
+	}
+
+	p {
+		padding-left: 24px;
+	}
+}
+
+.buttons {
+	gap: 32px;
+	margin-top: 40px;
+
+	button {
+		margin: 0;
+	}
+}

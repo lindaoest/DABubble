@@ -1,0 +1,25 @@
+<form (ngSubmit)="onSubmit()" class="registration">
+	<h1 class="blue-font">Konto erstellen</h1>
+	<p class="tac p-t-32">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
+	<div class="input-element input-email">
+		<img src="./assets/img/log-in/person.svg" alt="">
+		<input type="text" placeholder="beispielname@email.com" name="member" [(ngModel)]="data.member">
+	</div>
+	<div class="input-element input-email">
+		<img src="./assets/img/log-in/mail.svg" alt="">
+		<input type="text" placeholder="beispielname@email.com" name="email" [(ngModel)]="data.email">
+	</div>
+	<div class="input-element input-password">
+		<img src="./assets/img/log-in/lock.svg" alt="">
+		<input type="text" placeholder="Passwort" name="password" [(ngModel)]="data.password">
+	</div>
+	<div class="checkbox-privacy flex">
+		<input type="checkbox" name="checkbox" [(ngModel)]="privacyChecked" (change)="onPrivacyChange()">
+		<div class="privacy-text">
+			<p>Ich stimme der <a>Datenschutzerklärung</a> zu.</p>
+		</div>
+	</div>
+	<div class="buttons flex">
+		<button class="button1" [disabled]="disableButton">Weiter</button>
+	</div>
+</form>

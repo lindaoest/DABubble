@@ -3,6 +3,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { doc, onSnapshot, collection, addDoc, updateDoc } from "firebase/firestore";
 import { firstValueFrom } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
+import { Member } from '../../../../models/member.class';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,10 @@ export class FirestoreService {
 
   async updateData(colId:string, data:Channel) {
     await updateDoc(this.getSingleDocRef(colId, data.id), {data});
+  }
+
+  async addMember(data: Member) {
+    await addDoc(this.getDocRef('members'), this.setObject(data, ''));
   }
 
   getDocRef(colId:string) {
