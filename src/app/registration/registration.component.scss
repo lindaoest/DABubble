@@ -16,12 +16,17 @@
 	background-color: #ECEEFE;
 	border-radius: 30px;
 	@include displayFlex($jc:flex-start);
-	width: 100%;
+	width: calc(100% - 64px);
 
 	input {
 		border: none;
 		background-color: transparent;
 		padding-left: 32px;
+
+		&:focus-visible {
+			border: none;
+			outline: none;
+		}
 	}
 
 	p {
@@ -29,11 +34,14 @@
 	}
 }
 
-.buttons {
-	gap: 32px;
-	margin-top: 40px;
+.checkbox-privacy {
+	width: 100%;
+	margin-top: 32px;
+	gap: 8px;
+}
 
-	button {
-		margin: 0;
-	}
+.buttons {
+	display: flex;
+    justify-content: flex-end;
+    width: 100%;
 }

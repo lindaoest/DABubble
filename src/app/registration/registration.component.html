@@ -3,20 +3,20 @@
 	<p class="tac p-t-32">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/person.svg" alt="">
-		<input type="text" placeholder="beispielname@email.com" name="member" [(ngModel)]="data.member">
+		<input type="text" placeholder="Name & Nachname" name="member" [(ngModel)]="data.member" (ngModelChange)="checkFields()">
 	</div>
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/mail.svg" alt="">
-		<input type="text" placeholder="beispielname@email.com" name="email" [(ngModel)]="data.email">
+		<input type="text" placeholder="beispielname@email.com" name="email" [(ngModel)]="data.email" (ngModelChange)="checkFields()">
 	</div>
 	<div class="input-element input-password">
 		<img src="./assets/img/log-in/lock.svg" alt="">
-		<input type="text" placeholder="Passwort" name="password" [(ngModel)]="data.password">
+		<input type="text" placeholder="Passwort" name="password" [(ngModel)]="data.password" (ngModelChange)="checkFields()">
 	</div>
 	<div class="checkbox-privacy flex">
-		<input type="checkbox" name="checkbox" [(ngModel)]="privacyChecked" (change)="onPrivacyChange()">
+		<input type="checkbox" name="checkbox" [(ngModel)]="privacyChecked" (click)="onPrivacyChange()" (ngModelChange)="checkFields()">
 		<div class="privacy-text">
-			<p>Ich stimme der <a>Datenschutzerklärung</a> zu.</p>
+			<p>Ich stimme der <a class="blue-font">Datenschutzerklärung</a> zu.</p>
 		</div>
 	</div>
 	<div class="buttons flex">

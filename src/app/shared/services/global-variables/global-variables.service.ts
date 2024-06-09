@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
 interface Member {
   member: string,
   email: string,
-  url?: string
+  password: string,
+  avatar: string
 }
 
 @Injectable({
@@ -15,6 +16,7 @@ export class GlobalVariablesService {
 
   allMembers: Boolean = false;
   certainMember_Array: Member[] = [];
+  newMember: Member[] = [];
 
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();

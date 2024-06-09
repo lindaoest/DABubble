@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Member } from '../../models/member.class';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ChooseAvatarComponent } from '../choose-avatar/choose-avatar.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 
 @Component({
   selector: 'app-registration',
@@ -18,15 +22,27 @@ export class RegistrationComponent {
     avatar: ''
   }
 
+  constructor(public router: Router, private globalVariables: GlobalVariablesService) {}
+
   privacyChecked: boolean = false;
   disableButton: Boolean = true;
 
   onPrivacyChange() {
-    this.disableButton = !this.disableButton;
-    console.log(this.disableButton)
+    this.privacyChecked = !this.privacyChecked;
+  }
+
+  checkFields() {
+    this.disableButton = (
+      !this.data.member ||
+      !this.data.email ||
+      !this.data.password ||
+      !this.privacyChecked
+    )
   }
 
   onSubmit() {
-    console.log(this.data)
+    this.globalVariables.newMember.push(this.data);
+    this.router.navigate(['choose-avatar']);
+    console.log(this.globalVariables.newMember);
   }
 }

@@ -1,0 +1,44 @@
+@import './../shared/mixin.scss';
+
+.choose-avatar {
+	background-color: #FFFFFF;
+	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+	border-radius: 30px;
+	width: auto;
+	@include displayFlex($jc:flex-start);
+	flex-direction: column;
+	padding: 50px 60px;
+}
+
+.subtitle {
+	text-align: left;
+    width: 100%;
+    padding-top: 8px;
+}
+
+.profile {
+	margin: 16px 0 32px;
+	width: 168px;
+	height: 168px;
+}
+
+.avatar-images {
+	@include displayFlex($jc:space-between);
+	margin: 16px 0 32px;
+	width: 100%;
+
+	.avatar-img {
+		width: 56px;
+		height: 56px;
+	}
+}
+
+.upload-image {
+	@include displayFlex();
+}
+
+.buttons {
+	display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}

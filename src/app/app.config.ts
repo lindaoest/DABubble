@@ -5,6 +5,6 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { privateConfig } from './app.config-private';
 
-export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimationsAsync(), importProvidersFrom(provideFirestore(() => getFirestore()))]};
+export const appConfig: ApplicationConfig = privateConfig;
