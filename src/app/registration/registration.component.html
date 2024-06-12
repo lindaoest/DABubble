@@ -7,11 +7,11 @@
 	</div>
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/mail.svg" alt="">
-		<input type="text" placeholder="beispielname@email.com" name="email" [(ngModel)]="data.email" (ngModelChange)="checkFields()">
+		<input type="email" placeholder="beispielname@email.com" name="email" [(ngModel)]="data.email" email="true" (ngModelChange)="checkFields()">
 	</div>
 	<div class="input-element input-password">
 		<img src="./assets/img/log-in/lock.svg" alt="">
-		<input type="text" placeholder="Passwort" name="password" [(ngModel)]="data.password" (ngModelChange)="checkFields()">
+		<input type="password" minlength="8" placeholder="Passwort" name="password" [(ngModel)]="data.password" (ngModelChange)="checkFields()">
 	</div>
 	<div class="checkbox-privacy flex">
 		<input type="checkbox" name="checkbox" [(ngModel)]="privacyChecked" (click)="onPrivacyChange()" (ngModelChange)="checkFields()">

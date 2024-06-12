@@ -5,14 +5,25 @@
 	<p class="subtitle">Aus der Liste wählen</p>
 	<div class="avatar-images">
 		@for (item of [1,2,3,4,5,6]; track $index) {
-			<img (click)="addImage(item)" class="avatar-img" src="./assets/img/avatar/avatar-{{item}}.svg" alt="">
+		<img (click)="addImage(item)" class="avatar-img" src="./assets/img/avatar/avatar-{{item}}.svg" alt="">
 		}
 	</div>
 	<div class="upload-image">
 		<p>eigenes Bild verwenden</p>
-		<input type="file" (change)="handleFileInput($event)">
+		<label id="button-file">
+			<input type="file" (change)="handleFileInput($event)" />
+			<p>Datei hochladen</p>
+		</label>
 	</div>
 	<div class="buttons flex p-t-24">
-		<button class="button1" (click)="addMember()">Weiter</button>
+		<button class="button1" (click)="addMember()" [disabled]="chooseImage">Weiter</button>
 	</div>
 </form>
+
+@if (successSignIn) {
+<div class="overlay">
+	<div class="overlay-button">
+		<p>Konto erfolgreich erstellt!</p>
+	</div>
+</div>
+}

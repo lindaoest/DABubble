@@ -5,6 +5,8 @@ import { FirestoreService } from '../shared/services/firestore/firestore.service
 import { finalize } from 'rxjs/operators';
 import { Firestore } from '@angular/fire/firestore';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
+import { Member } from '../../models/member.class';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -16,65 +18,63 @@ import { GlobalVariablesService } from '../shared/services/global-variables/glob
 export class ChooseAvatarComponent {
 
   profilePicture = "./assets/img/channels/profile.svg";
-  fileToUpload: File | null = null;
   file: File | null = null;
+  chooseImage: boolean = true;
+  url: string = '';
+  successSignIn: Boolean = false;
 
 
-
-  constructor(public firestore: Firestore, public globalVariables: GlobalVariablesService) { }
+  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
 
   addImage(item: any) {
-    console.log(item)
     this.profilePicture = `./assets/img/avatar/avatar-${item}.svg`;
+    this.chooseImage = false;
   }
 
-  handleFileInput(event: any) {
+  async handleFileInput(event: any) {
     const file: File = event.target.files[0];
     if (file) {
       this.file = file;
 
-      // getDownloadURL(starsRef)
-      //   .then((url) => {
-      //     console.log(url)
-      //   })
-      //   .catch((error) => {
-      //     // A full list of error codes is available at
-      //     // https://firebase.google.com/docs/storage/web/handle-errors
-      //     switch (error.code) {
-      //       case 'storage/object-not-found':
-      //         // File doesn't exist
-      //         break;
-      //       case 'storage/unauthorized':
-      //         // User doesn't have permission to access the object
-      //         break;
-      //       case 'storage/canceled':
-      //         // User canceled the upload
-      //         break;
-
-      //       // ...
-
-      //       case 'storage/unknown':
-      //         // Unknown error occurred, inspect the server response
-      //         break;
-      //     }
-      //   });
-    }
-  }
-
-  addMember() {
-    if (this.file) {
       const storage = getStorage();
       const starsRef = ref(storage, `images/${this.file.name}`);
 
-      uploadBytes(starsRef, this.file).then((snapshot) => {
-        console.log('Uploaded a blob or file!');
+      await uploadBytes(starsRef, this.file).then((snapshot) => {
         console.log(snapshot)
-        console.log(this.file)
       });
 
-      this.globalVariables.newMember[0].avatar = this.file.name;
-      console.log(this.globalVariables.newMember)
+      await getDownloadURL(starsRef)
+        .then((url) => {
+          this.url = url;
+          this.profilePicture = url;
+        })
     }
+    this.chooseImage = false;
+  }
+
+  async addMember() {
+    if (this.file) {
+      this.globalVariables.newMember[0].avatar = this.url;
+    } else {
+      this.globalVariables.newMember[0].avatar = this.profilePicture;
+    }
+    this.updateMember();
+  }
+
+  updateMember() {
+    const newMember = new Member({
+      member: this.globalVariables.newMember[0].member,
+      email: this.globalVariables.newMember[0].email,
+      password: this.globalVariables.newMember[0].password,
+      avatar: this.globalVariables.newMember[0].avatar
+    })
+    this.channelFirestore.addMember(newMember);
+    this.successSignIn = true;
+
+    setTimeout(() => {
+      this.successSignIn = true;
+      this.router.navigate(['log-in']);
+    }, 2000);
   }
 
   // onSubmit() {

@@ -116,27 +116,41 @@ h3 {
 	font-size: 1.333rem;
 }
 
+input[type="file"] {
+	display: none;
+}
+
+button {
+	cursor: pointer;
+}
+
 .button1 {
 	border: none;
-    border-radius: 25px;
-    background-color: #444DF2;
-    padding: 12px 25px;
-    color: #FFFFFF;
-    font-weight: 700;
+	border-radius: 25px;
+	background-color: #444DF2;
+	padding: 12px 25px;
+	color: #FFFFFF;
+	font-weight: 700;
+	font-size: 1rem;
 }
 
 .button2,
-input[type="file"] {
+#button-file {
 	border: 1px solid #444DF2;
-    border-radius: 25px;
-    background-color: transparent;
-    padding: 12px 25px;
-    color: #444DF2;
-    font-weight: 700;
+	border-radius: 25px;
+	background-color: transparent;
+	padding: 12px 25px;
+	color: #444DF2;
+	font-weight: 700;
+	font-size: 1rem;
 }
 
 button:disabled {
-	opacity: 0.6;
+	opacity: 0.4;
+}
+
+#button-file {
+	cursor: pointer;
 }
 
 .tac {
@@ -152,16 +166,16 @@ button:disabled {
 }
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
-	border-radius: 30px!important;
+	border-radius: 30px !important;
 }
 
 app-log-in,
 app-registration,
 app-choose-avatar {
 	display: flex;
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 	max-width: 606px;
 	height: 100%;
-    margin: 32px auto;
+	margin: 32px auto;
 }

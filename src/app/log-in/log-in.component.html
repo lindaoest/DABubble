@@ -3,11 +3,11 @@
 	<p class="tac p-t-32">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/mail.svg" alt="">
-		<input type="text" placeholder="beispielname@email.com">
+		<input type="email" name="email" placeholder="beispielname@email.com" [(ngModel)]="email">
 	</div>
 	<div class="input-element input-password">
 		<img src="./assets/img/log-in/lock.svg" alt="">
-		<input type="text" placeholder="Passwort">
+		<input type="password" name="password" placeholder="Passwort" [(ngModel)]="password">
 	</div>
 	<p class="blue-font p-t-40">Passwort vergessen?</p>
 	<div class="or-container p-t-40">
@@ -19,7 +19,7 @@
 		<p class="blue-font">Anmelden mit Google</p>
 	</div>
 	<div class="buttons flex">
-		<button class="button1">Anmelden</button>
+		<button class="button1" (click)="checkLogin()">Anmelden</button>
 		<button class="button2">Gäste-Login</button>
 	</div>
 </form>

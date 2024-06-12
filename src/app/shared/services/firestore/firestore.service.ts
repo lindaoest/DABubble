@@ -26,8 +26,9 @@ export class FirestoreService {
     });
 
     this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
+      this.members = [];
       doc.forEach(element => {
-        this.members.push(element.data())
+        this.members.push(this.setObjectMembers(element.data(), element.id))
       });
     });
   }
@@ -38,6 +39,16 @@ export class FirestoreService {
       name: obj.name,
       description: obj.description,
       members: obj.members
+    }
+  }
+
+  setObjectMembers(obj: any, id:string) {
+    return {
+      id: id,
+      member: obj.member,
+      email: obj.email,
+      password: obj.password,
+      avatar: obj.avatar
     }
   }
 
@@ -55,7 +66,7 @@ export class FirestoreService {
   }
 
   async addMember(data: Member) {
-    await addDoc(this.getDocRef('members'), this.setObject(data, ''));
+    await addDoc(this.getDocRef('members'), this.setObjectMembers(data, ''));
   }
 
   getDocRef(colId:string) {
