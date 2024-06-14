@@ -1,14 +1,20 @@
-<form class="log-in">
+<form [formGroup]="login_form" class="log-in">
 	<h1 class="blue-font">Anmeldung</h1>
 	<p class="tac p-t-32">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/mail.svg" alt="">
-		<input type="email" name="email" placeholder="beispielname@email.com" [(ngModel)]="email">
+		<input type="email" name="email" placeholder="beispielname@email.com" formControlName="email">
 	</div>
+	@if(this.login_form.get('email')?.invalid && this.login_form.get('email')?.touched) {
+		<span class="error-message">Gib eine gültige Email ein</span>
+	}
 	<div class="input-element input-password">
 		<img src="./assets/img/log-in/lock.svg" alt="">
-		<input type="password" name="password" placeholder="Passwort" [(ngModel)]="password">
+		<input type="password" name="password" placeholder="Passwort" formControlName="password">
 	</div>
+	@if(this.login_form.get('password')?.invalid && this.login_form.get('password')?.touched) {
+		<span class="error-message">Gib dein Passwort ein</span>
+	}
 	<p class="blue-font p-t-40">Passwort vergessen?</p>
 	<div class="or-container p-t-40">
 		<p>ODER</p>
@@ -19,7 +25,7 @@
 		<p class="blue-font">Anmelden mit Google</p>
 	</div>
 	<div class="buttons flex">
-		<button class="button1" (click)="checkLogin()">Anmelden</button>
+		<button class="button1" [disabled]="!login_form.valid" (click)="checkLogin()">Anmelden</button>
 		<button class="button2">Gäste-Login</button>
 	</div>
 </form>

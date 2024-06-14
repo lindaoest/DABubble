@@ -1,12 +1,13 @@
 header {
 	display: flex;
     justify-content: space-between;
-    padding: 75px 75px 0;
+    padding: 24px 40px;
 }
 
 .registration {
 
 	p + p {
-		padding-top: 24px;
+		padding-top: 16px;
+		cursor: pointer;
 	}
 }

@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
+import { filter } from 'rxjs/operators';
+import { GlobalVariablesService } from '../services/global-variables/global-variables.service';
 
 @Component({
   selector: 'app-header',
@@ -10,4 +14,16 @@ import { RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
 
+  path: string = '';
+
+  constructor(private router: Router, private location: Location, public globalVariables: GlobalVariablesService) { }
+
+  ngOnInit(): void {
+    // Abonniere die Router-Events und filtere nur NavigationEnd-Ereignisse
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.path = this.location.path();
+    });
+  }
 }
