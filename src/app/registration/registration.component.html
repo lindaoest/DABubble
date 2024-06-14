@@ -1,25 +1,40 @@
-<form (ngSubmit)="onSubmit()" class="registration">
-	<h1 class="blue-font">Konto erstellen</h1>
+<form [formGroup]="registration_form" (ngSubmit)="onSubmit()" class="registration">
+	<div class="headline">
+		<img [routerLink]="['/log-in']" src="./assets/img/sign-in/back-arrow.svg" alt="">
+		<h1 class="blue-font">Konto erstellen</h1>
+	</div>
 	<p class="tac p-t-32">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/person.svg" alt="">
-		<input type="text" placeholder="Name & Nachname" name="member" [(ngModel)]="data.member" (ngModelChange)="checkFields()">
+		<input type="text" placeholder="Name & Nachname" name="member" formControlName="member" (ngModelChange)="checkFields()">
 	</div>
+	@if(this.registration_form.get('member')?.invalid && this.registration_form.get('member')?.touched) {
+		<span class="error-message">Gib deinen Namen ein</span>
+	}
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/mail.svg" alt="">
-		<input type="email" placeholder="beispielname@email.com" name="email" [(ngModel)]="data.email" email="true" (ngModelChange)="checkFields()">
+		<input type="email" placeholder="beispielname@email.com" name="email" formControlName="email" email="true" (ngModelChange)="checkFields()">
 	</div>
+	@if(this.registration_form.get('email')?.invalid && this.registration_form.get('email')?.touched) {
+		<span class="error-message">Gib eine gültige Email ein</span>
+	}
 	<div class="input-element input-password">
 		<img src="./assets/img/log-in/lock.svg" alt="">
-		<input type="password" minlength="8" placeholder="Passwort" name="password" [(ngModel)]="data.password" (ngModelChange)="checkFields()">
+		<input type="password" minlength="8" placeholder="Passwort" name="password" formControlName="password" (ngModelChange)="checkFields()">
 	</div>
+	@if(this.registration_form.get('password')?.invalid && this.registration_form.get('password')?.touched) {
+		<span class="error-message">Gib dein Passwort ein</span>
+	}
 	<div class="checkbox-privacy flex">
-		<input type="checkbox" name="checkbox" [(ngModel)]="privacyChecked" (click)="onPrivacyChange()" (ngModelChange)="checkFields()">
+		<input type="checkbox" name="checkbox" formControlName="privacyChecked" (click)="onPrivacyChange()" (ngModelChange)="checkFields()" required>
 		<div class="privacy-text">
-			<p>Ich stimme der <a class="blue-font">Datenschutzerklärung</a> zu.</p>
+			<p class="font-small">Ich stimme der <a class="blue-font">Datenschutzerklärung</a> zu.</p>
 		</div>
 	</div>
+	@if (this.registration_form.get('privacyChecked')?.invalid && this.registration_form.get('privacyChecked')?.touched) {
+		<span class="error-message">Bestätige unseren Datenschutz</span>
+	}
 	<div class="buttons flex">
-		<button class="button1" [disabled]="disableButton">Weiter</button>
+		<button type="submit" class="button1" [disabled]="!registration_form.valid">Weiter</button>
 	</div>
 </form>

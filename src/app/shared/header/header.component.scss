@@ -1,0 +1,12 @@
+header {
+	display: flex;
+    justify-content: space-between;
+    padding: 75px 75px 0;
+}
+
+.registration {
+
+	p + p {
+		padding-top: 24px;
+	}
+}

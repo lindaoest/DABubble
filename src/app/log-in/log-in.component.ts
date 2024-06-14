@@ -18,7 +18,7 @@ export class LogInComponent {
   constructor(public router: Router, public channelFirestore: FirestoreService) {}
 
   checkLogin() {
-    const activeMember = this.channelFirestore.members.find(obj => obj.email === this.email && obj.password === obj.password);
+    const activeMember = this.channelFirestore.members.find(obj => obj.email === this.email && obj.password === this.password);
 
     if(activeMember) {
       this.router.navigate(['']);

@@ -8,5 +8,5 @@ export const routes: Routes = [
 	{ path: '', component: MainPageComponent },
 	{ path: 'log-in', component: LogInComponent },
 	{ path: 'sign-in', component: RegistrationComponent },
-	{ path: 'choose-avatar', component: ChooseAvatarComponent },
+	{ path: 'choose-avatar', component: ChooseAvatarComponent }
 ];
