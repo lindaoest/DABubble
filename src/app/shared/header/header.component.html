@@ -6,10 +6,14 @@
 			<p class="blue-font" [routerLink]="['/sign-in']">Konto erstellen</p>
 		</div>
 	}
-	@if (path == '/') {
+	@if (path == '') {
 		<div class="profile">
-			<h1>{{ globalVariables.signed_in_member.member }}</h1>
-			<img src="./assets/" alt="">
+			<h1>{{ globalVariables.signed_in_member }}</h1>
+			<div class="profile-img">
+				<img src="./assets/img/avatar/avatar-1.svg" width="70" height="70" alt="">
+				<div class="online"></div>
+			</div>
+			<img src="./assets/img/chat/arrow_down.svg" alt="">
 		</div>
 	}
 </header>

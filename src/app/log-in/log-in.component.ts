@@ -39,9 +39,21 @@ export class LogInComponent {
   checkLogin() {
     const activeMember = this.channelFirestore.members.find(obj => obj.email === this.login_form.value.email && obj.password === this.login_form.value.password);
 
+    signInWithEmailAndPassword(this.auth, this.login_form.value.email, this.login_form.value.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        this.globalVariables.signed_in_member = user.email;
+        console.log(this.globalVariables.signed_in_member)
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
     if (activeMember && this.login_form.valid) {
-      this.globalVariables.signed_in_member = activeMember;
-      console.log(this.globalVariables.signed_in_member)
+      // this.globalVariables.signed_in_member = activeMember;
+      // console.log(this.globalVariables.signed_in_member)
       this.router.navigate(['']);
     }
   }

@@ -1,13 +1,35 @@
+@import '../mixin.scss';
+
 header {
 	display: flex;
-    justify-content: space-between;
-    padding: 24px 40px;
+	justify-content: space-between;
+	padding: 24px 40px;
 }
 
 .registration {
 
-	p + p {
+	p+p {
 		padding-top: 16px;
 		cursor: pointer;
+	}
+}
+
+.profile {
+	@include displayFlex();
+	gap: 24px;
+
+	.profile-img {
+		position: relative;
+
+		.online {
+			background-color: #92C83E;
+			width: 17px;
+			height: 17px;
+			border-radius: 50%;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			border: 2px solid #FFFFFF;
+		}
 	}
 }

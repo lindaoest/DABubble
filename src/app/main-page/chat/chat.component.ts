@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialog-overview-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { DialogMemberExistingChannelComponent } from '../dialog-member-existing-channel/dialog-member-existing-channel.component';
+import { getAuth, signInWithEmailAndPassword, connectAuthEmulator, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { privateConfig } from '../../app.config-private';
 
 @Component({
   selector: 'app-chat',
@@ -18,6 +21,11 @@ export class ChatComponent {
 
   name: string = '';
   description: string = '';
+
+  firebaseConfig = privateConfig;
+
+  app = initializeApp(this.firebaseConfig);
+  auth = getAuth(this.app);
 
   activeChannel: Channel = {
     id: '',
@@ -35,6 +43,36 @@ export class ChatComponent {
     this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
       this.activeChat = chat;
     });
+
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = user.uid;
+        this.globalVariables.signed_in_member = user.email;
+        console.log('uid', user)
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+
+    const user = this.auth.currentUser;
+    if (user !== null) {
+      // The user object has basic properties such as display name, email, etc.
+      const displayName = user.displayName;
+      const email = user.email;
+      const photoURL = user.photoURL;
+      const emailVerified = user.emailVerified;
+
+      console.log('email', email);
+
+      // The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
+      const uid = user.uid;
+    }
   }
 
   ngOnDestroy() {

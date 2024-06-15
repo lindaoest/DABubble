@@ -76,30 +76,4 @@ export class ChooseAvatarComponent {
       this.router.navigate(['log-in']);
     }, 2000);
   }
-
-  // onSubmit() {
-  //   const storage = getStorage();
-  //   if (this.file) {
-  //     const filePath = `uploads/${this.file.name}`;
-  //     const fileRef = storage.ref(filePath);
-  //     const task = storage.upload(filePath, this.file);
-
-  //     task.snapshotChanges().pipe(
-  //       finalize(() => {
-  //         fileRef.getDownloadURL().subscribe(url => {
-  //           this.saveFileData(url);
-  //         });
-  //       })
-  //     ).subscribe();
-  //   }
-  // }
-
-  // private saveFileData(url: string): void {
-  //   const memberData = { url: url };
-  //   this.firestore.collection('members').add(memberData).then(() => {
-  //     console.log('File URL saved in Firestore');
-  //   }).catch(error => {
-  //     console.error('Error saving file URL in Firestore: ', error);
-  //   });
-  // }
 }

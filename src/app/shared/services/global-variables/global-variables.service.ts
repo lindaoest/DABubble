@@ -17,7 +17,7 @@ export class GlobalVariablesService {
   allMembers: Boolean = false;
   certainMember_Array: Member[] = [];
   newMember: Member[] = [];
-  signed_in_member!: Member;
+  signed_in_member!: any;
 
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();
