@@ -43,7 +43,7 @@ export class LogInComponent {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        this.globalVariables.signed_in_member = user.email;
+        this.globalVariables.signed_in_member = user;
         console.log(this.globalVariables.signed_in_member)
         // ...
       })

@@ -4,6 +4,9 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { GlobalVariablesService } from '../services/global-variables/global-variables.service';
+import { getAuth, signOut } from "firebase/auth";
+import { ProfileComponent } from '../../main-page/profile/profile.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +18,9 @@ import { GlobalVariablesService } from '../services/global-variables/global-vari
 export class HeaderComponent {
 
   path: string = '';
+  openLightboxVar: boolean = false;
 
-  constructor(private router: Router, private location: Location, public globalVariables: GlobalVariablesService) { }
+  constructor(public dialog: MatDialog, private router: Router, private location: Location, public globalVariables: GlobalVariablesService) { }
 
   ngOnInit(): void {
     // Abonniere die Router-Events und filtere nur NavigationEnd-Ereignisse
@@ -25,5 +29,23 @@ export class HeaderComponent {
     ).subscribe(() => {
       this.path = this.location.path();
     });
+  }
+
+  openLightbox() {
+    this.openLightboxVar = !this.openLightboxVar;
+  }
+
+  logOut() {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      this.router.navigate(['log-in']);
+      this.openLightboxVar = false;
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+
+  openProfile(): void {
+    this.dialog.open(ProfileComponent, {});
   }
 }

@@ -49,7 +49,7 @@ export class ChatComponent {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
-        this.globalVariables.signed_in_member = user.email;
+        this.globalVariables.signed_in_member = user;
         console.log('uid', user)
         // ...
       } else {

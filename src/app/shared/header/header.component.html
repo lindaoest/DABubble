@@ -8,12 +8,19 @@
 	}
 	@if (path == '') {
 		<div class="profile">
-			<h1>{{ globalVariables.signed_in_member }}</h1>
+			<h1>{{ globalVariables.signed_in_member.displayName }}</h1>
 			<div class="profile-img">
 				<img src="./assets/img/avatar/avatar-1.svg" width="70" height="70" alt="">
 				<div class="online"></div>
 			</div>
-			<img src="./assets/img/chat/arrow_down.svg" alt="">
+			<img (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
 		</div>
 	}
 </header>
+
+@if (openLightboxVar) {
+	<div class="lightbox">
+		<p (click)="openProfile()" class="font-weight-700">Profil</p>
+		<p (click)="logOut()" class="font-weight-700">Log out</p>
+	</div>
+}
