@@ -1,0 +1,31 @@
+<div class="profile-container">
+	<div class="profile flex">
+		<div class="header">
+			<h3 class="font-weight-700">Dein Profil bearbeiten</h3>
+			<img class="close" (click)="onNoClick()" src="../assets/img/thread/close.svg" alt="">
+		</div>
+		<img class="avatar" src="{{ globalVariables.signed_in_member.photoURL }}" alt="">
+		<form [formGroup]="edit_profile_form" (ngSubmit)="onSubmit()" class="registration">
+			<div class="input-element input-member">
+				<img src="./assets/img/log-in/person.svg" alt="">
+				<p class="font-weight-700">Vollständiger Name</p>
+			</div>
+			<input type="text" placeholder="{{ globalVariables.signed_in_member.displayName }}" name="member" formControlName="member">
+			@if(this.edit_profile_form.get('member')?.invalid && this.edit_profile_form.get('member')?.touched) {
+				<span class="error-message">Gib deinen Namen ein</span>
+			}
+			<div class="input-element input-email">
+				<img src="./assets/img/log-in/mail.svg" alt="">
+				<p class="font-weight-700">E-Mail-Adresse</p>
+			</div>
+			<input type="email" placeholder="{{ globalVariables.signed_in_member.email }}" name="email" formControlName="email" email="true">
+			@if(this.edit_profile_form.get('email')?.invalid && this.edit_profile_form.get('email')?.touched) {
+				<span class="error-message">Gib eine gültige Email ein</span>
+			}
+			<div class="buttons flex">
+				<button type="button" class="button2" (click)="onNoClick()">Abbrechen</button>
+				<button type="submit" class="button1" [disabled]="!edit_profile_form.valid">Speichern</button>
+			</div>
+		</form>
+	</div>
+</div>

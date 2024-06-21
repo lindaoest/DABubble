@@ -52,8 +52,6 @@ export class LogInComponent {
         const errorMessage = error.message;
       });
     if (activeMember && this.login_form.valid) {
-      // this.globalVariables.signed_in_member = activeMember;
-      // console.log(this.globalVariables.signed_in_member)
       this.router.navigate(['']);
     }
   }

@@ -6,27 +6,27 @@
 	<p class="tac p-t-32">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/person.svg" alt="">
-		<input type="text" placeholder="Name & Nachname" name="member" formControlName="member" (ngModelChange)="checkFields()">
+		<input type="text" placeholder="Name & Nachname" name="member" formControlName="member">
 	</div>
 	@if(this.registration_form.get('member')?.invalid && this.registration_form.get('member')?.touched) {
 		<span class="error-message">Gib deinen Namen ein</span>
 	}
 	<div class="input-element input-email">
 		<img src="./assets/img/log-in/mail.svg" alt="">
-		<input type="email" placeholder="beispielname@email.com" name="email" formControlName="email" email="true" (ngModelChange)="checkFields()">
+		<input type="email" placeholder="beispielname@email.com" name="email" formControlName="email" email="true">
 	</div>
 	@if(this.registration_form.get('email')?.invalid && this.registration_form.get('email')?.touched) {
 		<span class="error-message">Gib eine gültige Email ein</span>
 	}
 	<div class="input-element input-password">
 		<img src="./assets/img/log-in/lock.svg" alt="">
-		<input type="password" minlength="8" placeholder="Passwort" name="password" formControlName="password" (ngModelChange)="checkFields()">
+		<input type="password" minlength="8" placeholder="Passwort" name="password" formControlName="password">
 	</div>
 	@if(this.registration_form.get('password')?.invalid && this.registration_form.get('password')?.touched) {
 		<span class="error-message">Gib dein Passwort ein</span>
 	}
 	<div class="checkbox-privacy flex">
-		<input type="checkbox" name="checkbox" formControlName="privacyChecked" (click)="onPrivacyChange()" (ngModelChange)="checkFields()" required>
+		<input type="checkbox" name="checkbox" formControlName="privacyChecked" (click)="onPrivacyChange()" required>
 		<div class="privacy-text">
 			<p class="font-small">Ich stimme der <a class="blue-font">Datenschutzerklärung</a> zu.</p>
 		</div>

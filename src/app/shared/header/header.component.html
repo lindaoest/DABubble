@@ -1,26 +1,30 @@
 <header>
 	<img src="./assets/img/dabubble-logo.svg" alt="">
 	@if (path == '/log-in') {
-		<div class="registration">
-			<p>Neu bei DaBubble?</p>
-			<p class="blue-font" [routerLink]="['/sign-in']">Konto erstellen</p>
-		</div>
+	<div class="registration">
+		<p>Neu bei DaBubble?</p>
+		<p class="blue-font" [routerLink]="['/sign-in']">Konto erstellen</p>
+	</div>
 	}
 	@if (path == '') {
-		<div class="profile">
-			<h1>{{ globalVariables.signed_in_member.displayName }}</h1>
-			<div class="profile-img">
-				<img src="./assets/img/avatar/avatar-1.svg" width="70" height="70" alt="">
-				<div class="online"></div>
-			</div>
-			<img (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
+	<div class="profile">
+		@if (globalVariables.signed_in_member) {
+		<h1>{{ globalVariables.signed_in_member.displayName }}</h1>
+		}
+		<div class="profile-img">
+			@if (globalVariables.signed_in_member) {
+			<img src="{{ globalVariables.signed_in_member.photoURL }}" width="70" height="70" alt="">
+			}
+			<div class="online"></div>
 		</div>
+		<img class="arrow-down" (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
+	</div>
 	}
 </header>
 
 @if (openLightboxVar) {
-	<div class="lightbox">
-		<p (click)="openProfile()" class="font-weight-700">Profil</p>
-		<p (click)="logOut()" class="font-weight-700">Log out</p>
-	</div>
+<div class="lightbox">
+	<p (click)="openProfile()" class="font-weight-700">Profil</p>
+	<p (click)="logOut()" class="font-weight-700">Log out</p>
+</div>
 }

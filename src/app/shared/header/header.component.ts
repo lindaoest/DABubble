@@ -41,7 +41,7 @@ export class HeaderComponent {
       this.router.navigate(['log-in']);
       this.openLightboxVar = false;
     }).catch((error) => {
-      // An error happened.
+      console.log('logOut', error);
     });
   }
 

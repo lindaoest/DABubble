@@ -12,8 +12,8 @@ export class FirestoreService {
 
   firestore: Firestore = inject(Firestore);
 
-  unsub:any;
-  unsubMembers:any;
+  unsub: any;
+  unsubMembers: any;
   channels: Channel[] = [];
   members: any[] = [];
 
@@ -28,12 +28,13 @@ export class FirestoreService {
     this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
       this.members = [];
       doc.forEach(element => {
+        console.log('onSnapshot Notes', this.setObjectMembers(element.data(), element.id));
         this.members.push(this.setObjectMembers(element.data(), element.id))
       });
     });
   }
 
-  setObject(obj: any, id:string) {
+  setObject(obj: any, id: string) {
     return {
       id: id,
       name: obj.name,
@@ -42,9 +43,9 @@ export class FirestoreService {
     }
   }
 
-  setObjectMembers(obj: any, id:string) {
+  setObjectMembers(obj: any, id: string): Member {
     return {
-      id: id,
+      id: id || '',
       member: obj.member,
       email: obj.email,
       password: obj.password,
@@ -61,19 +62,34 @@ export class FirestoreService {
     await addDoc(this.getDocRef('channels'), this.setObject(data, ''));
   }
 
-  async updateData(colId:string, data:Channel) {
-    await updateDoc(this.getSingleDocRef(colId, data.id), {data});
+  async updateData(colId: string, data: Channel) {
+    await updateDoc(this.getSingleDocRef(colId, data.id), { data });
   }
 
   async addMember(data: Member) {
-    await addDoc(this.getDocRef('members'), this.setObjectMembers(data, ''));
+    await addDoc(this.getDocRef('members'), data);
   }
 
-  getDocRef(colId:string) {
+  async updateMember(colId: string, data: Member) {
+    if(data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.getCleanJson(data));
+    }
+  }
+
+  getCleanJson(obj: Member) {
+    return {
+      member: obj.member,
+      email: obj.email,
+      password: obj.password,
+      avatar: obj.avatar
+    }
+  }
+
+  getDocRef(colId: string) {
     return collection(this.firestore, colId);
   }
 
-  getSingleDocRef(colId:string, docId: string) {
+  getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
   }
 }

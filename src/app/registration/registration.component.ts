@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Member } from '../../models/member.class';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../app.config-private';
 
@@ -18,6 +18,7 @@ import { privateConfig } from '../app.config-private';
 export class RegistrationComponent {
 
   data: Member = {
+    id: '',
     member: '',
     email: '',
     password: '',
@@ -49,41 +50,10 @@ export class RegistrationComponent {
     this.privacyChecked = !this.privacyChecked;
   }
 
-  checkFields() {
-    this.disableButton = (
-      !this.data.member ||
-      !this.data.email ||
-      !this.data.password ||
-      !this.privacyChecked
-    )
-  }
-
   onSubmit() {
     if (this.registration_form.valid) {
       this.globalVariables.newMember.push(this.registration_form.value);
       this.router.navigate(['choose-avatar']);
-
-      createUserWithEmailAndPassword(this.auth, this.registration_form.value.email, this.registration_form.value.password)
-        .then((userCredential) => {
-          // Registriert
-          const user = userCredential.user;
-
-          updateProfile(user, {
-            displayName: this.registration_form.value.member, photoURL:this.registration_form.value.avatar
-          }).then(() => {
-            console.log('with name', user)
-          }).catch((error) => {
-            // An error occurred
-            // ...
-          });
-
-          console.log('Registrierung erfolgreich:', user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.error('Fehler bei der Registrierung:', errorCode, errorMessage);
-        });
     }
   }
 }

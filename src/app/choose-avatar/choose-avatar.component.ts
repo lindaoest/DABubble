@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../shared/services/firestore/firestore.service';
@@ -7,6 +7,9 @@ import { Firestore } from '@angular/fire/firestore';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { Member } from '../../models/member.class';
 import { Router } from '@angular/router';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { privateConfig } from '../app.config-private';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -23,10 +26,14 @@ export class ChooseAvatarComponent {
   url: string = '';
   successSignIn: Boolean = false;
 
+  firebaseConfig = privateConfig;
+
+  app = initializeApp(this.firebaseConfig);
+  auth = getAuth(this.app);
 
   constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
 
-  addImage(item: any) {
+  addImage(item: number) {
     this.profilePicture = `./assets/img/avatar/avatar-${item}.svg`;
     this.chooseImage = false;
   }
@@ -62,12 +69,34 @@ export class ChooseAvatarComponent {
   }
 
   updateMember() {
-    const newMember = new Member({
+    const newMember: Member = {
       member: this.globalVariables.newMember[0].member,
       email: this.globalVariables.newMember[0].email,
       password: this.globalVariables.newMember[0].password,
       avatar: this.globalVariables.newMember[0].avatar
-    })
+    }
+
+    createUserWithEmailAndPassword(this.auth, this.globalVariables.newMember[0].email, this.globalVariables.newMember[0].password)
+        .then((userCredential) => {
+          // Registriert
+          const user = userCredential.user;
+
+          updateProfile(user, {
+            displayName: this.globalVariables.newMember[0].member, photoURL: this.globalVariables.newMember[0].avatar
+          }).then(() => {
+            console.log('with name', user)
+          }).catch((error) => {
+            console.log(error);
+          });
+
+          console.log('Registrierung erfolgreich:', user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error('Fehler bei der Registrierung:', errorCode, errorMessage);
+        });
+
     this.channelFirestore.addMember(newMember);
     this.successSignIn = true;
 

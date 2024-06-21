@@ -1,20 +1,21 @@
 <div class="profile-container">
-	<div class="profile">
+	<div class="profile flex">
 		<div class="header">
-			<p>Profile</p>
-			<img src="../assets/img/thread/close.svg" alt="">
+			<h3 class="font-weight-700">Profile</h3>
+			<img class="close" (click)="onNoClick()" src="../assets/img/thread/close.svg" alt="">
 		</div>
-		<img src="../assets/img/avatar/avatar-1.svg" alt="">
+		<img class="avatar" src="{{ globalVariables.signed_in_member.photoURL }}" alt="">
 		<div class="edit">
-			<p>Linda</p>
-			<p>Bearbeiten</p>
+			<h2>{{ globalVariables.signed_in_member.displayName }}</h2>
+			<p (click)="editProfile()" class="blue-font">Bearbeiten</p>
 		</div>
 		<div class="active">
-			<p>Active</p>
+			<p>Aktiv</p>
 		</div>
 		<div class="email">
 			<img src="../assets/img/log-in/mail.svg" alt="">
-			<p>E-Mail-Adresse</p>
+			<p class="font-weight-700">E-Mail-Adresse</p>
 		</div>
+		<p class="email-address blue-font">{{ globalVariables.signed_in_member.email }}</p>
 	</div>
 </div>
