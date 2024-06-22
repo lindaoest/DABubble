@@ -25,10 +25,10 @@ export class RegistrationComponent {
     avatar: ''
   }
 
-  firebaseConfig = privateConfig;
+  // firebaseConfig = privateConfig;
 
-  app = initializeApp(this.firebaseConfig);
-  auth = getAuth(this.app);
+  // app = initializeApp(this.firebaseConfig);
+  // auth = getAuth(this.app);
 
   registration_form: FormGroup = new FormGroup({});
 
