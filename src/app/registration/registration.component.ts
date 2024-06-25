@@ -4,9 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { getAuth } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { privateConfig } from '../app.config-private';
 
 @Component({
   selector: 'app-registration',

@@ -15,7 +15,7 @@
 	@if(this.login_form.get('password')?.invalid && this.login_form.get('password')?.touched) {
 		<span class="error-message">Gib dein Passwort ein</span>
 	}
-	<p class="blue-font p-t-40">Passwort vergessen?</p>
+	<p [routerLink]="['/reset-password']" class="forgot-password blue-font p-t-40">Passwort vergessen?</p>
 	<div class="or-container p-t-40">
 		<p>ODER</p>
 		<div class="line"></div>

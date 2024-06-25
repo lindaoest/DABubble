@@ -4,7 +4,7 @@ import { GlobalVariablesService } from '../../../shared/services/global-variable
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
 import { Member } from '../../../../models/member.class';
-import { getAuth, updateEmail, updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
+import { getAuth, signOut, updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../../app.config-private';
 
@@ -61,21 +61,19 @@ export class EditProfileComponent {
       updateProfile(user, {
         displayName: newUsername
       }).then(() => {
-        console.log('with name', user)
-        let email = updateEmail(user, newEmail)
-        this.firebaseEmailReset(user, email);
-        console.log('email', email)
+
+        this.firebaseEmailReset(user, newEmail);
       }).catch((error) => {
         console.log(error);
       });
     }
   }
 
-  async firebaseEmailReset(user:any, email: any) {
+  firebaseEmailReset(user:any, email: any) {
+    const auth = getAuth();
     try {
-        await verifyBeforeUpdateEmail(user, email);
-        // await signOut(firebaseAuth);
-        window.location.reload();
+        verifyBeforeUpdateEmail(user, email);
+        signOut(auth);
     } catch(error) {
 
     }
