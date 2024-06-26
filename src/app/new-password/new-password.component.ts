@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { privateConfig } from '../app.config-private';
 
 @Component({
   selector: 'app-new-password',
@@ -13,29 +15,53 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 })
 export class NewPasswordComponent {
 
-  email: string = '';
-
   password_form: FormGroup = new FormGroup({});
+
+  firebaseConfig = privateConfig;
+
+  app = initializeApp(this.firebaseConfig);
+  auth = getAuth(this.app);
+
+  actionCode!: string;
+
+  constructor(public router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.password_form = new FormGroup({
-      email: new FormControl('', Validators.email)
+      password: new FormControl('', Validators.required)
+    });
+
+    this.route.paramMap.subscribe((params) => {
+      this.actionCode = params.get('oobCode')!;
     });
   }
 
-  sendEmail() {
+  resetPassword() {
     if (this.password_form.valid) {
       const auth = getAuth();
-      sendPasswordResetEmail(auth, this.password_form.value.email)
-        .then(() => {
-          // Password reset email sent!
-          // ..
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
+
+      this.route.queryParams.subscribe(params => {
+        const actionCode = params['oobCode'];
+        const newPassword = this.password_form.value.password;
+
+        console.log('actionCode', newPassword)
+
+        confirmPasswordReset(auth, actionCode, newPassword).then((resp) => {
+          console.log('resp', resp);
+          this.router.navigate(['log-in']);
+        }).catch((error) => {
+          console.log(error);
         });
+      });
+
+      confirmPasswordReset(auth, this.actionCode, this.password_form.value.password).then((resp) => {
+        // Password reset has been confirmed and new password updated.
+
+        console.log('resp', resp);
+        this.router.navigate(['log-in']);
+      }).catch((error) => {
+        console.log(error)
+      });
     }
   }
 }
