@@ -3,7 +3,7 @@
 .dialog-add-channel {
 	border-radius: 30px !important;
 	padding: 40px !important;
-	//width: 45.416%;
+	width: 872px;
 }
 
 .headline {
@@ -52,4 +52,5 @@
 
 .actions {
 	@include displayFlex($jc: flex-end);
+	margin-top: 24px;
 }

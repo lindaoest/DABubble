@@ -13,6 +13,10 @@
 	cursor: pointer;
 }
 
+.edit {
+	cursor: pointer;
+}
+
 .header,
 .edit {
 	@include displayFlex($jc: space-between);

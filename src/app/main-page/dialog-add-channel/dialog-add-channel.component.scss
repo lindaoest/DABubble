@@ -38,4 +38,5 @@ mat-form-field {
 
 .actions {
 	@include displayFlex($jc:flex-end);
+	margin-top: 24px;
 }

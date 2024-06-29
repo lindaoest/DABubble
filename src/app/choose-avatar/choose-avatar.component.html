@@ -1,7 +1,7 @@
 <form class="choose-avatar">
 	<h1 class="blue-font">Wähle deinen Avatar</h1>
 	<img class="profile" [src]="profilePicture" alt="">
-	<h2 class="font-weight-700">Linda Österreicher</h2>
+	<h2 class="font-weight-700">{{ globalVariables.newMember ? globalVariables.newMember[0].member : '' }}</h2>
 	<p class="subtitle">Aus der Liste wählen</p>
 	<div class="avatar-images">
 		@for (item of [1,2,3,4,5,6]; track $index) {
