@@ -25,7 +25,7 @@
 		<p class="blue-font">Anmelden mit Google</p>
 	</div>
 	<div class="buttons flex">
-		<button class="button1" [disabled]="!login_form.valid" (click)="checkLogin()">Anmelden</button>
-		<button (click)="guestLogin()" class="button2">Gäste-Login</button>
+		<button type="submit" class="button1" [disabled]="!login_form.valid" (click)="checkLogin()">Anmelden</button>
+		<button type="button" (click)="guestLogin()" class="button2">Gäste-Login</button>
 	</div>
 </form>

@@ -28,7 +28,6 @@ export class FirestoreService {
     this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
       this.members = [];
       doc.forEach(element => {
-        console.log('onSnapshot Notes', this.setObjectMembers(element.data(), element.id));
         this.members.push(this.setObjectMembers(element.data(), element.id))
       });
     });
