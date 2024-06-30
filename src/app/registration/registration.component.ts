@@ -22,11 +22,6 @@ export class RegistrationComponent {
     avatar: ''
   }
 
-  // firebaseConfig = privateConfig;
-
-  // app = initializeApp(this.firebaseConfig);
-  // auth = getAuth(this.app);
-
   registration_form: FormGroup = new FormGroup({});
 
   constructor(public router: Router, private globalVariables: GlobalVariablesService) { }
@@ -49,8 +44,13 @@ export class RegistrationComponent {
 
   onSubmit() {
     if (this.registration_form.valid) {
-      this.globalVariables.newMember.push(this.registration_form.value);
+      // this.globalVariables.newMember.push(this.registration_form.value);
       this.router.navigate(['choose-avatar']);
+      sessionStorage.setItem('new Member', JSON.stringify(this.registration_form.value));
+      const newMemberData = sessionStorage.getItem('new Member');
+      if (newMemberData) {
+        this.globalVariables.newMember = JSON.parse(newMemberData);
+      }
     }
   }
 }

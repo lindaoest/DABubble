@@ -6,7 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { Firestore } from '@angular/fire/firestore';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { Member } from '../../models/member.class';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../app.config-private';
@@ -14,7 +14,7 @@ import { privateConfig } from '../app.config-private';
 @Component({
   selector: 'app-choose-avatar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './choose-avatar.component.html',
   styleUrl: './choose-avatar.component.scss'
 })
@@ -25,13 +25,16 @@ export class ChooseAvatarComponent {
   chooseImage: boolean = true;
   url: string = '';
   successSignIn: Boolean = false;
+  user_already_exists: Boolean = false;
 
   firebaseConfig = privateConfig;
 
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
-  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
+  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) {
+    console.log(this.globalVariables.newMember)
+  }
 
   addImage(item: number) {
     this.profilePicture = `./assets/img/avatar/avatar-${item}.svg`;
@@ -61,48 +64,44 @@ export class ChooseAvatarComponent {
 
   async addMember() {
     if (this.file) {
-      this.globalVariables.newMember[0].avatar = this.url;
+      this.globalVariables.newMember.avatar = this.url;
     } else {
-      this.globalVariables.newMember[0].avatar = this.profilePicture;
+      this.globalVariables.newMember.avatar = this.profilePicture;
     }
     this.updateMember();
   }
 
-  updateMember() {
+  async updateMember() {
     const newMember: Member = {
-      member: this.globalVariables.newMember[0].member,
-      email: this.globalVariables.newMember[0].email,
-      password: this.globalVariables.newMember[0].password,
-      avatar: this.globalVariables.newMember[0].avatar
+      member: this.globalVariables.newMember.member,
+      email: this.globalVariables.newMember.email,
+      password: this.globalVariables.newMember.password,
+      avatar: this.globalVariables.newMember.avatar
     }
 
-    createUserWithEmailAndPassword(this.auth, this.globalVariables.newMember[0].email, this.globalVariables.newMember[0].password)
-        .then((userCredential) => {
-          // Registriert
-          const user = userCredential.user;
+    await createUserWithEmailAndPassword(this.auth, this.globalVariables.newMember.email, this.globalVariables.newMember.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
 
-          updateProfile(user, {
-            displayName: this.globalVariables.newMember[0].member, photoURL: this.globalVariables.newMember[0].avatar
-          }).then(() => {
-            console.log('with name', user)
-          }).catch((error) => {
-            console.log(error);
-          });
-
-          console.log('Registrierung erfolgreich:', user);
+        updateProfile(user, {
+          displayName: this.globalVariables.newMember.member, photoURL: this.globalVariables.newMember.avatar
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.error('Fehler bei der Registrierung:', errorCode, errorMessage);
-        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Fehler bei der Registrierung:', errorCode, errorMessage);
+        this.user_already_exists = true;
+      });
 
-    this.channelFirestore.addMember(newMember);
-    this.successSignIn = true;
-
-    setTimeout(() => {
+    if (!this.user_already_exists) {
+      this.channelFirestore.addMember(newMember);
       this.successSignIn = true;
-      this.router.navigate(['log-in']);
-    }, 2000);
+
+      setTimeout(() => {
+        this.successSignIn = true;
+        this.router.navigate(['log-in']);
+      }, 2000);
+    }
   }
 }

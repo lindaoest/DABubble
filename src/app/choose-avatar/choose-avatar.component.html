@@ -1,7 +1,10 @@
 <form class="choose-avatar">
-	<h1 class="blue-font">Wähle deinen Avatar</h1>
+	<div class="headline">
+		<img [routerLink]="['/sign-in']" src="./assets/img/sign-in/back-arrow.svg" alt="">
+		<h1 class="blue-font">Wähle deinen Avatar</h1>
+	</div>
 	<img class="profile" [src]="profilePicture" alt="">
-	<h2 class="font-weight-700">{{ globalVariables.newMember ? globalVariables.newMember[0].member : '' }}</h2>
+	<h2 class="font-weight-700">{{ globalVariables.newMember ? globalVariables.newMember.member : '' }}</h2>
 	<p class="subtitle">Aus der Liste wählen</p>
 	<div class="avatar-images">
 		@for (item of [1,2,3,4,5,6]; track $index) {
@@ -15,6 +18,9 @@
 			<p>Datei hochladen</p>
 		</label>
 	</div>
+	@if (user_already_exists) {
+		<p class="error-message">Dieser User existiert bereits</p>
+	}
 	<div class="buttons flex p-t-24">
 		<button class="button1" (click)="addMember()" [disabled]="chooseImage">Weiter</button>
 	</div>

@@ -48,23 +48,15 @@ export class LogInComponent {
     });
 
 
+
     if (!this.user_already_exits) {
       await createUserWithEmailAndPassword(this.auth, this.newMember.email, this.newMember.password)
         .then((userCredential) => {
-          // Registriert
           const user = userCredential.user;
-
-          this.user_already_exits = false;
 
           updateProfile(user, {
             displayName: this.newMember.member, photoURL: this.newMember.avatar
-          }).then(() => {
-            console.log('with name', user.displayName)
-          }).catch((error) => {
-            console.log(error);
-          });
-
-          console.log('Registrierung erfolgreich:', user);
+          })
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -73,6 +65,7 @@ export class LogInComponent {
           this.user_already_exits = true;
         });
     }
+
   }
 
   async checkLogin() {

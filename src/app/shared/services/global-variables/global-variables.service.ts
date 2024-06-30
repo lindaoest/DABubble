@@ -16,7 +16,12 @@ export class GlobalVariablesService {
 
   allMembers: Boolean = false;
   certainMember_Array: Member[] = [];
-  newMember: Member[] = [];
+  newMember: Member = {
+    member: '',
+    email: '',
+    password: '',
+    avatar: ''
+  };
   signed_in_member!: any;
 
   private activeChatSubject = new Subject<string>();
@@ -25,6 +30,13 @@ export class GlobalVariablesService {
 
   set activeChat(value: string) {
     this.activeChatSubject.next(value);
+  }
+
+  constructor() {
+    const newMemberData = sessionStorage.getItem('new Member');
+    if (newMemberData) {
+      this.newMember = JSON.parse(newMemberData);
+    }
   }
 
 }

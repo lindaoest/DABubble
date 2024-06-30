@@ -10,6 +10,16 @@
 	padding: 50px 60px;
 }
 
+.headline {
+	@include displayFlex();
+	position: relative;
+	width: 100%;
+
+	img {
+		cursor: pointer;
+	}
+}
+
 .subtitle {
 	text-align: left;
 	width: 100%;
