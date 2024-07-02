@@ -14,20 +14,23 @@
 	@if (certainMembers) {
 	<div class="certain-members-container">
 		<div class="input-box">
-			<div class="added-members">
-				@for (item of globalVariables.certainMember_Array; track $index) {
+			<div class="added-members" [ngStyle]="{'width': globalVariables.certainMember_Array.length > 0 ? '260px' : ''}">
+				@for (item of globalVariables.certainMember_Array; track item; let index = $index) {
 				<div class="member">
-					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+					<img src="{{ item.avatar }}" alt="">
 					<p>{{ item.member }}</p>
-					<img src="./assets/img/thread/close.svg" alt="">
+					<img (click)="deleteMember(index)" src="./assets/img/thread/close.svg" alt="">
 				</div>
 				}
 			</div>
 			<input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input">
 		</div>
 		<div class="members-box">
-			@for (member of this.channelFirestore.members; track $index) {
-			<p (click)="addMember(member)">{{ member.member }}</p>
+			@for (member of this.channelFirestore.members; track member; let index = $index) {
+			<div (click)="addMember(member, index)" class="member" [ngClass]="{'gray-filter-on': isClicked}">
+				<img src="{{ member.avatar }}" alt="">
+				<p>{{ member.member }}</p>
+			</div>
 			}
 		</div>
 	</div>

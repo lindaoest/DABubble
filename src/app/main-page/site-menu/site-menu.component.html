@@ -9,7 +9,8 @@
 	<div class="channels-container">
 		<div class="overview">
 			<div class="left">
-				<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
+				<img (click)="channel_open_function()" class="arrow" [ngClass]="{'open' : channel_open}"
+					src="./assets/img/channels/arrow_drop_down.svg" alt="">
 				<div class="title">
 					<img src="./assets/img/channels/workspaces.svg" alt="">
 					<h4>Channels</h4>
@@ -17,54 +18,59 @@
 			</div>
 			<img (click)="openDialog()" src="./assets/img/channels/add.svg" alt="">
 		</div>
-		@for (channel of getList(); track $index) {
+		<div class="channel-container" [ngClass]="{'open' : channel_open}">
+			@for (channel of getList(); track $index) {
 			<div class="team-container" (click)="openChat(channel.name)">
 				<div class="team">
 					<img src="./assets/img/channels/tag.svg" alt="">
 					<p>{{ channel.name }}</p>
 				</div>
 			</div>
-		}
-		<div (click)="openDialog()" class="add-channel">
-			<img src="./assets/img/channels/add_circle.svg" alt="">
-			<p>Channel hinzufügen</p>
+			}
+			<div (click)="openDialog()" class="add-channel">
+				<img src="./assets/img/channels/add_circle.svg" alt="">
+				<p>Channel hinzufügen</p>
+			</div>
 		</div>
 	</div>
 	<div class="direct-messages">
 		<div class="overview">
-			<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
+			<img (click)="directmessage_open_function()" class="arrow" [ngClass]="{'open' : directmessage_open}"
+				src="./assets/img/channels/arrow_drop_down.svg" alt="">
 			<div class="title">
 				<img src="./assets/img/channels/account_circle.svg" alt="">
 				<h4>Direktnachrichten</h4>
 			</div>
 		</div>
-		<div class="direct-message">
-			<div class="avatar">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="online"></div>
+		<div class="directmessage-container" [ngClass]="{'open' : directmessage_open}">
+			<div class="direct-message">
+				<div class="avatar">
+					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+					<div class="online"></div>
+				</div>
+				<p>Guest</p>
 			</div>
-			<p>Guest</p>
-		</div>
-		<div class="direct-message">
-			<div class="avatar">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="online"></div>
+			<div class="direct-message">
+				<div class="avatar">
+					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+					<div class="online"></div>
+				</div>
+				<p>Linda Österreicher</p>
 			</div>
-			<p>Linda Österreicher</p>
-		</div>
-		<div class="direct-message">
-			<div class="avatar">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="online"></div>
+			<div class="direct-message">
+				<div class="avatar">
+					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+					<div class="online"></div>
+				</div>
+				<p>Annalena Pfitsch</p>
 			</div>
-			<p>Annalena Pfitsch</p>
-		</div>
-		<div class="direct-message">
-			<div class="avatar">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="online"></div>
+			<div class="direct-message">
+				<div class="avatar">
+					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+					<div class="online"></div>
+				</div>
+				<p>Thomas Holzner</p>
 			</div>
-			<p>Thomas Holzner</p>
 		</div>
 	</div>
 </div>

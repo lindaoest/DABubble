@@ -1,4 +1,5 @@
-import { Component, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -23,7 +24,8 @@ export interface DialogData {
   standalone: true,
   imports: [
     FormsModule,
-    MatDialogClose
+    MatDialogClose,
+    CommonModule
   ],
   templateUrl: './dialog-channel-add-members.component.html',
   styleUrl: './dialog-channel-add-members.component.scss'
@@ -32,7 +34,9 @@ export class DialogChannelAddMembersComponent {
 
   allMembers: Boolean = false;
   certainMembers: Boolean = false;
+  memberisChecked: Boolean = false;
   members: any[] = [];
+  isClicked: Boolean = false;
 
   //certainMember_Array: Member[] = [];
 
@@ -47,15 +51,25 @@ export class DialogChannelAddMembersComponent {
   checkAllMembers() {
     this.allMembers = !this.allMembers;
     this.globalVariables.allMembers = this.allMembers;
+    this.certainMembers = false;
   }
 
   checkCertainMembers() {
     this.certainMembers = !this.certainMembers;
+    this.allMembers = false;
+    console.log(this.channelFirestore.members)
   }
 
-  addMember(m:Member) {
+  addMember(m:Member, i: number) {
     const foundName = this.channelFirestore.members.find(obj => obj.member === m.member);
     this.globalVariables.certainMember_Array.push(foundName);
     console.log('certaimMember_array', this.globalVariables.certainMember_Array)
+    this.isClicked = true;
+  }
+
+  deleteMember(i: number) {
+    this.globalVariables.certainMember_Array.splice(i, 1);
+    console.log('splitted', this.globalVariables.certainMember_Array)
+    console.log('index', i)
   }
 }

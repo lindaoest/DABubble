@@ -74,5 +74,6 @@ export class DialogAddChannelComponent {
 
   checkFields() {
     this.disableButton = !this.name;
+    console.log(this.name.length)
   }
 }

@@ -28,9 +28,29 @@
 		gap: 16px;
 	}
 
+	.arrow {
+		transform: rotate(-90deg);
+
+		&.open {
+			transform: rotate(0);
+		}
+	}
+
 	.title {
 		@include displayFlex();
 		gap: 8px;
+	}
+}
+
+.channel-container {
+	height: 0;
+	opacity: 0;
+	transition: all 0.2s ease-in-out;
+
+	&.open {
+		height: auto;
+		opacity: 1;
+		transition: all 0.2s ease-in-out;
 	}
 }
 
@@ -46,6 +66,14 @@
 	.overview {
 		justify-content: flex-start;
 		margin-bottom: 24px;
+
+		.arrow {
+			transform: rotate(-90deg);
+
+			&.open {
+				transform: rotate(0);
+			}
+		}
 
 		.title {
 			margin-left: 16px;
@@ -72,5 +100,17 @@
 				border-radius: 50%;
 			}
 		}
+	}
+}
+
+.directmessage-container {
+	height: 0;
+	opacity: 0;
+	transition: all 0.2s ease-in-out;
+
+	&.open {
+		height: auto;
+		opacity: 1;
+		transition: all 0.2s ease-in-out;
 	}
 }
