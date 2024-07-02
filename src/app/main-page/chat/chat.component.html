@@ -2,7 +2,9 @@
 	<div class="info-top">
 		<div (click)="openDialog()" class="team-name">
 			<img src="./assets/img/channels/tag.svg" alt="">
-			<h3>{{ activeChat ? activeChat : 'Entwicklerteam' }}</h3>
+			@if (channelFirestore.channels[0]) {
+				<h3>{{ activeChat ? activeChat : channelFirestore.channels[0].name }}</h3>
+			}
 			<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
 		</div>
 		<div class="members">

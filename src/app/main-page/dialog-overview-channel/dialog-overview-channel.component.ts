@@ -28,11 +28,28 @@ export interface DialogData {
 })
 export class DialogOverviewChannelComponent {
 
+  name: string = '';
+  description: string = '';
+
   editModus: Boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewChannelComponent>, public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.setModel();
+    }
+
+  setModel() {
+    if(this.data.name) {
+      this.name = this.data.name;
+      this.description = this.data.description;
+    } else {
+      this.name = this.channelFirestore.channels[0].name;
+      this.description = this.channelFirestore.channels[0].description;
+    }
+
+    console.log('name', this.channelFirestore.channels[0].name)
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

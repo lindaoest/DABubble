@@ -37,7 +37,7 @@ export class ChatComponent {
   private activeChatSubscription: Subscription = new Subscription;
   activeChat: string = '';
 
-  constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
+  constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) {}
 
   ngOnInit() {
     this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {

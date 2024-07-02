@@ -1,6 +1,9 @@
 <div class="dialog-add-channel">
 	<div class="headline">
-		<h3>#{{ data.name }}</h3>
+		<div class="channel-name">
+			<img src="./assets/img/chat/tag-black.svg" alt="">
+			<h3>{{ data.name ? data.name : channelFirestore.channels[0].name }}</h3>
+		</div>
 		<img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
 	</div>
 	<div class="content flex p-t-24">
@@ -13,9 +16,15 @@
 			}
 		</div>
 		@if (editModus) {
-			<input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.name" required>
+			<div class="channel-name-two-input">
+				<img src="./assets/img/chat/tag-black.svg" alt="">
+				<input type="text" placeholder="{{ name }}" [(ngModel)]="name" required>
+			</div>
 		} @else {
-			<p>#{{ data.name }}</p>
+			<div class="channel-name-two">
+				<img src="./assets/img/chat/tag-black.svg" alt="">
+				<p>{{ data.name ? data.name : channelFirestore.channels[0].name }}</p>
+			</div>
 		}
 	</div>
 	<div class="content flex p-t-24">
@@ -28,13 +37,13 @@
 			}
 		</div>
 		@if (editModus) {
-			<input type="text" placeholder="z.B. Kooperationsprojekte" [(ngModel)]="data.description" required>
+			<input type="text" placeholder="{{ description }}" class="input-description" [(ngModel)]="description" required>
 		} @else {
-			<p>{{ data.description }}</p>
+			<p>{{ data.description ? data.description : channelFirestore.channels[0].description }}</p>
 		}
 		<div class="created-by">
 			<p class="font-weight-700">Erstellt von</p>
-			<p class="name blue-font">Linda</p>
+			<p class="name blue-font">{{ globalVariables.signed_in_member.displayName }}</p>
 		</div>
 	</div>
 	<div class="actions">
