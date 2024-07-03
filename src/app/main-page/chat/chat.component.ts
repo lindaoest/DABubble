@@ -31,7 +31,8 @@ export class ChatComponent {
     id: '',
     name: '',
     members: [],
-    description: ''
+    description: '',
+    creator: ''
   };
 
   private activeChatSubscription: Subscription = new Subscription;

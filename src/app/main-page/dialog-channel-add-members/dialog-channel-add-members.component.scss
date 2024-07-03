@@ -12,10 +12,6 @@
 	@include displayFlex($jc: space-between);
 }
 
-.mdc-text-field--filled:not(.mdc-text-field--disabled) {
-	background-color: #FFFFFF;
-}
-
 .content {
 
 	input {
@@ -55,10 +51,9 @@
 	}
 }
 
-
-	input:focus-visible {
-		outline: 0;
-	}
+input:focus-visible {
+	outline: 0;
+}
 
 
 .certain-members-input {

@@ -7,19 +7,86 @@
 
 .headline {
 	@include displayFlex($jc: space-between);
+
+	img {
+		cursor: pointer;
+	}
 }
 
-.channel {
-	padding: 8px 0 24px;
+.channel-name {
+	@include displayFlex($jc:flex-start);
+	gap: 8px;
+	margin-top: 8px;
 }
-
 
 input {
-	width: auto;
-	border: 1px solid #ADB0D9;
+	border: 0;
+}
+
+.input-box {
+	@include displayFlex($jc: flex-start);
 	border-radius: 30px;
 	padding: 16px 24px;
-	width: 434px;
+	margin-top: 24px;
+	border: 1px solid #ADB0D9;
+	width: auto;
+	gap: 8px;
+
+	&:focus-within {
+		border: 2px solid black;
+	}
+
+	input:focus-visible {
+		outline: 0;
+	}
+
+	.added-members {
+		@include displayFlex($jc: flex-start);
+		// width: 260px;
+		overflow-x: scroll;
+
+		.member {
+			@include displayFlex();
+			gap: 16px;
+			background-color: #ECEEFE;
+			border-radius: 30px;
+			padding: 5px 8px;
+
+			img {
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+			}
+
+		}
+	}
+}
+
+.members-box {
+	position: relative;
+	z-index: 1;
+	height: 170px;
+	overflow-y: scroll;
+	background-color: #FFFFFF;
+	border: 1px solid #ADB0D9;
+	padding: 20px;
+	border-radius: 0 20px 20px 20px;
+	width: 335px;
+	margin-top: -8px;
+	margin-left: 24px;
+
+	.member {
+		@include displayFlex($jc: flex-start);
+		gap: 8px;
+		margin-top: 16px;
+		cursor: pointer;
+
+		img {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+		}
+	}
 }
 
 .actions {

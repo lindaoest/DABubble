@@ -50,7 +50,8 @@ export class DialogAddChannelComponent {
           id: result.id,
           name: result.name,
           description: result.description,
-          members: this.channelFirestore.members
+          members: this.channelFirestore.members,
+          creator: this.globalVariables.signed_in_member.displayName
         })
         this.channelFirestore.addData(newChannel);
       } else {
@@ -58,7 +59,8 @@ export class DialogAddChannelComponent {
           id: result.id,
           name: result.name,
           description: result.description,
-          members: this.globalVariables.certainMember_Array
+          members: this.globalVariables.certainMember_Array,
+          creator: this.globalVariables.signed_in_member.displayName
         })
         this.channelFirestore.addData(newChannel);
         console.log(result);

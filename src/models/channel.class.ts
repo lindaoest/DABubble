@@ -3,11 +3,13 @@ export class Channel {
 	name: string;
 	description: string;
 	members: [];
+	creator: string;
 
 	constructor(obj:any) {
 		this.id = obj.id
 		this.name = obj.name
 		this.description = obj.description
 		this.members = obj.members
+		this.creator = obj.creator
 	}
 }

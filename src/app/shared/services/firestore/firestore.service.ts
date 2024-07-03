@@ -38,7 +38,8 @@ export class FirestoreService {
       id: id,
       name: obj.name,
       description: obj.description,
-      members: obj.members
+      members: obj.members,
+      creator: obj.creator
     }
   }
 

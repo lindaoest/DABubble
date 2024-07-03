@@ -23,6 +23,7 @@
 	.team-name {
 		@include displayFlex();
 		gap: 8px;
+		cursor: pointer
 	}
 
 	.members {
@@ -37,6 +38,10 @@
 				width: 40px;
 				height: 40px;
 			}
+		}
+
+		.add-member {
+			cursor: pointer;
 		}
 	}
 }

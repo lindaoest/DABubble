@@ -3,9 +3,34 @@
 		<h3>Leute hinzufügen</h3>
 		<img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
 	</div>
-	<p class="channel blue-font">#Entwicklerteam</p>
-	<input type="text" placeholder="Name eingeben">
+	<div class="channel-name">
+		<img src="./assets/img/channels/tag.svg" alt="">
+		<p class="channel blue-font">{{ this.globalVariables.activeChat ? this.globalVariables.activeChat : this.channelFirestore.channels[0].name}}</p>
+	</div>
+	<div class="certain-members-container">
+		<div class="input-box">
+			<div class="added-members"
+				[ngStyle]="{'width': add_new_members_array.length > 0 ? '260px' : ''}">
+				@for (item of add_new_members_array; track item; let index = $index) {
+				<div class="member">
+					<img src="{{ item.avatar }}" alt="">
+					<p>{{ item.member }}</p>
+					<img (click)="deleteMember(index)" class="cursorPointer" src="./assets/img/thread/close.svg" alt="">
+				</div>
+				}
+			</div>
+			<input type="text" placeholder="Name eingeben">
+		</div>
+		<div class="members-box">
+			@for (member of this.channelFirestore.members; track member; let index = $index) {
+			<div (click)="addMember(member, index)" class="member">
+				<img src="{{ member.avatar }}" alt="">
+				<p>{{ member.member }}</p>
+			</div>
+			}
+		</div>
+	</div>
 	<div class="actions">
-		<button class="button1">Hinzufügen</button>
+		<button (click)="addToChannel()" class="button1" [disabled]="newMemberTrue">Hinzufügen</button>
 	</div>
 </div>
