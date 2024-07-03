@@ -40,15 +40,8 @@ export class DialogOverviewChannelComponent {
     }
 
   setModel() {
-    if(this.data.name) {
-      this.name = this.data.name;
-      this.description = this.data.description;
-    } else {
-      this.name = this.channelFirestore.channels[0].name;
-      this.description = this.channelFirestore.channels[0].description;
-    }
-
-    console.log('name', this.channelFirestore.channels[0].name)
+    this.name = this.data.name;
+    this.description = this.data.description;
   }
 
   onNoClick(): void {
@@ -60,7 +53,10 @@ export class DialogOverviewChannelComponent {
   }
 
   saveChanges() {
+    this.data.name = this.name;
+    this.data.description = this.description;
     this.channelFirestore.updateData('channels', this.data);
     this.editModus = false;
+    this.globalVariables.activeChat = this.data.name;
   }
 }

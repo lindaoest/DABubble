@@ -87,6 +87,9 @@ export class ChatComponent {
 
   openDialog(): void {
     if (this.activeChannel) {
+      if(!this.activeChat) {
+        this.activeChat = this.channelFirestore.channels[0].name;
+      }
       const foundChannel = this.channelFirestore.channels.find(obj => obj.name === this.activeChat);
       if (foundChannel) {
         this.activeChannel = foundChannel;

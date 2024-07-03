@@ -49,6 +49,14 @@
 		padding: 16px 24px;
 		margin-top: 16px;
 
+		&:focus-within {
+			border: 2px solid black;
+		}
+
+		input:focus-visible {
+			outline: 0;
+		}
+
 		img {
 			width: 24px;
 			height: 24px;

@@ -62,7 +62,9 @@ export class FirestoreService {
   }
 
   async updateData(colId: string, data: Channel) {
-    await updateDoc(this.getSingleDocRef(colId, data.id), { data });
+    if(data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.getCleanJsonForChannel(data));
+    }
   }
 
   async addMember(data: Member) {
@@ -81,6 +83,14 @@ export class FirestoreService {
       email: obj.email,
       password: obj.password,
       avatar: obj.avatar
+    }
+  }
+
+  getCleanJsonForChannel(obj: Channel) {
+    return {
+      name: obj.name,
+      description: obj.description,
+      members: obj.members
     }
   }
 
