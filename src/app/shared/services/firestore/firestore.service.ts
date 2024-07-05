@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { doc, onSnapshot, collection, addDoc, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, collection, addDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { firstValueFrom } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
@@ -65,6 +65,14 @@ export class FirestoreService {
   async updateData(colId: string, data: Channel) {
     if(data.id) {
       await updateDoc(this.getSingleDocRef(colId, data.id), this.getCleanJsonForChannel(data));
+    }
+  }
+
+  async updateArray(colId: string, id: string, newKey: Member) {
+    if(id) {
+      await updateDoc(this.getSingleDocRef(colId, id), {
+        members: arrayUnion(this.getCleanJson(newKey))
+    });
     }
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
+import { Channel } from '../../../../models/channel.class';
 
 interface Member {
   member: string,
@@ -23,6 +24,13 @@ export class GlobalVariablesService {
     avatar: ''
   };
   signed_in_member!: any;
+  activeChannel: Channel = {
+    id: '',
+    name: '',
+    members: [],
+    description: '',
+    creator: ''
+  };
 
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();

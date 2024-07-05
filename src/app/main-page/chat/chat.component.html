@@ -3,18 +3,32 @@
 		<div (click)="openDialog()" class="team-name">
 			<img src="./assets/img/channels/tag.svg" alt="">
 			@if (channelFirestore.channels[0]) {
-				<h3>{{ activeChat ? activeChat : channelFirestore.channels[0].name }}</h3>
+			<h3>{{ activeChat ? activeChat : channelFirestore.channels[0].name }}</h3>
 			}
 			<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
 		</div>
 		<div class="members">
 			<div class="avatars">
+				@if (getMembers().length == 0) {
+					@if(channelFirestore.channels[0]) {
+					@for (avatar of channelFirestore.channels[0].members; track avatar; let index = $index) {
+					<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
+					}
+				}
+				} @else {
 				@for (avatar of getMembers(); track $index) {
-					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+				<img [src]="avatar['avatar']" alt="">
+				}
 				}
 			</div>
 			<div class="quantity">
+				@if (getMembers().length == 0) {
+					@if (channelFirestore.channels[0]) {
+					<p>{{ channelFirestore.channels[0].members.length }}</p>
+					}
+				} @else {
 				<p>{{ getMembers().length }}</p>
+				}
 			</div>
 			<div (click)="addMembers()" class="add-member">
 				<img src="./assets/img/chat/chat-add-member.svg" alt="">

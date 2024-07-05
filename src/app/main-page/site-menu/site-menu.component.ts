@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
 import { Channel } from '../../../models/channel.class';
@@ -35,6 +36,21 @@ export class SiteMenuComponent {
 
   openChat(channelName: string) {
     this.globalVariables.activeChat = channelName;
+    if (this.globalVariables.activeChannel) {
+      // if(!channelName) {
+      //   this.activeChat = this.channelFirestore.channels[0].name;
+      // }
+      const foundChannel = this.channelFirestore.channels.find(obj => obj.name === channelName);
+      if (foundChannel) {
+        this.globalVariables.activeChannel = foundChannel;
+        console.log(this.globalVariables.activeChannel)
+      } else {
+        console.warn('Channel not found');
+      }
+      // this.dialog.open(DialogOverviewChannelComponent, {
+      //   data: this.activeChannel
+      // });
+    }
   }
 
   channel_open_function() {

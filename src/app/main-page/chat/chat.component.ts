@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
@@ -13,7 +14,7 @@ import { privateConfig } from '../../app.config-private';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
@@ -27,14 +28,6 @@ export class ChatComponent {
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
-  activeChannel: Channel = {
-    id: '',
-    name: '',
-    members: [],
-    description: '',
-    creator: ''
-  };
-
   private activeChatSubscription: Subscription = new Subscription;
   activeChat: string = '';
 
@@ -47,15 +40,8 @@ export class ChatComponent {
 
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
         this.globalVariables.signed_in_member = user;
-        console.log('uid', user)
-        // ...
-      } else {
-        // User is signed out
-        // ...
       }
     });
 
@@ -83,29 +69,29 @@ export class ChatComponent {
   }
 
   getMembers() {
-    return this.activeChannel.members;
+    return this.globalVariables.activeChannel.members;
   }
 
   openDialog(): void {
-    if (this.activeChannel) {
+    if (this.globalVariables.activeChannel) {
       if(!this.activeChat) {
         this.activeChat = this.channelFirestore.channels[0].name;
       }
       const foundChannel = this.channelFirestore.channels.find(obj => obj.name === this.activeChat);
       if (foundChannel) {
-        this.activeChannel = foundChannel;
+        this.globalVariables.activeChannel = foundChannel;
       } else {
         console.warn('Channel not found');
       }
       this.dialog.open(DialogOverviewChannelComponent, {
-        data: this.activeChannel
+        data: this.globalVariables.activeChannel
       });
     }
   }
 
   addMembers() {
     this.dialog.open(DialogMemberExistingChannelComponent, {
-      data: this.activeChannel
+      data: this.globalVariables.activeChannel
     });
   }
 }

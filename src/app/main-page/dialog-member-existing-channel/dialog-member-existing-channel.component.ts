@@ -101,5 +101,6 @@ export class DialogMemberExistingChannelComponent {
   }
 
   addToChannel() {
+    this.channelFirestore.updateArray('channels', this.globalVariables.activeChannel.id, this.add_new_members_array[0])
   }
 }
