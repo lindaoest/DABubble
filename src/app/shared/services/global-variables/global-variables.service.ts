@@ -2,13 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
-
-interface Member {
-  member: string,
-  email: string,
-  password: string,
-  avatar: string
-}
+import { Member } from '../../../../models/member.class';
+import { Messenges } from '../../../../models/messenges.class';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +26,7 @@ export class GlobalVariablesService {
     description: '',
     creator: ''
   };
+  messenges: Messenges[] = [];
 
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();

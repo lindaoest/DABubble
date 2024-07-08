@@ -10,11 +10,13 @@ import { DialogMemberExistingChannelComponent } from '../dialog-member-existing-
 import { getAuth, signInWithEmailAndPassword, connectAuthEmulator, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../app.config-private';
+import { FormsModule } from '@angular/forms';
+import { Messenges } from '../../../models/messenges.class';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
@@ -93,5 +95,17 @@ export class ChatComponent {
     this.dialog.open(DialogMemberExistingChannelComponent, {
       data: this.globalVariables.activeChannel
     });
+  }
+
+  addMessage() {
+    const message: Messenges = new Messenges({
+      channel: this.globalVariables.activeChannel.name,
+      text: this.description,
+      time: '',
+      sender: this.globalVariables.signed_in_member.displayName,
+      avatar: this.globalVariables.signed_in_member.photoURL
+    })
+    this.channelFirestore.addMessage(message)
+    this.description = '';
   }
 }

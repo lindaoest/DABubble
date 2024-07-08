@@ -10,10 +10,10 @@
 		<div class="members">
 			<div class="avatars">
 				@if (getMembers().length == 0) {
-					@if(channelFirestore.channels[0]) {
-					@for (avatar of channelFirestore.channels[0].members; track avatar; let index = $index) {
-					<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
-					}
+				@if(channelFirestore.channels[0]) {
+				@for (avatar of channelFirestore.channels[0].members; track avatar; let index = $index) {
+				<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
+				}
 				}
 				} @else {
 				@for (avatar of getMembers(); track $index) {
@@ -23,9 +23,9 @@
 			</div>
 			<div class="quantity">
 				@if (getMembers().length == 0) {
-					@if (channelFirestore.channels[0]) {
-					<p>{{ channelFirestore.channels[0].members.length }}</p>
-					}
+				@if (channelFirestore.channels[0]) {
+				<p>{{ channelFirestore.channels[0].members.length }}</p>
+				}
 				} @else {
 				<p>{{ getMembers().length }}</p>
 				}
@@ -77,10 +77,32 @@
 					</div>
 				</div>
 			</div>
+
+			@for (item of this.globalVariables.messenges; track $index) {
+			<div class="message flex">
+				<img src="./assets/img/avatar/avatar-1.svg" alt="">
+				<div class="message-text">
+					<div class="top flex align-center gap-24">
+						<p class="font-weight-700">{{ item.sender }}</p>
+						<p class="font-small">{{ item.time }} Uhr</p>
+					</div>
+					<div class="text">
+						<p>{{ item.text }}</p>
+					</div>
+					<div class="bottom flex align-center gap-24">
+						<p class="blue-font">2 Antworten</p>
+						<p class="font-small">Letzte Antwort 14:56</p>
+					</div>
+				</div>
+			</div>
+			}
+
+
+
 		</div>
 	</div>
 	<div class="writing-box">
-		<input type="text" placeholder="Nachricht an #Entwicklerteam">
+		<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
 		<div class="bottom-icons">
 			<div class="reactions">
 				<img src="./assets/img/chat/add-reaction.svg" alt="">
@@ -88,7 +110,7 @@
 				<img src="./assets/img/chat/tag-people.svg" alt="">
 			</div>
 			<div class="send-message">
-				<img src="./assets/img/chat/send-message.svg" alt="">
+				<img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
 			</div>
 		</div>
 	</div>

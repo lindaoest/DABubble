@@ -6,6 +6,7 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
 import { Channel } from '../../../models/channel.class';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
+import { Messenges } from '../../../models/messenges.class';
 
 @Component({
   selector: 'app-site-menu',
@@ -21,6 +22,7 @@ export class SiteMenuComponent {
   members: [] = [];
   channel_open: Boolean = false;
   directmessage_open: Boolean = false;
+  filteredChats: Messenges[] = [];
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
@@ -30,12 +32,11 @@ export class SiteMenuComponent {
 
   openDialog(): void {
     this.dialog.open(DialogAddChannelComponent, {
-      data: { name: this.name, description: this.description, members: this.members},
+      data: { name: this.name, description: this.description, members: this.members },
     });
   }
 
   openChat(channelName: string) {
-    this.globalVariables.activeChat = channelName;
     if (this.globalVariables.activeChannel) {
       // if(!channelName) {
       //   this.activeChat = this.channelFirestore.channels[0].name;
@@ -43,6 +44,7 @@ export class SiteMenuComponent {
       const foundChannel = this.channelFirestore.channels.find(obj => obj.name === channelName);
       if (foundChannel) {
         this.globalVariables.activeChannel = foundChannel;
+        this.filterChats();
         console.log(this.globalVariables.activeChannel)
       } else {
         console.warn('Channel not found');
@@ -51,6 +53,14 @@ export class SiteMenuComponent {
       //   data: this.activeChannel
       // });
     }
+  }
+
+  filterChats() {
+    this.filteredChats = this.channelFirestore.messenges.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
+    this.filteredChats.forEach(element => {
+      this.globalVariables.messenges.push(this.channelFirestore.setObjectMessenges(element, ''));
+    });
+    console.log('filteredChats', this.globalVariables.messenges)
   }
 
   channel_open_function() {

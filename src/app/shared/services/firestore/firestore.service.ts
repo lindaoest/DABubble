@@ -4,6 +4,7 @@ import { doc, onSnapshot, collection, addDoc, updateDoc, arrayUnion } from "fire
 import { firstValueFrom } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
+import { Messenges } from '../../../../models/messenges.class';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,10 @@ export class FirestoreService {
 
   unsub: any;
   unsubMembers: any;
+  unsubMessenges: any;
   channels: Channel[] = [];
   members: any[] = [];
+  messenges: any[] = [];
 
   constructor() {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
@@ -31,6 +34,15 @@ export class FirestoreService {
         this.members.push(this.setObjectMembers(element.data(), element.id))
       });
     });
+
+    this.unsubMessenges = onSnapshot(this.getDocRef('messenges'), (doc) => {
+      
+      doc.forEach(element => {
+        this.messenges.push(this.setObjectMessenges(element.data(), element.id))
+      });
+    });
+
+    console.log(this.messenges)
   }
 
   setObject(obj: any, id: string) {
@@ -53,9 +65,21 @@ export class FirestoreService {
     }
   }
 
+  setObjectMessenges(obj: any, id: string): Messenges {
+    return {
+      id: id || '',
+      channel: obj.channel,
+      text: obj.text,
+      time: obj.time,
+      sender: obj.sender,
+      avatar: obj.avatar
+    }
+  }
+
   ngOnDestroy(): void {
     this.unsub();
     this.unsubMembers();
+    this.unsubMessenges();
   }
 
   async addData(data: Channel) {
@@ -84,6 +108,10 @@ export class FirestoreService {
     if(data.id) {
       await updateDoc(this.getSingleDocRef(colId, data.id), this.getCleanJson(data));
     }
+  }
+
+  async addMessage(data: Messenges) {
+    await addDoc(this.getDocRef('messenges'), this.setObjectMessenges(data, ''));
   }
 
   getCleanJson(obj: Member) {
