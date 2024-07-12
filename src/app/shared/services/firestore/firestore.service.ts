@@ -19,7 +19,7 @@ export class FirestoreService {
   channels: Channel[] = [];
   members: any[] = [];
   messenges: any[] = [];
-  groupedMessages: { [key: string]: any[] } = {};
+  groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
 
   constructor() {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
@@ -40,7 +40,7 @@ export class FirestoreService {
       doc.forEach(element => {
         this.messenges.push(this.setObjectMessenges(element.data(), element.id))
       });
-      this.groupedMessages = this.groupMessagesByDate(this.messenges);
+      this.groupedMessages = this.groupMessagesByDateAndChannel(this.messenges);
     });
   }
 
@@ -76,14 +76,24 @@ export class FirestoreService {
     }
   }
 
-  groupMessagesByDate(messages: any[]): { [key: string]: any[] } {
+  groupMessagesByDateAndChannel(messages: any[]): { [channel: string]: { [date: string]: any[] } } {
     return messages.reduce((groups, message) => {
-      const date = message.creationDate; // YYYY-MM-DD
-      if (!groups[date]) {
-        groups[date] = [];
+      if (!message.channel || !message.creationDate) {
+        console.warn('Message without creationDate or channel:', message);
+        return groups;
       }
-      groups[date].push(message);
-      console.log('groupedMessenges', groups)
+      const channel = message.channel; // z.B. 'grafik' oder 'editing'
+      const date = message.creationDate; // YYYY-MM-DD
+
+      if (!groups[channel]) {
+        groups[channel] = {};
+      }
+
+      if (!groups[channel][date]) {
+        groups[channel][date] = [];
+      }
+
+      groups[channel][date].push(message);
       return groups;
     }, {});
   }

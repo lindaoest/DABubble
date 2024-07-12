@@ -36,58 +36,24 @@
 		</div>
 	</div>
 	<div class="chat-block flex">
+		@for (group of (this.channelFirestore.groupedMessages | keyvalue); track $index) {
+		@if (group.key == globalVariables.activeChannel.name) {
+		@for (dateGroup of (group.value | keyvalue); track $index) {
 		<div class="date-block">
 			<div class="date">
-				<p>Dienstag, 14 Januar</p>
-			</div>
-			<div class="message flex">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="message-text">
-					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">Noah Braun</p>
-						<p class="font-small">14:25 Uhr</p>
-					</div>
-					<div class="text">
-						<p>Welche Version ist aktuell von Angular?</p>
-					</div>
-					<div class="bottom flex align-center gap-24">
-						<p class="blue-font">2 Antworten</p>
-						<p class="font-small">Letzte Antwort 14:56</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="date-block">
-			<div class="date">
-				<p>Heute</p>
-			</div>
-			<div class="message flex">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="message-text">
-					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">Frederik Beck</p>
-						<p class="font-small">14:25 Uhr</p>
-					</div>
-					<div class="text">
-						<p>Welche Version ist aktuell von Angular?</p>
-					</div>
-					<div class="bottom flex align-center gap-24">
-						<p class="blue-font">2 Antworten</p>
-						<p class="font-small">Letzte Antwort 14:56</p>
-					</div>
-				</div>
+				<p>{{ dateGroup.key }}</p>
 			</div>
 
-			@for (item of this.globalVariables.messenges; track $index) {
+			@for (message of dateGroup.value; track $index) {
 			<div class="message flex">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
+				<img src="{{ message.avatar }}" alt="">
 				<div class="message-text">
 					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">{{ item.sender }}</p>
-						<p class="font-small">{{ item.time }} Uhr</p>
+						<p class="font-weight-700">{{ message.sender }}</p>
+						<p class="font-small">{{ message.time }} Uhr</p>
 					</div>
 					<div class="text">
-						<p>{{ item.text }}</p>
+						<p>{{ message.text }}</p>
 					</div>
 					<div class="bottom flex align-center gap-24">
 						<p class="blue-font">2 Antworten</p>
@@ -96,10 +62,10 @@
 				</div>
 			</div>
 			}
-
-
-
 		</div>
+		}
+		}
+		}
 	</div>
 	<div class="writing-box">
 		<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
