@@ -37,6 +37,7 @@ export class SiteMenuComponent {
   }
 
   openChat(channelName: string) {
+    this.globalVariables.activeChat = channelName;
     if (this.globalVariables.activeChannel) {
       // if(!channelName) {
       //   this.activeChat = this.channelFirestore.channels[0].name;
@@ -56,6 +57,7 @@ export class SiteMenuComponent {
   }
 
   filterChats() {
+    this.globalVariables.messenges = [];
     this.filteredChats = this.channelFirestore.messenges.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
     this.filteredChats.forEach(element => {
       this.globalVariables.messenges.push(this.channelFirestore.setObjectMessenges(element, ''));

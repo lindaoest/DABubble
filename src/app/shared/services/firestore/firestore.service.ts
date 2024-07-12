@@ -19,6 +19,7 @@ export class FirestoreService {
   channels: Channel[] = [];
   members: any[] = [];
   messenges: any[] = [];
+  groupedMessages: { [key: string]: any[] } = {};
 
   constructor() {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
@@ -36,13 +37,11 @@ export class FirestoreService {
     });
 
     this.unsubMessenges = onSnapshot(this.getDocRef('messenges'), (doc) => {
-      
       doc.forEach(element => {
         this.messenges.push(this.setObjectMessenges(element.data(), element.id))
       });
+      this.groupedMessages = this.groupMessagesByDate(this.messenges);
     });
-
-    console.log(this.messenges)
   }
 
   setObject(obj: any, id: string) {
@@ -72,8 +71,21 @@ export class FirestoreService {
       text: obj.text,
       time: obj.time,
       sender: obj.sender,
-      avatar: obj.avatar
+      avatar: obj.avatar,
+      creationDate: obj.creationDate
     }
+  }
+
+  groupMessagesByDate(messages: any[]): { [key: string]: any[] } {
+    return messages.reduce((groups, message) => {
+      const date = message.creationDate; // YYYY-MM-DD
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+      console.log('groupedMessenges', groups)
+      return groups;
+    }, {});
   }
 
   ngOnDestroy(): void {

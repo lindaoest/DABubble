@@ -5,6 +5,7 @@ export class Messenges {
 	time: string;
 	sender: string;
 	avatar: string;
+	creationDate: number;
 
 
 	constructor(obj: any) {
@@ -14,5 +15,6 @@ export class Messenges {
 		this.time = obj.time;
 		this.sender = obj.sender;
 		this.avatar = obj.avatar;
+		this.creationDate = obj.creationDate;
 	}
 }
