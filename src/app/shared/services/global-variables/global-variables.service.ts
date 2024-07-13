@@ -27,6 +27,7 @@ export class GlobalVariablesService {
     creator: ''
   };
   messenges: Messenges[] = [];
+  create_new_chat: Boolean = false;
 
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();

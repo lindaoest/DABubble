@@ -12,11 +12,12 @@ import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../app.config-private';
 import { FormsModule } from '@angular/forms';
 import { Messenges } from '../../../models/messenges.class';
+import { CreateNewChatComponent } from './create-new-chat/create-new-chat.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CreateNewChatComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })

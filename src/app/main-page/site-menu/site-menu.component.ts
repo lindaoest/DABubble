@@ -72,4 +72,8 @@ export class SiteMenuComponent {
   directmessage_open_function() {
     this.directmessage_open = !this.directmessage_open;
   }
+
+  open_new_chat() {
+    this.globalVariables.create_new_chat = true;
+  }
 }

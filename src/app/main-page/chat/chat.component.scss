@@ -11,6 +11,10 @@
 	}
 }
 
+app-create-new-chat {
+	padding: 0!important;
+}
+
 .info-top {
 	@include displayFlex($jc: space-between);
 	gap: 24px;

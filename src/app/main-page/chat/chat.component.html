@@ -1,85 +1,89 @@
 <div class="chat">
-	<div class="info-top">
-		<div (click)="openDialog()" class="team-name">
-			<img src="./assets/img/channels/tag.svg" alt="">
-			@if (channelFirestore.channels[0]) {
-			<h3>{{ activeChat ? activeChat : channelFirestore.channels[0].name }}</h3>
-			}
-			<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
-		</div>
-		<div class="members">
-			<div class="avatars">
-				@if (getMembers().length == 0) {
-				@if(channelFirestore.channels[0]) {
-				@for (avatar of channelFirestore.channels[0].members; track avatar; let index = $index) {
-				<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
-				}
-				}
-				} @else {
-				@for (avatar of getMembers(); track $index) {
-				<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
-				}
-				}
-			</div>
-			<div class="quantity">
-				@if (getMembers().length == 0) {
+	@if (!globalVariables.create_new_chat) {
+		<div class="info-top">
+			<div (click)="openDialog()" class="team-name">
+				<img src="./assets/img/channels/tag.svg" alt="">
 				@if (channelFirestore.channels[0]) {
-				<p>{{ channelFirestore.channels[0].members.length }}</p>
+				<h3>{{ activeChat ? activeChat : channelFirestore.channels[0].name }}</h3>
 				}
-				} @else {
-				<p>{{ getMembers().length }}</p>
-				}
+				<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
 			</div>
-			<div (click)="addMembers()" class="add-member">
-				<img src="./assets/img/chat/chat-add-member.svg" alt="">
+			<div class="members">
+				<div class="avatars">
+					@if (getMembers().length == 0) {
+					@if(channelFirestore.channels[0]) {
+					@for (avatar of channelFirestore.channels[0].members; track avatar; let index = $index) {
+					<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
+					}
+					}
+					} @else {
+					@for (avatar of getMembers(); track $index) {
+					<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
+					}
+					}
+				</div>
+				<div class="quantity">
+					@if (getMembers().length == 0) {
+					@if (channelFirestore.channels[0]) {
+					<p>{{ channelFirestore.channels[0].members.length }}</p>
+					}
+					} @else {
+					<p>{{ getMembers().length }}</p>
+					}
+				</div>
+				<div (click)="addMembers()" class="add-member">
+					<img src="./assets/img/chat/chat-add-member.svg" alt="">
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="chat-block flex">
-		@for (group of (this.channelFirestore.groupedMessages | keyvalue); track $index) {
-		@if (group.key == globalVariables.activeChannel.name) {
-			@for (dateGroup of (group.value | keyvalue); track $index) {
-			<div class="date-block">
-				<div class="date">
-					<p>{{ dateGroup.key }}</p>
-				</div>
+		<div class="chat-block flex">
+			@for (group of (this.channelFirestore.groupedMessages | keyvalue); track $index) {
+			@if (group.key == globalVariables.activeChannel.name) {
+				@for (dateGroup of (group.value | keyvalue); track $index) {
+				<div class="date-block">
+					<div class="date">
+						<p>{{ dateGroup.key }}</p>
+					</div>
 
-				@for (message of dateGroup.value; track $index) {
-				<div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
-					<img src="{{ message.avatar }}" alt="">
-					<div class="message-text">
-						<div class="top flex align-center gap-24">
-							<p class="font-weight-700">{{ message.sender }}</p>
-							<p class="font-small">{{ message.time }} Uhr</p>
-						</div>
-						<div class="text">
-							<p>{{ message.text }}</p>
-						</div>
-						<div class="bottom flex align-center gap-24">
-							<p class="blue-font">2 Antworten</p>
-							<p class="font-small">Letzte Antwort 14:56</p>
+					@for (message of dateGroup.value; track $index) {
+					<div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+						<img src="{{ message.avatar }}" alt="">
+						<div class="message-text">
+							<div class="top flex align-center gap-24">
+								<p class="font-weight-700">{{ message.sender }}</p>
+								<p class="font-small">{{ message.time }} Uhr</p>
+							</div>
+							<div class="text">
+								<p>{{ message.text }}</p>
+							</div>
+							<div class="bottom flex align-center gap-24">
+								<p class="blue-font">2 Antworten</p>
+								<p class="font-small">Letzte Antwort 14:56</p>
+							</div>
 						</div>
 					</div>
+					}
 				</div>
 				}
-			</div>
+			} @else {
+				<p>Dies ist der Beginn einer neuen Konversation</p>
 			}
-		} @else {
-			<p>Dies ist der Beginn einer neuen Konversation</p>
-		}
-		}
-	</div>
-	<div class="writing-box">
-		<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
-		<div class="bottom-icons">
-			<div class="reactions">
-				<img src="./assets/img/chat/add-reaction.svg" alt="">
-				<img src="./assets/img/chat/add-emoji.svg" alt="">
-				<img src="./assets/img/chat/tag-people.svg" alt="">
-			</div>
-			<div class="send-message">
-				<img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
+			}
+		</div>
+		<div class="writing-box">
+			<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
+			<div class="bottom-icons">
+				<div class="reactions">
+					<img src="./assets/img/chat/add-reaction.svg" alt="">
+					<img src="./assets/img/chat/add-emoji.svg" alt="">
+					<img src="./assets/img/chat/tag-people.svg" alt="">
+				</div>
+				<div class="send-message">
+					<img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
+				</div>
 			</div>
 		</div>
-	</div>
+	} @else {
+		<app-create-new-chat></app-create-new-chat>
+	}
 </div>
