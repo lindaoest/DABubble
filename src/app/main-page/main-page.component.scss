@@ -4,15 +4,31 @@ main {
 	align-items: center;
 }
 
+.container {
+	width: 100%;
+	justify-content: center;
+}
+
 .da-bubble-logo {
 	padding: 24px 40px;
 }
 
 app-site-menu {
-	margin-left: 16px;
+	max-width: 366px;
+    width: 19.062%;
+    min-width: 300px;
 }
 
 app-chat {
+	width: 51.562%;
+    max-width: 990px;
+    min-width: 470px;
 	margin-left: 16px;
 	margin-right: 16px;
+}
+
+app-thread-reply {
+	width: 25.26%;
+    max-width: 485px;
+    min-width: 360px;
 }

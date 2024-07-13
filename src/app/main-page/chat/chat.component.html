@@ -17,7 +17,7 @@
 				}
 				} @else {
 				@for (avatar of getMembers(); track $index) {
-				<img [src]="avatar['avatar']" alt="">
+				<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
 				}
 				}
 			</div>
@@ -38,32 +38,34 @@
 	<div class="chat-block flex">
 		@for (group of (this.channelFirestore.groupedMessages | keyvalue); track $index) {
 		@if (group.key == globalVariables.activeChannel.name) {
-		@for (dateGroup of (group.value | keyvalue); track $index) {
-		<div class="date-block">
-			<div class="date">
-				<p>{{ dateGroup.key }}</p>
-			</div>
+			@for (dateGroup of (group.value | keyvalue); track $index) {
+			<div class="date-block">
+				<div class="date">
+					<p>{{ dateGroup.key }}</p>
+				</div>
 
-			@for (message of dateGroup.value; track $index) {
-			<div class="message flex">
-				<img src="{{ message.avatar }}" alt="">
-				<div class="message-text">
-					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">{{ message.sender }}</p>
-						<p class="font-small">{{ message.time }} Uhr</p>
-					</div>
-					<div class="text">
-						<p>{{ message.text }}</p>
-					</div>
-					<div class="bottom flex align-center gap-24">
-						<p class="blue-font">2 Antworten</p>
-						<p class="font-small">Letzte Antwort 14:56</p>
+				@for (message of dateGroup.value; track $index) {
+				<div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+					<img src="{{ message.avatar }}" alt="">
+					<div class="message-text">
+						<div class="top flex align-center gap-24">
+							<p class="font-weight-700">{{ message.sender }}</p>
+							<p class="font-small">{{ message.time }} Uhr</p>
+						</div>
+						<div class="text">
+							<p>{{ message.text }}</p>
+						</div>
+						<div class="bottom flex align-center gap-24">
+							<p class="blue-font">2 Antworten</p>
+							<p class="font-small">Letzte Antwort 14:56</p>
+						</div>
 					</div>
 				</div>
+				}
 			</div>
 			}
-		</div>
-		}
+		} @else {
+			<p>Dies ist der Beginn einer neuen Konversation</p>
 		}
 		}
 	</div>
