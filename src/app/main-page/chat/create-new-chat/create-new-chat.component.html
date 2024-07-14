@@ -13,9 +13,11 @@
 		</div>
 		}
 	</div>
-	<div class="chat-block flex"></div>
+	<div class="chat-block flex">
+		@for (item of channelFirestore.direct_message; track $index) {}
+	</div>
 	<div class="writing-box">
-		<input type="text" placeholder="Nachricht schreiben...">
+		<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
 		<div class="bottom-icons">
 			<div class="reactions">
 				<img src="./assets/img/chat/add-reaction.svg" alt="">
@@ -23,7 +25,7 @@
 				<img src="./assets/img/chat/tag-people.svg" alt="">
 			</div>
 			<div class="send-message">
-				<img (click)="sendMessage()" src="./assets/img/chat/send-message.svg" alt="">
+				<img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
 			</div>
 		</div>
 	</div>

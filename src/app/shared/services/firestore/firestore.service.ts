@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
 import { Messenges } from '../../../../models/messenges.class';
+import { DirectMessage } from '../../../../models/direct-message.class';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,11 @@ export class FirestoreService {
   unsub: any;
   unsubMembers: any;
   unsubMessenges: any;
+  unsubDirectMessage: any;
   channels: Channel[] = [];
   members: any[] = [];
   messenges: any[] = [];
+  direct_message: any[] = [];
   groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
 
   constructor() {
@@ -41,6 +44,13 @@ export class FirestoreService {
         this.messenges.push(this.setObjectMessenges(element.data(), element.id))
       });
       this.groupedMessages = this.groupMessagesByDateAndChannel(this.messenges);
+    });
+
+    this.unsubDirectMessage = onSnapshot(this.getDocRef('direct-message'), (doc) => {
+      doc.forEach(element => {
+        this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
+      });
+      console.log('direct-message', this.direct_message)
     });
   }
 
@@ -73,6 +83,17 @@ export class FirestoreService {
       sender: obj.sender,
       avatar: obj.avatar,
       creationDate: obj.creationDate
+    }
+  }
+
+  setObjectDirectMessage(obj: any, id: string) {
+    return {
+      id: id,
+      sender: obj.sender,
+      receiver: obj.receiver,
+      messages: [
+        {text: obj.messages[0].text}
+      ]
     }
   }
 
@@ -134,6 +155,10 @@ export class FirestoreService {
 
   async addMessage(data: Messenges) {
     await addDoc(this.getDocRef('messenges'), this.setObjectMessenges(data, ''));
+  }
+
+  async addDirectMessage(data: DirectMessage) {
+    await addDoc(this.getDocRef('direct-message'), this.setObjectDirectMessage(data, ''));
   }
 
   getCleanJson(obj: Member) {
