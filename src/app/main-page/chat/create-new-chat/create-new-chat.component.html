@@ -1,7 +1,17 @@
 <div class="create-new-chat">
 	<div class="info-top">
 		<h3>Neue Nachricht</h3>
-		<input type="text" placeholder="An: #channel, oder @jemand oder E-Mail Adresse">
+		<input (keyup)="observe_input()" type="text" [placeholder]="placeholder_value" [(ngModel)]="name">
+		@if (message_to_direct_message) {
+		<div class="members-box">
+			@for (member of this.channelFirestore.members; track member; let index = $index) {
+			<div (click)="addMember(member.member)" class="member">
+				<img src="{{ member.avatar }}" alt="">
+				<p>{{ member.member }}</p>
+			</div>
+			}
+		</div>
+		}
 	</div>
 	<div class="chat-block flex"></div>
 	<div class="writing-box">
@@ -13,7 +23,7 @@
 				<img src="./assets/img/chat/tag-people.svg" alt="">
 			</div>
 			<div class="send-message">
-				<img src="./assets/img/chat/send-message.svg" alt="">
+				<img (click)="sendMessage()" src="./assets/img/chat/send-message.svg" alt="">
 			</div>
 		</div>
 	</div>
