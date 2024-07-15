@@ -23,6 +23,7 @@ export class FirestoreService {
   messenges: any[] = [];
   direct_message: any[] = [];
   groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
+  groupedDirectMessages: { [key: string]: any[] } = {};
 
   constructor() {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
@@ -50,7 +51,8 @@ export class FirestoreService {
       doc.forEach(element => {
         this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
       });
-      console.log('direct-message', this.direct_message)
+      this.groupedDirectMessages = this.groupDirectMessagesBySender(this.direct_message);
+      console.log('direct-message', this.groupedDirectMessages)
     });
   }
 
@@ -92,7 +94,7 @@ export class FirestoreService {
       sender: obj.sender,
       receiver: obj.receiver,
       messages: [
-        {text: obj.messages[0].text}
+        {text: obj.messages}
       ]
     }
   }
@@ -115,6 +117,23 @@ export class FirestoreService {
       }
 
       groups[channel][date].push(message);
+      return groups;
+    }, {});
+  }
+
+  groupDirectMessagesBySender(direct_messages: any[]): { [key: string]: any[] } {
+    return direct_messages.reduce((groups, direct_message) => {
+      if (!direct_message.sender) {
+        console.warn('direct_message:', direct_message);
+        return groups;
+      }
+      const sender = direct_message.sender;
+
+      if (!groups[sender]) {
+        groups[sender] = [];
+      }
+
+      groups[sender].push(direct_message);
       return groups;
     }, {});
   }
