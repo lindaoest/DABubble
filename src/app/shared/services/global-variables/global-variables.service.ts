@@ -28,6 +28,8 @@ export class GlobalVariablesService {
   };
   messenges: Messenges[] = [];
   create_new_chat: Boolean = false;
+  open_directmessages_chat: Boolean = false;
+  active_privatechat: string = '';
 
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();

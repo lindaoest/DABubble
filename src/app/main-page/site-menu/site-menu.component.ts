@@ -7,6 +7,8 @@ import { Channel } from '../../../models/channel.class';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 import { Messenges } from '../../../models/messenges.class';
+import { DirectmessagesChatComponent } from '../chat/directmessages-chat/directmessages-chat.component';
+import { DirectMessage } from '../../../models/direct-message.class';
 
 @Component({
   selector: 'app-site-menu',
@@ -75,5 +77,16 @@ export class SiteMenuComponent {
 
   open_new_chat() {
     this.globalVariables.create_new_chat = true;
+  }
+
+  async open_directmessages_chat(receiver: string) {
+    this.globalVariables.open_directmessages_chat = true;
+    localStorage.setItem('active privatechat', JSON.stringify(receiver));
+
+    let get_active_chat = localStorage.getItem('active privatechat');
+
+    if(get_active_chat) {
+      this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
+    }
   }
 }

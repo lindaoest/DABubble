@@ -7,24 +7,24 @@
 		</div>
 	</div>
 	<div class="chat-block flex">
-		@for (group of (this.channelFirestore.groupedMessages| keyvalue); track $index) {
-		@if (group.key == globalVariables.activeChannel.name) {
-		@for (dateGroup of (group.value | keyvalue); track $index) {
-		<div class="date-block">
+		@for (group of (this.channelFirestore.groupedDirectMessages| keyvalue); track $index) {
+		@if (group.key == globalVariables.signed_in_member.displayName) {
+		@for (memberGroup of group.value; track $index) {
+		@if (memberGroup.receiver == globalVariables.active_privatechat) {
+		<div (click)="test(memberGroup.avatar)" class="date-block">
 			<div class="date">
-				<p>{{ dateGroup.key }}</p>
+				<p>{{ memberGroup.key }}</p>
 			</div>
-
-			@for (message of dateGroup.value; track $index) {
-			<div class="message flex">
-				<img src="{{ message.avatar }}" alt="">
+			<div class="message flex"
+				[ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === memberGroup.sender}">
+				<img src="{{ memberGroup.avatar }}" alt="">
 				<div class="message-text">
 					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">{{ message.sender }}</p>
-						<p class="font-small">{{ message.time }} Uhr</p>
+						<p class="font-weight-700">{{ memberGroup.sender }}</p>
+						<p class="font-small">{{ memberGroup.time }} Uhr</p>
 					</div>
 					<div class="text">
-						<p>{{ message.text }}</p>
+						<p>{{ memberGroup.text }}</p>
 					</div>
 					<div class="bottom flex align-center gap-24">
 						<p class="blue-font">2 Antworten</p>
@@ -32,8 +32,8 @@
 					</div>
 				</div>
 			</div>
-			}
 		</div>
+		}
 		}
 		} @else {
 		<p>Dies ist der Beginn einer neuen Konversation</p>

@@ -46,7 +46,7 @@
 			@for (group of (this.channelFirestore.groupedDirectMessages| keyvalue); track $index) {
 				@if (group.key == globalVariables.signed_in_member.displayName) {
 					@for (groupValue of group.value; track $index) {
-					<div class="direct-message">
+					<div (click)="open_directmessages_chat(groupValue.receiver)" class="direct-message">
 						<div class="avatar">
 							<img src="./assets/img/avatar/avatar-1.svg" alt="">
 							<div class="online"></div>
