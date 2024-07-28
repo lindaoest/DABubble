@@ -46,4 +46,9 @@ export class GlobalVariablesService {
     }
   }
 
+  currentTime() {
+    let date = new Date();
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
 }

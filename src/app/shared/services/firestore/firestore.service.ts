@@ -6,6 +6,7 @@ import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
 import { Messenges } from '../../../../models/messenges.class';
 import { DirectMessage } from '../../../../models/direct-message.class';
+import { FirestoreHelperService } from '../firestoreHelper/firestore-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class FirestoreService {
   groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
   groupedDirectMessages: { [key: string]: any[] } = {};
 
-  constructor() {
+  constructor(public firestoreHelper: FirestoreHelperService) {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
       this.channels = [];
       doc.forEach(element => {
@@ -44,16 +45,22 @@ export class FirestoreService {
       doc.forEach(element => {
         this.messenges.push(this.setObjectMessenges(element.data(), element.id))
       });
-      this.groupedMessages = this.groupMessagesByDateAndChannel(this.messenges);
+      this.groupedMessages = this.firestoreHelper.groupMessagesByDateAndChannel(this.messenges);
     });
 
     this.unsubDirectMessage = onSnapshot(this.getDocRef('direct-message'), (doc) => {
       doc.forEach(element => {
-        this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
+        this.direct_message.push(this.setObjectDirectMessage2(element.data(), element.id))
       });
-      this.groupedDirectMessages = this.groupDirectMessagesBySender(this.direct_message);
-      console.log('direct-message', this.groupedDirectMessages)
+      this.groupedDirectMessages = this.firestoreHelper.groupDirectMessagesBySender(this.direct_message);
+      console.log('direct-message', this.direct_message)
     });
+  }
+
+  ngOnDestroy(): void {
+    this.unsub();
+    this.unsubMembers();
+    this.unsubMessenges();
   }
 
   setObject(obj: any, id: string) {
@@ -93,64 +100,25 @@ export class FirestoreService {
       id: id,
       sender: obj.sender,
       receiver: obj.receiver,
-      messages: [
-        {text: this.allMessages(obj)}
+      messages:
+      [
+        {
+          text: obj.messages.text,
+          time: obj.messages.time,
+          avatar: obj.messages.avatar,
+          creationDate: obj.messages.creationDate
+        }
       ]
     }
   }
 
-  allMessages(obj: any) {
-    if(obj.messages) {
-      for (let i = 0; i < obj.messages.length; i++) {
-        let message = obj.messages[i];
-        return message.text;
-      }
+  setObjectDirectMessage2(obj: any, id: string) {
+    return {
+      id: id,
+      sender: obj.sender,
+      receiver: obj.receiver,
+      messages: this.firestoreHelper.allMessages(obj)
     }
-  }
-
-  groupMessagesByDateAndChannel(messages: any[]): { [channel: string]: { [date: string]: any[] } } {
-    return messages.reduce((groups, message) => {
-      if (!message.channel || !message.creationDate) {
-        console.warn('Message without creationDate or channel:', message);
-        return groups;
-      }
-      const channel = message.channel; // z.B. 'grafik' oder 'editing'
-      const date = message.creationDate; // YYYY-MM-DD
-
-      if (!groups[channel]) {
-        groups[channel] = {};
-      }
-
-      if (!groups[channel][date]) {
-        groups[channel][date] = [];
-      }
-
-      groups[channel][date].push(message);
-      return groups;
-    }, {});
-  }
-
-  groupDirectMessagesBySender(direct_messages: any[]): { [key: string]: any[] } {
-    return direct_messages.reduce((groups, direct_message) => {
-      if (!direct_message.sender) {
-        console.warn('direct_message:', direct_message);
-        return groups;
-      }
-      const sender = direct_message.sender;
-
-      if (!groups[sender]) {
-        groups[sender] = [];
-      }
-
-      groups[sender].push(direct_message);
-      return groups;
-    }, {});
-  }
-
-  ngOnDestroy(): void {
-    this.unsub();
-    this.unsubMembers();
-    this.unsubMessenges();
   }
 
   async addData(data: Channel) {
@@ -159,14 +127,22 @@ export class FirestoreService {
 
   async updateData(colId: string, data: Channel) {
     if(data.id) {
-      await updateDoc(this.getSingleDocRef(colId, data.id), this.getCleanJsonForChannel(data));
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForChannel(data));
     }
   }
 
   async updateArray(colId: string, id: string, newKey: Member) {
     if(id) {
       await updateDoc(this.getSingleDocRef(colId, id), {
-        members: arrayUnion(this.getCleanJson(newKey))
+        members: arrayUnion(this.firestoreHelper.getCleanJson(newKey))
+    });
+    }
+  }
+
+  async updateArrayMessages(colId: string, id: string, newKey: any) {
+    if(id) {
+      await updateDoc(this.getSingleDocRef(colId, id), {
+        messages: arrayUnion(this.firestoreHelper.getCleanJsonForDirectMessage(newKey))
     });
     }
   }
@@ -177,7 +153,7 @@ export class FirestoreService {
 
   async updateMember(colId: string, data: Member) {
     if(data.id) {
-      await updateDoc(this.getSingleDocRef(colId, data.id), this.getCleanJson(data));
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJson(data));
     }
   }
 
@@ -187,23 +163,6 @@ export class FirestoreService {
 
   async addDirectMessage(data: DirectMessage) {
     await addDoc(this.getDocRef('direct-message'), this.setObjectDirectMessage(data, ''));
-  }
-
-  getCleanJson(obj: Member) {
-    return {
-      member: obj.member,
-      email: obj.email,
-      password: obj.password,
-      avatar: obj.avatar
-    }
-  }
-
-  getCleanJsonForChannel(obj: Channel) {
-    return {
-      name: obj.name,
-      description: obj.description,
-      members: obj.members
-    }
   }
 
   getDocRef(colId: string) {

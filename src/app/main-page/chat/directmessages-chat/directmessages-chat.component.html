@@ -11,28 +11,30 @@
 		@if (group.key == globalVariables.signed_in_member.displayName) {
 		@for (memberGroup of group.value; track $index) {
 		@if (memberGroup.receiver == globalVariables.active_privatechat) {
-		<div (click)="test(memberGroup.avatar)" class="date-block">
-			<div class="date">
-				<p>{{ memberGroup.key }}</p>
-			</div>
-			<div class="message flex"
-				[ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === memberGroup.sender}">
-				<img src="{{ memberGroup.avatar }}" alt="">
-				<div class="message-text">
-					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">{{ memberGroup.sender }}</p>
-						<p class="font-small">{{ memberGroup.time }} Uhr</p>
+			@for (message of memberGroup.messages; track $index) {
+				<div (click)="test(memberGroup)" class="date-block">
+					<div class="date">
+						<p>{{ memberGroup.key }}</p>
 					</div>
-					<div class="text">
-						<p>{{ memberGroup.text }}</p>
-					</div>
-					<div class="bottom flex align-center gap-24">
-						<p class="blue-font">2 Antworten</p>
-						<p class="font-small">Letzte Antwort 14:56</p>
+					<div class="message flex"
+						[ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === memberGroup.sender}">
+						<img src="{{ message.avatar }}" alt="">
+						<div class="message-text">
+							<div class="top flex align-center gap-24">
+								<p class="font-weight-700">{{ message.sender }}</p>
+								<p class="font-small">{{ message.time }} Uhr</p>
+							</div>
+							<div class="text">
+								<p>{{ message.text }}</p>
+							</div>
+							<div class="bottom flex align-center gap-24">
+								<p class="blue-font">2 Antworten</p>
+								<p class="font-small">Letzte Antwort 14:56</p>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			}
 		}
 		}
 		} @else {

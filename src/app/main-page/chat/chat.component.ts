@@ -102,17 +102,12 @@ export class ChatComponent {
     const message: Messenges = new Messenges({
       channel: this.globalVariables.activeChannel.name,
       text: this.description,
-      time: this.currentTime(),
+      time: this.globalVariables.currentTime(),
       sender: this.globalVariables.signed_in_member.displayName,
       avatar: this.globalVariables.signed_in_member.photoURL,
       creationDate: new Date().toISOString().slice(0, 10)
     })
     this.channelFirestore.addMessage(message)
     this.description = '';
-  }
-
-  currentTime() {
-    let date = new Date();
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 }
