@@ -1,58 +1,51 @@
 <div class="chat">
 	<div class="info-top">
-		<div (click)="openDialog()" class="team-name">
-			<img src="./assets/img/channels/tag.svg" alt="">
-			<h3>Name</h3>
-			<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
-		</div>
+	  <div (click)="openDialog()" class="team-name">
+		<img src="./assets/img/channels/tag.svg" alt="">
+		<h3>Name</h3>
+		<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
+	  </div>
 	</div>
 	<div class="chat-block flex">
-		@for (group of (this.channelFirestore.groupedDirectMessages| keyvalue); track $index) {
-		@if (group.key == globalVariables.signed_in_member.displayName) {
-		@for (memberGroup of group.value; track $index) {
-		@if (memberGroup.receiver == globalVariables.active_privatechat) {
-			@for (message of memberGroup.messages; track $index) {
-				<div (click)="test(memberGroup)" class="date-block">
-					<div class="date">
-						<p>{{ memberGroup.key }}</p>
-					</div>
-					<div class="message flex"
-						[ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === memberGroup.sender}">
-						<img src="{{ message.avatar }}" alt="">
-						<div class="message-text">
-							<div class="top flex align-center gap-24">
-								<p class="font-weight-700">{{ message.sender }}</p>
-								<p class="font-small">{{ message.time }} Uhr</p>
-							</div>
-							<div class="text">
-								<p>{{ message.text }}</p>
-							</div>
-							<div class="bottom flex align-center gap-24">
-								<p class="blue-font">2 Antworten</p>
-								<p class="font-small">Letzte Antwort 14:56</p>
-							</div>
-						</div>
-					</div>
+	  <ng-container *ngFor="let group of (this.channelFirestore.groupedDirectMessages | keyvalue); trackBy: trackByFn">
+		<ng-container *ngIf="isRelevantGroup(group.key)">
+		  <ng-container *ngFor="let message of group.value; trackBy: trackByFn">
+			<div class="date-block">
+			  <div class="date">
+				<p>{{ message.creationDate }}</p>
+			  </div>
+			  <div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+				<img src="{{ message.avatar }}" alt="">
+				<div class="message-text">
+				  <div class="top flex align-center gap-24">
+					<p class="font-weight-700">{{ message.sender }}</p>
+					<p class="font-small">{{ message.time }} Uhr</p>
+				  </div>
+				  <div class="text">
+					<p>{{ message.text }}</p>
+				  </div>
+				  <div class="bottom flex align-center gap-24">
+					<p class="blue-font">2 Antworten</p>
+					<p class="font-small">Letzte Antwort 14:56</p>
+				  </div>
 				</div>
-			}
-		}
-		}
-		} @else {
-		<p>Dies ist der Beginn einer neuen Konversation</p>
-		}
-		}
+			  </div>
+			</div>
+		  </ng-container>
+		</ng-container>
+	  </ng-container>
 	</div>
 	<div class="writing-box">
-		<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
-		<div class="bottom-icons">
-			<div class="reactions">
-				<img src="./assets/img/chat/add-reaction.svg" alt="">
-				<img src="./assets/img/chat/add-emoji.svg" alt="">
-				<img src="./assets/img/chat/tag-people.svg" alt="">
-			</div>
-			<div class="send-message">
-				<img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
-			</div>
+	  <input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
+	  <div class="bottom-icons">
+		<div class="reactions">
+		  <img src="./assets/img/chat/add-reaction.svg" alt="">
+		  <img src="./assets/img/chat/add-emoji.svg" alt="">
+		  <img src="./assets/img/chat/tag-people.svg" alt="">
 		</div>
+		<div class="send-message">
+		  <img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
+		</div>
+	  </div>
 	</div>
-</div>
+  </div>

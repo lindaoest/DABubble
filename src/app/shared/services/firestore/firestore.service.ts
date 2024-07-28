@@ -50,10 +50,10 @@ export class FirestoreService {
 
     this.unsubDirectMessage = onSnapshot(this.getDocRef('direct-message'), (doc) => {
       doc.forEach(element => {
-        this.direct_message.push(this.setObjectDirectMessage2(element.data(), element.id))
+        this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
       });
-      this.groupedDirectMessages = this.firestoreHelper.groupDirectMessagesBySender(this.direct_message);
-      console.log('direct-message', this.direct_message)
+      this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(this.direct_message);
+      console.log('direct-message', this.groupedDirectMessages)
     });
   }
 
@@ -100,15 +100,10 @@ export class FirestoreService {
       id: id,
       sender: obj.sender,
       receiver: obj.receiver,
-      messages:
-      [
-        {
-          text: obj.messages.text,
-          time: obj.messages.time,
-          avatar: obj.messages.avatar,
-          creationDate: obj.messages.creationDate
-        }
-      ]
+      text: obj.text,
+      time: obj.time,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate
     }
   }
 

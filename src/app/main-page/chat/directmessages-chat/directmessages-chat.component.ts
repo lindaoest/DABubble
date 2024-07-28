@@ -15,10 +15,10 @@ export class DirectmessagesChatComponent {
 
   description: string = '';
 
-  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {}
+  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   openDialog() {
-    
+
   }
 
   addMessage() {
@@ -32,4 +32,16 @@ export class DirectmessagesChatComponent {
   test(m: string) {
     console.log('m', m)
   }
+
+  isRelevantGroup(key: string): boolean {
+    const signedInMember = this.globalVariables.signed_in_member.displayName;
+    const activePrivateChat = this.globalVariables.active_privatechat;
+    const participants = [signedInMember, activePrivateChat].sort().join('-');
+    return key === participants;
+  }
+
+  trackByFn(index: number, item: any): number {
+    return index;
+  }
+
 }

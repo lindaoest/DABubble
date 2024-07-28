@@ -11,20 +11,20 @@ export class FirestoreHelperService {
 
   allMessages(obj: any): { text: any; time: any; avatar: any; creationDate: any; }[] | undefined {
     if (obj.messages) {
-        let allMessages = [];
-        for (let i = 0; i < obj.messages.length; i++) {
-            let message = obj.messages[i];
-            allMessages.push({
-                text: message.text,
-                time: message.time,
-                avatar: message.avatar,
-                creationDate: message.creationDate
-            });
-        }
-        return allMessages;
+      let allMessages = [];
+      for (let i = 0; i < obj.messages.length; i++) {
+        let message = obj.messages[i];
+        allMessages.push({
+          text: message.text,
+          time: message.time,
+          avatar: message.avatar,
+          creationDate: message.creationDate
+        });
+      }
+      return allMessages;
     }
     return undefined;
-}
+  }
 
   groupMessagesByDateAndChannel(messages: any[]): { [channel: string]: { [date: string]: any[] } } {
     return messages.reduce((groups, message) => {
@@ -48,21 +48,44 @@ export class FirestoreHelperService {
     }, {});
   }
 
-  groupDirectMessagesBySender(direct_messages: any[]): { [key: string]: any[] } {
+  // groupDirectMessagesBySender(direct_messages: any[]): { [key: string]: any[] } {
+  //   return direct_messages.reduce((groups, direct_message) => {
+  //     if (!direct_message.sender) {
+  //       console.warn('direct_message:', direct_message);
+  //       return groups;
+  //     }
+  //     const sender = direct_message.sender;
+
+  //     if (!groups[sender]) {
+  //       groups[sender] = [];
+  //     }
+
+  //     groups[sender].push(direct_message);
+  //     return groups;
+  //   }, {});
+  // }
+
+  groupDirectMessages(direct_messages: any[]): { [key: string]: any[] } {
     return direct_messages.reduce((groups, direct_message) => {
-      if (!direct_message.sender) {
+      if (!direct_message.sender || !direct_message.receiver) {
         console.warn('direct_message:', direct_message);
         return groups;
       }
-      const sender = direct_message.sender;
 
-      if (!groups[sender]) {
-        groups[sender] = [];
+      const senderReceiverKey = this.createSenderReceiverKey(direct_message.sender, direct_message.receiver);
+
+      if (!groups[senderReceiverKey]) {
+        groups[senderReceiverKey] = [];
       }
 
-      groups[sender].push(direct_message);
+      groups[senderReceiverKey].push(direct_message);
       return groups;
     }, {});
+  }
+
+  createSenderReceiverKey(sender: string, receiver: string): string {
+    const participants = [sender, receiver].sort();  // Ensure consistent ordering
+    return participants.join('-');
   }
 
   getCleanJson(obj: Member) {
@@ -84,10 +107,10 @@ export class FirestoreHelperService {
 
   getCleanJsonForDirectMessage(obj: any) {
     return {
-        text: obj.text,
-        time: obj.time,
-        avatar: obj.avatar,
-        creationDate: obj.creationDate
+      text: obj.text,
+      time: obj.time,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate
     }
   }
 }
