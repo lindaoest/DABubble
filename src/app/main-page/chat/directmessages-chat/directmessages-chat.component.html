@@ -1,8 +1,8 @@
 <div class="chat">
 	<div class="info-top">
 	  <div (click)="openDialog()" class="team-name">
-		<img src="./assets/img/channels/tag.svg" alt="">
-		<h3>Name</h3>
+		<img class="avatar" src="{{ activeMember[0].avatar }}" alt="">
+		<h3>{{ globalVariables.active_privatechat }}</h3>
 		<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
 	  </div>
 	</div>
@@ -23,10 +23,6 @@
 				  </div>
 				  <div class="text">
 					<p>{{ message.text }}</p>
-				  </div>
-				  <div class="bottom flex align-center gap-24">
-					<p class="blue-font">2 Antworten</p>
-					<p class="font-small">Letzte Antwort 14:56</p>
 				  </div>
 				</div>
 			  </div>

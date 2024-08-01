@@ -1,7 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog
+} from '@angular/material/dialog';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+
+export interface DialogData {
+  name: string;
+  avatar: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +22,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 })
 export class ProfileComponent {
 
-  constructor(public dialogRef: MatDialogRef<ProfileComponent>, public dialog: MatDialog, public globalVariables: GlobalVariablesService) {}
+  constructor(public dialogRef: MatDialogRef<ProfileComponent>, public dialog: MatDialog, public globalVariables: GlobalVariablesService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   editProfile() {
     this.dialogRef.close();

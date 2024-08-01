@@ -21,7 +21,13 @@
 	.team-name {
 		@include displayFlex();
 		gap: 8px;
-		cursor: pointer
+		cursor: pointer;
+
+		.avatar {
+			border-radius: 50%;
+    		width: 65px;
+    		height: 65px;
+		}
 	}
 
 	.members {

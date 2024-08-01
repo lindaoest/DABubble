@@ -4,10 +4,12 @@
 			<h3 class="font-weight-700">Profile</h3>
 			<img class="close" (click)="onNoClick()" src="../assets/img/thread/close.svg" alt="">
 		</div>
-		<img class="avatar" src="{{ globalVariables.signed_in_member.photoURL }}" alt="">
+		<img class="avatar" src="{{ data.avatar }}" alt="">
 		<div class="edit">
-			<h2>{{ globalVariables.signed_in_member.displayName }}</h2>
-			<p (click)="editProfile()" class="edit blue-font">Bearbeiten</p>
+			<h2>{{ data.name }}</h2>
+			@if (data.name == globalVariables.signed_in_member.displayName) {
+				<p (click)="editProfile()" class="edit blue-font">Bearbeiten</p>
+			}
 		</div>
 		<div class="active">
 			<p>Aktiv</p>
@@ -16,6 +18,6 @@
 			<img src="../assets/img/log-in/mail.svg" alt="">
 			<p class="font-weight-700">E-Mail-Adresse</p>
 		</div>
-		<p class="email-address blue-font">{{ globalVariables.signed_in_member.email }}</p>
+		<p class="email-address blue-font">{{ data.email }}</p>
 	</div>
 </div>

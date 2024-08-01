@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../../shared/services/global-variables/global-variables.service';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileComponent } from '../../profile/profile.component';
+import { DirectMessage } from '../../../../models/direct-message.class';
 
 @Component({
   selector: 'app-directmessages-chat',
@@ -14,23 +17,22 @@ import { FormsModule } from '@angular/forms';
 export class DirectmessagesChatComponent {
 
   description: string = '';
+  activeMember: any;
 
-  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
-
-  openDialog() {
-
-  }
-
-  addMessage() {
-
-  }
+  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService, public dialog: MatDialog,) { }
 
   ngOnInit() {
-    console.log('active', this.globalVariables.active_privatechat)
+    this.activeMember = this.channelFirestore.members.filter(member => member.member === this.globalVariables.active_privatechat);
   }
 
-  test(m: string) {
-    console.log('m', m)
+  openDialog() {
+    this.dialog.open(ProfileComponent, {
+      data: {
+        name: this.activeMember[0].member,
+        avatar: this.activeMember[0].avatar,
+        email: this.activeMember[0].email
+      }
+    });
   }
 
   isRelevantGroup(key: string): boolean {
@@ -42,6 +44,20 @@ export class DirectmessagesChatComponent {
 
   trackByFn(index: number, item: any): number {
     return index;
+  }
+
+  addMessage() {
+    const message: DirectMessage = new DirectMessage({
+      sender: this.globalVariables.signed_in_member.displayName,
+      receiver: this.globalVariables.active_privatechat,
+      text: this.description,
+      time: this.globalVariables.currentTime(),
+      avatar: this.globalVariables.signed_in_member.photoURL,
+      creationDate: new Date().toISOString().slice(0, 10)
+    })
+
+    this.channelFirestore.addDirectMessage(message);
+    this.description = '';
   }
 
 }

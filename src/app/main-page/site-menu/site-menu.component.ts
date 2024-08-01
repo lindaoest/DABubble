@@ -39,6 +39,8 @@ export class SiteMenuComponent {
   }
 
   openChat(channelName: string) {
+    this.globalVariables.open_directmessages_chat = false;
+    this.globalVariables.create_new_chat = false;
     this.globalVariables.activeChat = channelName;
     if (this.globalVariables.activeChannel) {
       // if(!channelName) {
@@ -76,10 +78,12 @@ export class SiteMenuComponent {
   }
 
   open_new_chat() {
+    this.globalVariables.open_directmessages_chat = false;
     this.globalVariables.create_new_chat = true;
   }
 
   async open_directmessages_chat(receiver: string) {
+    this.globalVariables.create_new_chat = false;
     this.globalVariables.open_directmessages_chat = true;
     localStorage.setItem('active privatechat', JSON.stringify(receiver));
 
@@ -88,5 +92,17 @@ export class SiteMenuComponent {
     if(get_active_chat) {
       this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
     }
+  }
+
+  uniqueReceivers(messages: any[]): any[] {
+    const seen = new Set();
+    return messages.filter(message => {
+      if (seen.has(message.receiver)) {
+        return false;
+      } else {
+        seen.add(message.receiver);
+        return true;
+      }
+    });
   }
 }

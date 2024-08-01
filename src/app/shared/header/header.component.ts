@@ -46,6 +46,13 @@ export class HeaderComponent {
   }
 
   openProfile(): void {
-    this.dialog.open(ProfileComponent, {});
+    this.dialog.open(ProfileComponent, {
+      data: {
+        name: this.globalVariables.signed_in_member.displayName,
+        avatar: this.globalVariables.signed_in_member.photoURL,
+        email: this.globalVariables.signed_in_member.email
+
+      }
+    });
   }
 }
