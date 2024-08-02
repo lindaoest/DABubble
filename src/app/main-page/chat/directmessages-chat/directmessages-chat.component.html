@@ -7,29 +7,31 @@
 	  </div>
 	</div>
 	<div class="chat-block flex">
-	  <ng-container *ngFor="let group of (this.channelFirestore.groupedDirectMessages | keyvalue); trackBy: trackByFn">
-		<ng-container *ngIf="isRelevantGroup(group.key)">
-		  <ng-container *ngFor="let message of group.value; trackBy: trackByFn">
-			<div class="date-block">
-			  <div class="date">
-				<p>{{ message.creationDate }}</p>
-			  </div>
-			  <div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
-				<img src="{{ message.avatar }}" alt="">
-				<div class="message-text">
-				  <div class="top flex align-center gap-24">
-					<p class="font-weight-700">{{ message.sender }}</p>
-					<p class="font-small">{{ message.time }} Uhr</p>
-				  </div>
-				  <div class="text">
-					<p>{{ message.text }}</p>
-				  </div>
-				</div>
-			  </div>
-			</div>
-		  </ng-container>
+		<ng-container *ngFor="let group of (this.channelFirestore.groupedDirectMessages | keyvalue); trackBy: trackByFn">
+			<ng-container *ngIf="isRelevantGroup(group.key)">
+				<ng-container *ngFor="let dateGroup of (group.value | keyvalue); trackBy: trackByFn">
+					<div class="date-block">
+						<div class="date">
+							<p>{{ dateGroup.key }}</p>
+						</div>
+						<ng-container *ngFor="let message of dateGroup.value; trackBy: trackByFn">
+							<div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+								<img src="{{ message.avatar }}" alt="">
+								<div class="message-text">
+									<div class="top flex align-center gap-24">
+										<p class="font-weight-700">{{ message.sender }}</p>
+										<p class="font-small">{{ message.time }} Uhr</p>
+									</div>
+									<div class="text">
+										<p>{{ message.text }}</p>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+			</ng-container>
 		</ng-container>
-	  </ng-container>
 	</div>
 	<div class="writing-box">
 	  <input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">

@@ -48,37 +48,26 @@ export class FirestoreHelperService {
     }, {});
   }
 
-  // groupDirectMessagesBySender(direct_messages: any[]): { [key: string]: any[] } {
-  //   return direct_messages.reduce((groups, direct_message) => {
-  //     if (!direct_message.sender) {
-  //       console.warn('direct_message:', direct_message);
-  //       return groups;
-  //     }
-  //     const sender = direct_message.sender;
-
-  //     if (!groups[sender]) {
-  //       groups[sender] = [];
-  //     }
-
-  //     groups[sender].push(direct_message);
-  //     return groups;
-  //   }, {});
-  // }
-
   groupDirectMessages(direct_messages: any[]): { [key: string]: any[] } {
     return direct_messages.reduce((groups, direct_message) => {
-      if (!direct_message.sender || !direct_message.receiver) {
+      if (!direct_message.sender || !direct_message.receiver || !direct_message.creationDate) {
         console.warn('direct_message:', direct_message);
         return groups;
       }
 
       const senderReceiverKey = this.createSenderReceiverKey(direct_message.sender, direct_message.receiver);
+      const dateKey = direct_message.creationDate;
 
       if (!groups[senderReceiverKey]) {
-        groups[senderReceiverKey] = [];
+        groups[senderReceiverKey] = {};
       }
 
-      groups[senderReceiverKey].push(direct_message);
+      if (!groups[senderReceiverKey][dateKey]) {
+        groups[senderReceiverKey][dateKey] = [];
+      }
+
+      groups[senderReceiverKey][dateKey].push(direct_message);
+      console.log('groups', groups)
       return groups;
     }, {});
   }
@@ -87,6 +76,7 @@ export class FirestoreHelperService {
     const participants = [sender, receiver].sort();  // Ensure consistent ordering
     return participants.join('-');
   }
+
 
   getCleanJson(obj: Member) {
     return {

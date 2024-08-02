@@ -44,19 +44,29 @@
 		</div>
 		<div class="directmessage-container" [ngClass]="{'open' : directmessage_open}">
 			@for (group of (this.channelFirestore.groupedDirectMessages| keyvalue); track $index) {
-				@if (uniqueReceivers(group.value).length > 0) {
-					@for (groupValue of uniqueReceivers(group.value); track $index) {
-						@if (groupValue.sender == globalVariables.signed_in_member.displayName) {
-							<div (click)="open_directmessages_chat(groupValue.receiver)" class="direct-message">
-								<div class="avatar">
-									<img src="./assets/img/avatar/avatar-1.svg" alt="">
-									<div class="online"></div>
-								</div>
-								<p>{{ groupValue.receiver }}</p>
-							</div>
-						}
-					}
-				}
+			@for (dateGroup of (group.value | keyvalue); track $index) {
+			@for (groupValue of dateGroup.value; track $index) {
+			@for (item of visiblePerson(groupValue); track $index) {
+			@if (groupValue.sender == globalVariables.signed_in_member.displayName) {
+			<div (click)="open_directmessages_chat(groupValue.receiver)" class="direct-message">
+				<div (click)="test(groupValue)" class="avatar">
+					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+					<div class="online"></div>
+				</div>
+				<p>{{ item }}</p>
+			</div>
+			} @else if(groupValue.receiver == globalVariables.signed_in_member.displayName) {
+			<div (click)="open_directmessages_chat(groupValue.sender)" class="direct-message">
+				<div (click)="test(groupValue)" class="avatar">
+					<img src="./assets/img/avatar/avatar-1.svg" alt="">
+					<div class="online"></div>
+				</div>
+				<p>{{ item }}</p>
+			</div>
+			}
+			}
+			}
+			}
 			}
 		</div>
 	</div>

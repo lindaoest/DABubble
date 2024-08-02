@@ -89,20 +89,38 @@ export class SiteMenuComponent {
 
     let get_active_chat = localStorage.getItem('active privatechat');
 
-    if(get_active_chat) {
+    if (get_active_chat) {
       this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
     }
   }
 
-  uniqueReceivers(messages: any[]): any[] {
-    const seen = new Set();
-    return messages.filter(message => {
-      if (seen.has(message.receiver)) {
-        return false;
-      } else {
-        seen.add(message.receiver);
-        return true;
-      }
-    });
+  personObjArray: string[] = [];
+
+  visiblePerson(personObj: any): any[] {
+    if(!this.personObjArray.includes(personObj.receiver)) {
+      this.personObjArray.push(personObj.receiver)
+    }
+    return this.personObjArray;
+  }
+
+  uniqueReceivers(messages: any) {
+    console.log('messages', messages)
+    // const receivers = new Set();
+    // messages.forEach(message => {
+    //   if (message.sender === this.globalVariables.signed_in_member.displayName) {
+    //     receivers.add(message.receiver);
+    //   } else if (message.receiver === this.globalVariables.signed_in_member.displayName) {
+    //     receivers.add(message.sender);
+    //   }
+    // });
+    // return Array.from(receivers);
+  }
+
+  trackByFn(index: number, item: any): number {
+    return index;
+  }
+
+  test(m: any) {
+    console.log('test', m)
   }
 }
