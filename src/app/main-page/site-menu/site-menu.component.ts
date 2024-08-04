@@ -119,8 +119,4 @@ export class SiteMenuComponent {
   trackByFn(index: number, item: any): number {
     return index;
   }
-
-  test(m: any) {
-    console.log('test', m)
-  }
 }

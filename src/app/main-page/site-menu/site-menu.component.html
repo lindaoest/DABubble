@@ -49,7 +49,7 @@
 			@for (item of visiblePerson(groupValue); track $index) {
 			@if (groupValue.sender == globalVariables.signed_in_member.displayName) {
 			<div (click)="open_directmessages_chat(groupValue.receiver)" class="direct-message">
-				<div (click)="test(groupValue)" class="avatar">
+				<div class="avatar">
 					<img src="./assets/img/avatar/avatar-1.svg" alt="">
 					<div class="online"></div>
 				</div>
