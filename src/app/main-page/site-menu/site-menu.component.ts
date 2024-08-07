@@ -25,6 +25,7 @@ export class SiteMenuComponent {
   channel_open: Boolean = false;
   directmessage_open: Boolean = false;
   filteredChats: Messenges[] = [];
+  personObjArray: string[] = [];
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
@@ -66,7 +67,6 @@ export class SiteMenuComponent {
     this.filteredChats.forEach(element => {
       this.globalVariables.messenges.push(this.channelFirestore.setObjectMessenges(element, ''));
     });
-    console.log('filteredChats', this.globalVariables.messenges)
   }
 
   channel_open_function() {
@@ -75,6 +75,18 @@ export class SiteMenuComponent {
 
   directmessage_open_function() {
     this.directmessage_open = !this.directmessage_open;
+
+    this.channelFirestore.direct_message.forEach(message => {
+      if (message.sender == this.globalVariables.signed_in_member.displayName) {
+        if(!this.personObjArray.includes(message.receiver)) {
+          this.personObjArray.push(message.receiver);
+        }
+      } else if(message.receiver == this.globalVariables.signed_in_member.displayName) {
+        if(!this.personObjArray.includes(message.sender)) {
+          this.personObjArray.push(message.sender);
+        }
+      }
+    });
   }
 
   open_new_chat() {
@@ -94,17 +106,8 @@ export class SiteMenuComponent {
     }
   }
 
-  personObjArray: string[] = [];
-
-  visiblePerson(personObj: any): any[] {
-    if(!this.personObjArray.includes(personObj.receiver)) {
-      this.personObjArray.push(personObj.receiver)
-    }
-    return this.personObjArray;
-  }
-
   uniqueReceivers(messages: any) {
-    console.log('messages', messages)
+    // console.log('messages', messages)
     // const receivers = new Set();
     // messages.forEach(message => {
     //   if (message.sender === this.globalVariables.signed_in_member.displayName) {

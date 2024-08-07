@@ -49,6 +49,7 @@ export class FirestoreService {
     });
 
     this.unsubDirectMessage = onSnapshot(this.getDocRef('direct-message'), (doc) => {
+      this.direct_message = [];
       doc.forEach(element => {
         this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
       });

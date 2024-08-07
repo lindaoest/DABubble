@@ -67,7 +67,6 @@ export class FirestoreHelperService {
       }
 
       groups[senderReceiverKey][dateKey].push(direct_message);
-      console.log('groups', groups)
       return groups;
     }, {});
   }
