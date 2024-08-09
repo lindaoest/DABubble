@@ -29,14 +29,20 @@ export class GlobalVariablesService {
   messenges: Messenges[] = [];
   create_new_chat: Boolean = false;
   open_directmessages_chat: Boolean = false;
-  active_privatechat: string = '';
+  // active_privatechat: string = '';
+
+  private active_privatechatSubject = new Subject<string>();
+  active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();
 
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();
 
-
   set activeChat(value: string) {
     this.activeChatSubject.next(value);
+  }
+
+  set active_privatechat(value: string) {
+    this.active_privatechatSubject.next(value);
   }
 
   constructor() {

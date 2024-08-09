@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileComponent } from '../../profile/profile.component';
 import { DirectMessage } from '../../../../models/direct-message.class';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-directmessages-chat',
@@ -18,11 +19,23 @@ export class DirectmessagesChatComponent {
 
   description: string = '';
   activeMember: any;
+  active_privatechatSubscription: Subscription = new Subscription;
 
   constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService, public dialog: MatDialog,) { }
 
   ngOnInit() {
-    this.activeMember = this.channelFirestore.members.filter(member => member.member === this.globalVariables.active_privatechat);
+    // this.activeMember = this.channelFirestore.members.filter(member => member.member === this.globalVariables.active_privatechat);
+
+    this.active_privatechatSubscription = this.globalVariables.active_privatechat$.subscribe(subscriber => {
+      this.activeMember = this.channelFirestore.members.filter(member => member.member === subscriber);
+      console.log('subscriber', subscriber)
+    });
+  }
+
+  ngOnDestroy() {
+    if(this.active_privatechatSubscription) {
+      this.active_privatechatSubscription.unsubscribe();
+    }
   }
 
   openDialog() {
