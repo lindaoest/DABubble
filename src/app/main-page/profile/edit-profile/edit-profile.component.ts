@@ -7,6 +7,7 @@ import { Member } from '../../../../models/member.class';
 import { getAuth, signOut, updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../../app.config-private';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -24,20 +25,17 @@ export class EditProfileComponent {
 
   edit_profile_form: FormGroup = new FormGroup({});
 
-  constructor(public dialogRef: MatDialogRef<EditProfileComponent>, public globalVariables: GlobalVariablesService, public firestore: FirestoreService) { }
+  constructor(public dialogRef: MatDialogRef<EditProfileComponent>, public globalVariables: GlobalVariablesService, public firestore: FirestoreService, private router: Router,) { }
 
   ngOnInit() {
     this.edit_profile_form = new FormGroup({
       member: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.email),
+      email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 
   onSubmit() {
-
     const updateMember = this.firestore.members.find(obj => obj.email === this.globalVariables.signed_in_member.email && obj.member === this.globalVariables.signed_in_member.displayName);
-
-    console.log('updateMember', updateMember)
 
     const member: Member = {
       id: updateMember.id,
@@ -57,6 +55,8 @@ export class EditProfileComponent {
     const newEmail = this.edit_profile_form.value.email;
     const newUsername = this.edit_profile_form.value.member;
 
+    this.globalVariables.verifyText = true;
+
     if (user) {
       updateProfile(user, {
         displayName: newUsername
@@ -73,7 +73,14 @@ export class EditProfileComponent {
     const auth = getAuth();
     try {
         verifyBeforeUpdateEmail(user, email);
-        signOut(auth);
+        setTimeout(() => {
+          signOut(auth).then(() => {
+            this.router.navigate(['log-in']);
+            this.globalVariables.verifyText = false;
+          }).catch((error) => {
+            console.log('logOut', error);
+          });
+        }, 4000);
     } catch(error) {
 
     }

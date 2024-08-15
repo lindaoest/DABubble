@@ -29,6 +29,7 @@ export class GlobalVariablesService {
   messenges: Messenges[] = [];
   create_new_chat: Boolean = false;
   open_directmessages_chat: Boolean = false;
+  verifyText: Boolean = false;
   // active_privatechat: string = '';
 
   private active_privatechatSubject = new Subject<string>();

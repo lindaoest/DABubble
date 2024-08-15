@@ -54,5 +54,7 @@ export class HeaderComponent {
 
       }
     });
+
+    this.openLightboxVar = false;
   }
 }
