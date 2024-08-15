@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../shared/services/firestore/firestore.service';
-import { finalize } from 'rxjs/operators';
 import { Firestore } from '@angular/fire/firestore';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { Member } from '../../models/member.class';

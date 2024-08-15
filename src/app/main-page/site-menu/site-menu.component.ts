@@ -51,7 +51,7 @@ export class SiteMenuComponent {
       if (foundChannel) {
         this.globalVariables.activeChannel = foundChannel;
         this.filterChats();
-        console.log(this.globalVariables.activeChannel)
+        // console.log(this.globalVariables.activeChannel)
       } else {
         console.warn('Channel not found');
       }

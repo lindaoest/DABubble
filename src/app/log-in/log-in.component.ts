@@ -4,7 +4,7 @@ import { FirestoreService } from '../shared/services/firestore/firestore.service
 import { Router, RouterModule } from '@angular/router';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../app.config-private';
 import { Member } from '../../models/member.class';
@@ -18,14 +18,12 @@ import { Member } from '../../models/member.class';
 })
 export class LogInComponent {
 
-  newMember: Member = {
+  guestMember: Member = {
     member: 'Gast',
     email: 'guest@guestaccount.com',
     password: 'guestlogin12dabubble78&',
     avatar: './assets/img/channels/profile.svg'
   }
-
-  user_already_exits: Boolean = false;
 
   email: string = '';
   password: string = '';
@@ -46,25 +44,6 @@ export class LogInComponent {
       email: new FormControl('', Validators.email),
       password: new FormControl('', Validators.required),
     });
-
-
-
-    if (!this.user_already_exits) {
-      await createUserWithEmailAndPassword(this.auth, this.newMember.email, this.newMember.password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-
-          updateProfile(user, {
-            displayName: this.newMember.member, photoURL: this.newMember.avatar
-          })
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.error('Fehler bei der Registrierung:', errorCode, errorMessage);
-          this.user_already_exits = true;
-        });
-    }
 
   }
 
@@ -91,12 +70,8 @@ export class LogInComponent {
   }
 
   async guestLogin() {
-    if (!this.user_already_exits) {
-      this.user_already_exits = true;
-      this.channelFirestore.addMember(this.newMember);
-      await this.signInWithEmail(this.newMember.email, this.newMember.password);
-      this.router.navigate(['']);
-    }
+    await this.signInWithEmail(this.guestMember.email, this.guestMember.password);
+    this.router.navigate(['']);
   }
 
   googleAuth() {
@@ -111,16 +86,19 @@ export class LogInComponent {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        console.log('user', user)
+        const newMember: Member = {
+          member: user.displayName || '',
+          email: user.email || '',
+          password: '',
+          avatar: user.photoURL || ''
+        }
+
+        const emailAlreadyUsed = this.channelFirestore.members.filter(userEmail => userEmail.email === user.email);
+        if (emailAlreadyUsed.length == 0) {
+          this.channelFirestore.addMember(newMember);
+        }
       }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        console.error(error)
       });
 
     this.router.navigate(['']);
