@@ -39,10 +39,29 @@ export class DialogMemberExistingChannelComponent {
     avatar: ''
   };
   newMemberTrue: Boolean = true;
+  notIncludedMembers: Member[] = [];
+  already_added_members: Member[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<DialogMemberExistingChannelComponent>, public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+  showMemberBox() {
+    const foundChannel = this.channelFirestore.channels.find(obj => obj.name === this.globalVariables.activeChannel.name);
+    this.channelFirestore.channels.forEach(element => {
+      if (foundChannel) {
+        if (foundChannel.name === element.name) {
+          element.members.forEach( member => {
+            this.already_added_members.push(member);
+          })
+        }
+      }
+    })
+
+    this.notIncludedMembers = this.channelFirestore.members.filter(member =>
+      !this.already_added_members.some(added_member => added_member.member === member.member)
+    );
+  }
 
   openDialog(): void {
     this.dialogRef.close();
@@ -79,9 +98,8 @@ export class DialogMemberExistingChannelComponent {
     this.dialogRef.close();
   }
 
-  addMember(m:Member, i: number) {
-    const foundName = this.channelFirestore.members.find(obj => obj.member === m.member);
-    this.add_new_members_array.push(foundName);
+  addMember(m: Member) {
+    this.add_new_members_array.push(m);
 
     this.checkMemberArray();
   }
@@ -93,7 +111,7 @@ export class DialogMemberExistingChannelComponent {
   }
 
   checkMemberArray() {
-    if(this.add_new_members_array.length > 0) {
+    if (this.add_new_members_array.length > 0) {
       this.newMemberTrue = false;
     } else {
       this.newMemberTrue = true;
@@ -101,6 +119,10 @@ export class DialogMemberExistingChannelComponent {
   }
 
   addToChannel() {
-    this.channelFirestore.updateArray('channels', this.globalVariables.activeChannel.id, this.add_new_members_array[0])
+    this.add_new_members_array.forEach(element => {
+      this.channelFirestore.updateArray('channels', this.globalVariables.activeChannel.id, element)
+    })
+
+    this.dialogRef.close();
   }
 }

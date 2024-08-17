@@ -19,16 +19,18 @@
 				</div>
 				}
 			</div>
-			<input type="text" placeholder="Name eingeben">
+			<input (click)="showMemberBox()" type="text" placeholder="Name eingeben">
 		</div>
-		<div class="members-box">
-			@for (member of this.channelFirestore.members; track member; let index = $index) {
-			<div (click)="addMember(member, index)" class="member">
-				<img src="{{ member.avatar }}" alt="">
-				<p>{{ member.member }}</p>
-			</div>
-			}
-		</div>
+    @if (notIncludedMembers.length > 0) {
+      <div class="members-box">
+        @for (member of notIncludedMembers; track member; let index = $index) {
+        <div (click)="addMember(member)" class="member">
+          <img src="{{ member.avatar }}" alt="">
+          <p>{{ member.member }}</p>
+        </div>
+        }
+      </div>
+    }
 	</div>
 	<div class="actions">
 		<button (click)="addToChannel()" class="button1" [disabled]="newMemberTrue">Hinzufügen</button>
