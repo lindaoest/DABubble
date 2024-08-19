@@ -9,6 +9,7 @@ import { GlobalVariablesService } from '../../shared/services/global-variables/g
 import { Messenges } from '../../../models/messenges.class';
 import { DirectmessagesChatComponent } from '../chat/directmessages-chat/directmessages-chat.component';
 import { DirectMessage } from '../../../models/direct-message.class';
+import { Member } from '../../../models/member.class';
 
 @Component({
   selector: 'app-site-menu',
@@ -26,11 +27,15 @@ export class SiteMenuComponent {
   directmessage_open: Boolean = false;
   filteredChats: Messenges[] = [];
   personObjArray: string[] = [];
+  channels: Channel[] = [];
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   getList() {
-    return this.channelFirestore.channels;
+    this.channels = this.channelFirestore.channels.filter((channel: Channel) =>
+      channel.members.some((user: Member) => user && user.member === this.globalVariables.signed_in_member.displayName)
+    );
+    return this.channels;
   }
 
   openDialog(): void {

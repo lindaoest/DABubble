@@ -42,6 +42,7 @@ export class FirestoreService {
     });
 
     this.unsubMessenges = onSnapshot(this.getDocRef('messenges'), (doc) => {
+      this.messenges = [];
       doc.forEach(element => {
         this.messenges.push(this.setObjectMessenges(element.data(), element.id))
       });

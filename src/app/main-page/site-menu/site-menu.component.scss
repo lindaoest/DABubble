@@ -31,8 +31,13 @@
 		gap: 16px;
 	}
 
+  .add-channel-svg {
+    cursor: pointer;
+  }
+
 	.arrow {
 		transform: rotate(-90deg);
+    cursor: pointer;
 
 		&.open {
 			transform: rotate(0);
@@ -49,6 +54,7 @@
 	height: 0;
 	opacity: 0;
 	transition: all 0.2s ease-in-out;
+  cursor: pointer;
 
 	&.open {
 		height: auto;
@@ -72,6 +78,7 @@
 
 		.arrow {
 			transform: rotate(-90deg);
+      cursor: pointer;
 
 			&.open {
 				transform: rotate(0);

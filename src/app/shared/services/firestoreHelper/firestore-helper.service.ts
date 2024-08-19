@@ -44,6 +44,10 @@ export class FirestoreHelperService {
       }
 
       groups[channel][date].push(message);
+
+      // Sortiere die Nachrichten nach Zeit
+      groups[channel][date].sort((a:any, b:any) => a.time.localeCompare(b.time));
+
       return groups;
     }, {});
   }
