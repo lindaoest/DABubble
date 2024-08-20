@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { doc, onSnapshot, collection, addDoc, updateDoc, deleteDoc, arrayUnion } from "firebase/firestore";
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
 import { Messenges } from '../../../../models/messenges.class';
@@ -19,7 +19,15 @@ export class FirestoreService {
   unsubMembers: any;
   unsubMessenges: any;
   unsubDirectMessage: any;
-  channels: Channel[] = [];
+
+  private channelSubject = new BehaviorSubject([]);
+  channels$ = this.channelSubject.asObservable();
+
+  set channels(value: any) {
+    this.channelSubject.next(value);
+  }
+
+  // channels: Channel[] = [];
   members: any[] = [];
   messenges: any[] = [];
   direct_message: any[] = [];
@@ -28,10 +36,12 @@ export class FirestoreService {
 
   constructor(public firestoreHelper: FirestoreHelperService) {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
-      this.channels = [];
+        const tempChannels: any[] = [];  // Temporäres Array erstellen
       doc.forEach(element => {
-        this.channels.push(this.setObject(element.data(), element.id))
+          tempChannels.push(this.setObject(element.data(), element.id));
       });
+      this.channels = tempChannels;  // Das Array über den Setter setzen
+      console.log('tempChannels', tempChannels);
     });
 
     this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
@@ -55,7 +65,7 @@ export class FirestoreService {
         this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
       });
       this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(this.direct_message);
-      console.log('direct-message', this.groupedDirectMessages)
+      // console.log('direct-message', this.groupedDirectMessages)
     });
   }
 

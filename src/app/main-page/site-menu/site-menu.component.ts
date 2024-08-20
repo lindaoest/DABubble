@@ -31,10 +31,18 @@ export class SiteMenuComponent {
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
+  ngOnInit(): void {
+    this.channelFirestore.channels$.subscribe(channels => {
+      console.log('Aktuelle Channels:', channels);
+    });
+  }
+
   getList() {
-    this.channels = this.channelFirestore.channels.filter((channel: Channel) =>
-      channel.members.some((user: Member) => user && user.member === this.globalVariables.signed_in_member.displayName)
-    );
+    this.channelFirestore.channels$.subscribe(channels => {
+      this.channels = channels.filter((channel: Channel) =>
+        channel.members.some((user: Member) => user && user.member === this.globalVariables.signed_in_member.displayName)
+      );
+    });
     return this.channels;
   }
 
@@ -49,20 +57,15 @@ export class SiteMenuComponent {
     this.globalVariables.create_new_chat = false;
     this.globalVariables.activeChat = channelName;
     if (this.globalVariables.activeChannel) {
-      // if(!channelName) {
-      //   this.activeChat = this.channelFirestore.channels[0].name;
-      // }
-      const foundChannel = this.channelFirestore.channels.find(obj => obj.name === channelName);
-      if (foundChannel) {
-        this.globalVariables.activeChannel = foundChannel;
-        this.filterChats();
-        // console.log(this.globalVariables.activeChannel)
-      } else {
-        console.warn('Channel not found');
-      }
-      // this.dialog.open(DialogOverviewChannelComponent, {
-      //   data: this.activeChannel
-      // });
+      this.channelFirestore.channels$.subscribe(channels => {
+        const foundChannel = channels.find((obj:any) => obj.name === channelName);
+        if (foundChannel) {
+          this.globalVariables.activeChannel = foundChannel;
+          this.filterChats();
+        } else {
+          console.warn('Channel not found');
+        }
+      });
     }
   }
 

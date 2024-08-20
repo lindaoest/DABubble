@@ -34,11 +34,18 @@ export class ChatComponent {
   private activeChatSubscription: Subscription = new Subscription;
   activeChat: string = '';
 
+  channelSubscription: Subscription = new Subscription;
+  channels: Channel[] = [];
+
   constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
 
   ngOnInit() {
     this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
       this.activeChat = chat;
+    });
+
+    this.channelSubscription = this.channelFirestore.channels$.subscribe(channels => {
+      this.channels = channels;
     });
 
     onAuthStateChanged(this.auth, (user) => {
@@ -77,15 +84,17 @@ export class ChatComponent {
 
   openDialog(): void {
     if (this.globalVariables.activeChannel) {
-      if (!this.activeChat) {
-        this.activeChat = this.channelFirestore.channels[0].name;
-      }
-      const foundChannel = this.channelFirestore.channels.find(obj => obj.name === this.activeChat);
-      if (foundChannel) {
-        this.globalVariables.activeChannel = foundChannel;
-      } else {
-        console.warn('Channel not found');
-      }
+      this.channelFirestore.channels$.subscribe((channels: any) => {
+        if (!this.activeChat) {
+          this.activeChat = channels[0].name;
+        }
+        const foundChannel = channels.find((obj: any) => obj.name === this.activeChat);
+        if (foundChannel) {
+          this.globalVariables.activeChannel = foundChannel;
+        } else {
+          console.warn('Channel not found');
+        }
+      });
       this.dialog.open(DialogOverviewChannelComponent, {
         data: this.globalVariables.activeChannel
       });
