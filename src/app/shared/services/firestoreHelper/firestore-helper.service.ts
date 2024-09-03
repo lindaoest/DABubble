@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
+import { Messenges } from '../../../../models/messenges.class';
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,17 @@ export class FirestoreHelperService {
       email: obj.email,
       password: obj.password,
       avatar: obj.avatar
+    }
+  }
+
+  getCleanJsonForMessenges(obj: Messenges) {
+    return {
+      channel: obj.channel,
+      text: obj.text,
+      time: obj.time,
+      sender: obj.sender,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate
     }
   }
 

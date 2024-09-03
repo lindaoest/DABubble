@@ -8,6 +8,7 @@ import { getAuth, signOut, updateProfile, verifyBeforeUpdateEmail } from "fireba
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../../app.config-private';
 import { Router } from '@angular/router';
+import { Messenges } from '../../../../models/messenges.class';
 
 @Component({
   selector: 'app-edit-profile',
@@ -36,6 +37,7 @@ export class EditProfileComponent {
 
   onSubmit() {
     const updateMember = this.firestore.members.find(obj => obj.email === this.globalVariables.signed_in_member.email && obj.member === this.globalVariables.signed_in_member.displayName);
+    const updateMessages = this.firestore.messenges.filter(message => message.sender === this.globalVariables.signed_in_member.displayName);
 
     const member: Member = {
       id: updateMember.id,
@@ -45,6 +47,19 @@ export class EditProfileComponent {
       avatar: updateMember.avatar
     }
     this.firestore.updateMember('members', member);
+
+    updateMessages.forEach(updateMessage => {
+      const message: Messenges = {
+        id: updateMessage.id,
+        channel: updateMessage.channel,
+        text: updateMessage.text,
+        time: updateMessage.time,
+        sender: this.edit_profile_form.value.member,
+        avatar: updateMessage.avatar,
+        creationDate: updateMessage.creationDate
+      }
+      this.firestore.updateMessage('messenges', message)
+    })
 
     this.updateAuthentification();
     this.dialogRef.close();

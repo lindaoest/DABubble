@@ -41,7 +41,7 @@ export class FirestoreService {
           tempChannels.push(this.setObject(element.data(), element.id));
       });
       this.channels = tempChannels;  // Das Array über den Setter setzen
-      console.log('tempChannels', tempChannels);
+      console.log('tempChannels', this.channels);
     });
 
     this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
@@ -166,6 +166,12 @@ export class FirestoreService {
 
   async addMessage(data: Messenges) {
     await addDoc(this.getDocRef('messenges'), this.setObjectMessenges(data, ''));
+  }
+
+  async updateMessage(colId: string, data: Messenges) {
+    if(data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForMessenges(data));
+    }
   }
 
   async addDirectMessage(data: DirectMessage) {
