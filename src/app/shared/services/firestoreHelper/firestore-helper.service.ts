@@ -47,7 +47,7 @@ export class FirestoreHelperService {
       groups[channel][date].push(message);
 
       // Sortiere die Nachrichten nach Zeit
-      groups[channel][date].sort((a:any, b:any) => a.time.localeCompare(b.time));
+      groups[channel][date].sort((a: any, b: any) => a.time.localeCompare(b.time));
 
       return groups;
     }, {});
@@ -110,8 +110,19 @@ export class FirestoreHelperService {
     }
   }
 
+  getCleanJsonForArray(obj: any) {
+    return {
+      text: obj.text,
+      time: obj.time,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate
+    }
+  }
+
   getCleanJsonForDirectMessage(obj: any) {
     return {
+      sender: obj.sender,
+      receiver: obj.receiver,
       text: obj.text,
       time: obj.time,
       avatar: obj.avatar,

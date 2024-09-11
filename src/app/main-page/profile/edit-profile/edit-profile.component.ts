@@ -9,6 +9,7 @@ import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../../app.config-private';
 import { Router } from '@angular/router';
 import { Messenges } from '../../../../models/messenges.class';
+import { DirectMessage } from '../../../../models/direct-message.class';
 
 @Component({
   selector: 'app-edit-profile',
@@ -38,6 +39,7 @@ export class EditProfileComponent {
   onSubmit() {
     const updateMember = this.firestore.members.find(obj => obj.email === this.globalVariables.signed_in_member.email && obj.member === this.globalVariables.signed_in_member.displayName);
     const updateMessages = this.firestore.messenges.filter(message => message.sender === this.globalVariables.signed_in_member.displayName);
+    const updateDirectMessage = this.firestore.direct_message.filter(directMessage => directMessage.sender === this.globalVariables.signed_in_member.displayName || directMessage.receiver === this.globalVariables.signed_in_member.displayName);
 
     const member: Member = {
       id: updateMember.id,
@@ -59,6 +61,32 @@ export class EditProfileComponent {
         creationDate: updateMessage.creationDate
       }
       this.firestore.updateMessage('messenges', message)
+    })
+
+    updateDirectMessage.forEach(updateDirectMessage => {
+      let directMessage: DirectMessage;
+      if(updateDirectMessage.sender === this.globalVariables.signed_in_member.displayName) {
+        directMessage = {
+          id: updateDirectMessage.id,
+          sender: this.edit_profile_form.value.member,
+          receiver: updateDirectMessage.receiver,
+          text: updateDirectMessage.text,
+          time: updateDirectMessage.time,
+          avatar: updateDirectMessage.avatar,
+          creationDate: updateDirectMessage.creationDate,
+        }
+      } else {
+        directMessage = {
+          id: updateDirectMessage.id,
+          sender: updateDirectMessage.sender,
+          receiver: this.edit_profile_form.value.member,
+          text: updateDirectMessage.text,
+          time: updateDirectMessage.time,
+          avatar: updateDirectMessage.avatar,
+          creationDate: updateDirectMessage.creationDate,
+        }
+      }
+      this.firestore.updateDirectMessage('direct-message', directMessage)
     })
 
     this.updateAuthentification();

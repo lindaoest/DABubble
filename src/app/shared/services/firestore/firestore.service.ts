@@ -149,7 +149,7 @@ export class FirestoreService {
   async updateArrayMessages(colId: string, id: string, newKey: any) {
     if(id) {
       await updateDoc(this.getSingleDocRef(colId, id), {
-        messages: arrayUnion(this.firestoreHelper.getCleanJsonForDirectMessage(newKey))
+        messages: arrayUnion(this.firestoreHelper.getCleanJsonForArray(newKey))
     });
     }
   }
@@ -171,6 +171,12 @@ export class FirestoreService {
   async updateMessage(colId: string, data: Messenges) {
     if(data.id) {
       await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForMessenges(data));
+    }
+  }
+
+  async updateDirectMessage(colId: string, data: DirectMessage) {
+    if(data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForDirectMessage(data));
     }
   }
 

@@ -1,4 +1,5 @@
 export class DirectMessage {
+  id?: string;
 	sender: string;
 	receiver: string;
 	text: string;
@@ -7,6 +8,7 @@ export class DirectMessage {
 	creationDate: string;
 
 	constructor(obj: any) {
+    this.id = obj.id;
 		this.sender = obj.sender;
 		this.receiver = obj.receiver;
 		this.text = obj.text;
