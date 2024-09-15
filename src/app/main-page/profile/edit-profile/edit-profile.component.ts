@@ -68,7 +68,8 @@ export class EditProfileComponent {
         time: updateMessage.time,
         sender: this.edit_profile_form.value.member,
         avatar: updateMessage.avatar,
-        creationDate: updateMessage.creationDate
+        creationDate: updateMessage.creationDate,
+        timeStamp: updateMessage.timeStamp
       }
       this.firestore.updateMessage('messenges', message)
     })

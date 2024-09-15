@@ -47,7 +47,7 @@ export class FirestoreHelperService {
       groups[channel][date].push(message);
 
       // Sortiere die Nachrichten nach Zeit
-      groups[channel][date].sort((a: any, b: any) => a.time.localeCompare(b.time));
+      groups[channel][date].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
 
       return groups;
     }, {});
@@ -98,7 +98,8 @@ export class FirestoreHelperService {
       time: obj.time,
       sender: obj.sender,
       avatar: obj.avatar,
-      creationDate: obj.creationDate
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
     }
   }
 

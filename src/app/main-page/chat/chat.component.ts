@@ -114,7 +114,8 @@ export class ChatComponent {
       time: this.globalVariables.currentTime(),
       sender: this.globalVariables.signed_in_member.displayName,
       avatar: this.globalVariables.signed_in_member.photoURL,
-      creationDate: new Date().toISOString().slice(0, 10)
+      creationDate: new Date().toISOString().slice(0, 10),
+      timeStamp: new Date().getTime()
     })
     this.channelFirestore.addMessage(message)
     this.description = '';

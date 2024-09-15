@@ -103,7 +103,8 @@ export class FirestoreService {
       time: obj.time,
       sender: obj.sender,
       avatar: obj.avatar,
-      creationDate: obj.creationDate
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
     }
   }
 
