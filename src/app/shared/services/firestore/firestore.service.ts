@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { doc, onSnapshot, collection, addDoc, updateDoc, deleteDoc, arrayUnion } from "firebase/firestore";
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
 import { Messenges } from '../../../../models/messenges.class';
@@ -19,7 +19,15 @@ export class FirestoreService {
   unsubMembers: any;
   unsubMessenges: any;
   unsubDirectMessage: any;
-  channels: Channel[] = [];
+
+  private channelSubject = new BehaviorSubject([]);
+  channels$ = this.channelSubject.asObservable();
+
+  set channels(value: any) {
+    this.channelSubject.next(value);
+  }
+
+  // channels: Channel[] = [];
   members: any[] = [];
   messenges: any[] = [];
   direct_message: any[] = [];
@@ -28,10 +36,11 @@ export class FirestoreService {
 
   constructor(public firestoreHelper: FirestoreHelperService) {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
-      this.channels = [];
+        const tempChannels: any[] = [];  // Temporäres Array erstellen
       doc.forEach(element => {
-        this.channels.push(this.setObject(element.data(), element.id))
+          tempChannels.push(this.setObject(element.data(), element.id));
       });
+      this.channels = tempChannels;  // Das Array über den Setter setzen
     });
 
     this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
@@ -55,7 +64,7 @@ export class FirestoreService {
         this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
       });
       this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(this.direct_message);
-      console.log('direct-message', this.groupedDirectMessages)
+      // console.log('direct-message', this.groupedDirectMessages)
     });
   }
 
@@ -93,7 +102,8 @@ export class FirestoreService {
       time: obj.time,
       sender: obj.sender,
       avatar: obj.avatar,
-      creationDate: obj.creationDate
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
     }
   }
 
@@ -105,7 +115,8 @@ export class FirestoreService {
       text: obj.text,
       time: obj.time,
       avatar: obj.avatar,
-      creationDate: obj.creationDate
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
     }
   }
 
@@ -139,7 +150,7 @@ export class FirestoreService {
   async updateArrayMessages(colId: string, id: string, newKey: any) {
     if(id) {
       await updateDoc(this.getSingleDocRef(colId, id), {
-        messages: arrayUnion(this.firestoreHelper.getCleanJsonForDirectMessage(newKey))
+        messages: arrayUnion(this.firestoreHelper.getCleanJsonForArray(newKey))
     });
     }
   }
@@ -156,6 +167,18 @@ export class FirestoreService {
 
   async addMessage(data: Messenges) {
     await addDoc(this.getDocRef('messenges'), this.setObjectMessenges(data, ''));
+  }
+
+  async updateMessage(colId: string, data: Messenges) {
+    if(data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForMessenges(data));
+    }
+  }
+
+  async updateDirectMessage(colId: string, data: DirectMessage) {
+    if(data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForDirectMessage(data));
+    }
   }
 
   async addDirectMessage(data: DirectMessage) {

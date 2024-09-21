@@ -12,6 +12,7 @@ import { FirestoreService } from '../../shared/services/firestore/firestore.serv
 import { DialogChannelAddMembersComponent } from '../dialog-channel-add-members/dialog-channel-add-members.component';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 import { Member } from '../../../models/member.class';
+import { Subscription } from 'rxjs';
 
 export interface DialogData {
   name: string;
@@ -42,21 +43,32 @@ export class DialogMemberExistingChannelComponent {
   notIncludedMembers: Member[] = [];
   already_added_members: Member[] = [];
 
+  channelSubscription: Subscription = new Subscription;
+  channels: Channel[] = [];
+
   constructor(
     public dialogRef: MatDialogRef<DialogMemberExistingChannelComponent>, public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
+  ngOnInit() {
+    this.channelSubscription = this.channelFirestore.channels$.subscribe(channels => {
+      this.channels = channels;
+    });
+  }
+
   showMemberBox() {
-    const foundChannel = this.channelFirestore.channels.find(obj => obj.name === this.globalVariables.activeChannel.name);
-    this.channelFirestore.channels.forEach(element => {
-      if (foundChannel) {
-        if (foundChannel.name === element.name) {
-          element.members.forEach( member => {
-            this.already_added_members.push(member);
-          })
+    this.channelFirestore.channels$.subscribe(channels => {
+      const foundChannel: any = channels.find((obj: any) => obj.name === this.globalVariables.activeChannel.name);
+      channels.forEach((element: any) => {
+        if (foundChannel) {
+          if (foundChannel.name === element.name) {
+            element.members.forEach( (member: any) => {
+              this.already_added_members.push(member);
+            })
+          }
         }
-      }
-    })
+      })
+    });
 
     this.notIncludedMembers = this.channelFirestore.members.filter(member =>
       !this.already_added_members.some(added_member => added_member.member === member.member)

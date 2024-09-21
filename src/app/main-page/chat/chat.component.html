@@ -3,16 +3,16 @@
 		<div class="info-top">
 			<div (click)="openDialog()" class="team-name">
 				<img src="./assets/img/channels/tag.svg" alt="">
-				@if (channelFirestore.channels[0]) {
-				<h3>{{ activeChat ? activeChat : channelFirestore.channels[0].name }}</h3>
+				@if (channels[0]) {
+				<h3>{{ activeChat ? activeChat : channels[0].name }}</h3>
 				}
 				<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
 			</div>
 			<div class="members">
 				<div class="avatars">
 					@if (getMembers().length == 0) {
-					@if(channelFirestore.channels[0]) {
-					@for (avatar of channelFirestore.channels[0].members; track avatar; let index = $index) {
+					@if(channels[0]) {
+					@for (avatar of channels[0].members; track avatar; let index = $index) {
 					<img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
 					}
 					}
@@ -24,8 +24,8 @@
 				</div>
 				<div class="quantity">
 					@if (getMembers().length == 0) {
-					@if (channelFirestore.channels[0]) {
-					<p>{{ channelFirestore.channels[0].members.length }}</p>
+					@if (channels[0]) {
+					<p>{{ channels[0].members.length }}</p>
 					}
 					} @else {
 					<p>{{ getMembers().length }}</p>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
+import { Messenges } from '../../../../models/messenges.class';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,7 @@ export class FirestoreHelperService {
       groups[channel][date].push(message);
 
       // Sortiere die Nachrichten nach Zeit
-      groups[channel][date].sort((a:any, b:any) => a.time.localeCompare(b.time));
+      groups[channel][date].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
 
       return groups;
     }, {});
@@ -71,6 +72,10 @@ export class FirestoreHelperService {
       }
 
       groups[senderReceiverKey][dateKey].push(direct_message);
+
+      // Sortiere die Nachrichten nach Zeit
+      groups[senderReceiverKey][dateKey].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
+
       return groups;
     }, {});
   }
@@ -90,6 +95,18 @@ export class FirestoreHelperService {
     }
   }
 
+  getCleanJsonForMessenges(obj: Messenges) {
+    return {
+      channel: obj.channel,
+      text: obj.text,
+      time: obj.time,
+      sender: obj.sender,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
+    }
+  }
+
   getCleanJsonForChannel(obj: Channel) {
     return {
       name: obj.name,
@@ -98,12 +115,24 @@ export class FirestoreHelperService {
     }
   }
 
-  getCleanJsonForDirectMessage(obj: any) {
+  getCleanJsonForArray(obj: any) {
     return {
       text: obj.text,
       time: obj.time,
       avatar: obj.avatar,
       creationDate: obj.creationDate
+    }
+  }
+
+  getCleanJsonForDirectMessage(obj: any) {
+    return {
+      sender: obj.sender,
+      receiver: obj.receiver,
+      text: obj.text,
+      time: obj.time,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
     }
   }
 }
