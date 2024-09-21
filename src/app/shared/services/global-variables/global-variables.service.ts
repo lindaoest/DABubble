@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
@@ -32,7 +32,7 @@ export class GlobalVariablesService {
   verifyText: Boolean = false;
   // active_privatechat: string = '';
 
-  private active_privatechatSubject = new Subject<string>();
+  private active_privatechatSubject = new BehaviorSubject<string>('null');
   active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();
 
   private activeChatSubject = new Subject<string>();

@@ -72,6 +72,10 @@ export class FirestoreHelperService {
       }
 
       groups[senderReceiverKey][dateKey].push(direct_message);
+
+      // Sortiere die Nachrichten nach Zeit
+      groups[senderReceiverKey][dateKey].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
+
       return groups;
     }, {});
   }
@@ -127,7 +131,8 @@ export class FirestoreHelperService {
       text: obj.text,
       time: obj.time,
       avatar: obj.avatar,
-      creationDate: obj.creationDate
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
     }
   }
 }

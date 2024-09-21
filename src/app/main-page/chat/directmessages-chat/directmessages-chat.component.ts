@@ -24,8 +24,6 @@ export class DirectmessagesChatComponent {
   constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService, public dialog: MatDialog,) { }
 
   ngOnInit() {
-    // this.activeMember = this.channelFirestore.members.filter(member => member.member === this.globalVariables.active_privatechat);
-
     this.active_privatechatSubscription = this.globalVariables.active_privatechat$.subscribe(subscriber => {
       this.activeMember = this.channelFirestore.members.filter(member => member.member === subscriber);
       console.log('subscriber', subscriber)
@@ -50,8 +48,7 @@ export class DirectmessagesChatComponent {
 
   isRelevantGroup(key: string): boolean {
     const signedInMember = this.globalVariables.signed_in_member.displayName;
-    const activePrivateChat = this.globalVariables.active_privatechat;
-    const participants = [signedInMember, activePrivateChat].sort().join('-');
+    const participants = [signedInMember, this.activeMember[0].member].sort().join('-');
     return key === participants;
   }
 
@@ -62,11 +59,12 @@ export class DirectmessagesChatComponent {
   addMessage() {
     const message: DirectMessage = new DirectMessage({
       sender: this.globalVariables.signed_in_member.displayName,
-      receiver: this.globalVariables.active_privatechat,
+      receiver: this.activeMember[0].member,
       text: this.description,
       time: this.globalVariables.currentTime(),
       avatar: this.globalVariables.signed_in_member.photoURL,
-      creationDate: new Date().toISOString().slice(0, 10)
+      creationDate: new Date().toISOString().slice(0, 10),
+      timeStamp: new Date().getTime()
     })
 
     this.channelFirestore.addDirectMessage(message);

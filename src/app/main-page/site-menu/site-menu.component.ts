@@ -31,11 +31,11 @@ export class SiteMenuComponent {
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
-  ngOnInit(): void {
-    this.channelFirestore.channels$.subscribe(channels => {
-      console.log('Aktuelle Channels:', channels);
-    });
-  }
+  // ngOnInit(): void {
+  //   this.channelFirestore.channels$.subscribe(channels => {
+  //     console.log('Aktuelle Channels:', channels);
+  //   });
+  // }
 
   getList() {
     this.channelFirestore.channels$.subscribe(channels => {

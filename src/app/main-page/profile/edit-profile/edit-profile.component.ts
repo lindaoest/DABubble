@@ -85,6 +85,7 @@ export class EditProfileComponent {
           time: updateDirectMessage.time,
           avatar: updateDirectMessage.avatar,
           creationDate: updateDirectMessage.creationDate,
+          timeStamp: updateDirectMessage.timeStamp
         }
       } else {
         directMessage = {
@@ -95,6 +96,7 @@ export class EditProfileComponent {
           time: updateDirectMessage.time,
           avatar: updateDirectMessage.avatar,
           creationDate: updateDirectMessage.creationDate,
+          timeStamp: updateDirectMessage.timeStamp
         }
       }
       this.firestore.updateDirectMessage('direct-message', directMessage)

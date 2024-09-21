@@ -41,7 +41,8 @@ export class CreateNewChatComponent {
       text: this.description,
       time: this.globalVariables.currentTime(),
       avatar: this.globalVariables.signed_in_member.photoURL,
-      creationDate: new Date().toISOString().slice(0, 10)
+      creationDate: new Date().toISOString().slice(0, 10),
+      timeStamp: new Date().getTime()
     })
 
     this.channelFirestore.addDirectMessage(message);

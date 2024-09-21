@@ -41,7 +41,6 @@ export class FirestoreService {
           tempChannels.push(this.setObject(element.data(), element.id));
       });
       this.channels = tempChannels;  // Das Array über den Setter setzen
-      console.log('tempChannels', this.channels);
     });
 
     this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
@@ -116,7 +115,8 @@ export class FirestoreService {
       text: obj.text,
       time: obj.time,
       avatar: obj.avatar,
-      creationDate: obj.creationDate
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp
     }
   }
 

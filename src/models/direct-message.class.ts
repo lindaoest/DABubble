@@ -6,6 +6,7 @@ export class DirectMessage {
 	time: string;
 	avatar: string;
 	creationDate: string;
+  timeStamp: number;
 
 	constructor(obj: any) {
     this.id = obj.id;
@@ -15,5 +16,6 @@ export class DirectMessage {
 		this.time = obj.time;
 		this.avatar = obj.avatar;
 		this.creationDate = obj.creationDate;
+    this.timeStamp = obj.timeStamp;
 	}
 }
