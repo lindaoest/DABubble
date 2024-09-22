@@ -26,16 +26,10 @@ export class SiteMenuComponent {
   channel_open: Boolean = false;
   directmessage_open: Boolean = false;
   filteredChats: Messenges[] = [];
-  personObjArray: string[] = [];
+  personObjArray: any[] = [];
   channels: Channel[] = [];
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
-
-  // ngOnInit(): void {
-  //   this.channelFirestore.channels$.subscribe(channels => {
-  //     console.log('Aktuelle Channels:', channels);
-  //   });
-  // }
 
   getList() {
     this.channelFirestore.channels$.subscribe(channels => {
@@ -86,12 +80,16 @@ export class SiteMenuComponent {
 
     this.channelFirestore.direct_message.forEach(message => {
       if (message.sender == this.globalVariables.signed_in_member.displayName) {
-        if(!this.personObjArray.includes(message.receiver)) {
-          this.personObjArray.push(message.receiver);
+        let direct_message_receiver = this.channelFirestore.members.find(member => message.receiver == member.member);
+        if(direct_message_receiver && !this.personObjArray.some(person => person.member === direct_message_receiver.member)) {
+          console.log('member1', direct_message_receiver);
+          this.personObjArray.push(direct_message_receiver);
         }
-      } else if(message.receiver == this.globalVariables.signed_in_member.displayName) {
-        if(!this.personObjArray.includes(message.sender)) {
-          this.personObjArray.push(message.sender);
+      } else if (message.receiver == this.globalVariables.signed_in_member.displayName) {
+        let direct_message_sender = this.channelFirestore.members.find(member => message.sender == member.member);
+        if(direct_message_sender && !this.personObjArray.some(person => person.member === direct_message_sender.member)) {
+          console.log('member2', direct_message_sender);
+          this.personObjArray.push(direct_message_sender);
         }
       }
     });
