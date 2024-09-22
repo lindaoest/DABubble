@@ -1,42 +1,70 @@
 <div class="threads">
-	<div class="info-top">
-		<div class="thread-name">
-			<h3>Thread</h3>
-			<p># Entwicklerteam</p>
-		</div>
-		<img src="./assets/img/thread/close.svg" alt="">
-	</div>
-	<div class="chat-block flex">
-		<div class="date-block">
-			<div class="message flex">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="message-text">
-					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">Noah Braun</p>
-						<p class="font-small">14:25 Uhr</p>
-					</div>
-					<div class="text">
-						<p>Welche Version ist aktuell von Angular?</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="answers-number">
-			<p class="answer-number-text">2 Antworten</p>
-		</div>
-		<div class="date-block">
-			<div class="message flex">
-				<img src="./assets/img/avatar/avatar-1.svg" alt="">
-				<div class="message-text">
-					<div class="top flex align-center gap-24">
-						<p class="font-weight-700">Noah Braun</p>
-						<p class="font-small">14:25 Uhr</p>
-					</div>
-					<div class="text">
-						<p>Welche Version ist aktuell von Angular?</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="info-top">
+    <div class="thread-name">
+      <h3>Thread</h3>
+      <p># {{ messageToReplyTo.channel }}</p>
+    </div>
+    <img src="./assets/img/thread/close.svg" alt="">
+  </div>
+  <div class="chat-block flex">
+    <div class="date-block">
+      <div class="message flex">
+        <img src="{{ messageToReplyTo.avatar }}" alt="">
+        <div class="message-text">
+          <div class="top flex align-center gap-24">
+            <p class="font-weight-700">{{ messageToReplyTo.sender }}</p>
+            <p class="font-small">{{ messageToReplyTo.time }} Uhr</p>
+          </div>
+          <div class="text">
+            <p>{{ messageToReplyTo.text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="answers-number">
+      <p class="answer-number-text">2 Antworten</p>
+    </div>
+    @for (group of (this.channelFirestore.groupedThreads | keyvalue); track $index) {
+    @if (group.key == globalVariables.activeChannel.name) {
+    @for (dateGroup of (group.value | keyvalue); track $index) {
+    <div class="date-block">
+      <!-- <div class="date">
+						<p>{{ dateGroup.key }}</p>
+					</div> -->
+
+      @for (message of dateGroup.value; track $index) {
+      @if (message.message.text == messageToReplyTo.text) {
+      <div class="message flex"
+        [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+        <img src="{{ message.avatar }}" alt="">
+        <div class="message-text">
+          <div class="top flex align-center gap-24">
+            <p class="font-weight-700">{{ message.sender }}</p>
+            <p class="font-small">{{ message.time }} Uhr</p>
+          </div>
+          <div class="text">
+            <p>{{ message.text }}</p>
+          </div>
+        </div>
+      </div>
+      }
+      }
+    </div>
+    }
+    }
+    }
+  </div>
+  <div class="writing-box">
+    <input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
+    <div class="bottom-icons">
+      <div class="reactions">
+        <img src="./assets/img/chat/add-reaction.svg" alt="">
+        <img src="./assets/img/chat/add-emoji.svg" alt="">
+        <img src="./assets/img/chat/tag-people.svg" alt="">
+      </div>
+      <div class="send-message">
+        <img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
+      </div>
+    </div>
+  </div>
 </div>

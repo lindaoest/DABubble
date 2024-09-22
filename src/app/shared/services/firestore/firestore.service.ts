@@ -7,6 +7,7 @@ import { Member } from '../../../../models/member.class';
 import { Messenges } from '../../../../models/messenges.class';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { FirestoreHelperService } from '../firestoreHelper/firestore-helper.service';
+import { Thread } from '../../../../models/thread.class';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class FirestoreService {
   unsubMembers: any;
   unsubMessenges: any;
   unsubDirectMessage: any;
+  unsubThreads: any;
 
   private channelSubject = new BehaviorSubject([]);
   channels$ = this.channelSubject.asObservable();
@@ -31,8 +33,10 @@ export class FirestoreService {
   members: any[] = [];
   messenges: any[] = [];
   direct_message: any[] = [];
+  threads: any[] = [];
   groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
   groupedDirectMessages: { [key: string]: any[] } = {};
+  groupedThreads: { [channel: string]: { [date: string]: any[] } } = {};
 
   constructor(public firestoreHelper: FirestoreHelperService) {
     this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
@@ -66,12 +70,21 @@ export class FirestoreService {
       this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(this.direct_message);
       // console.log('direct-message', this.groupedDirectMessages)
     });
+
+    this.unsubThreads = onSnapshot(this.getDocRef('threads'), (doc) => {
+      this.threads = [];
+      doc.forEach(element => {
+        this.threads.push(this.setObjectThreads(element.data(), element.id))
+      });
+      this.groupedThreads = this.firestoreHelper.groupThreadsByDateAndChannel(this.threads);
+    });
   }
 
   ngOnDestroy(): void {
     this.unsub();
     this.unsubMembers();
     this.unsubMessenges();
+    this.unsubThreads();
   }
 
   setObject(obj: any, id: string) {
@@ -129,6 +142,20 @@ export class FirestoreService {
     }
   }
 
+  setObjectThreads(obj: any, id: string): Thread {
+    return {
+      id: id || '',
+      channel: obj.channel,
+      text: obj.text,
+      time: obj.time,
+      sender: obj.sender,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp,
+      message: obj.message
+    }
+  }
+
   async addData(data: Channel) {
     await addDoc(this.getDocRef('channels'), this.setObject(data, ''));
   }
@@ -183,6 +210,10 @@ export class FirestoreService {
 
   async addDirectMessage(data: DirectMessage) {
     await addDoc(this.getDocRef('direct-message'), this.setObjectDirectMessage(data, ''));
+  }
+
+  async addThread(data: Thread) {
+    await addDoc(this.getDocRef('threads'), this.setObjectThreads(data, ''));
   }
 
   getDocRef(colId: string) {

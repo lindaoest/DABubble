@@ -2,11 +2,11 @@
 	<div class="container flex">
 		<app-site-menu></app-site-menu>
 		@if (!globalVariables.open_directmessages_chat) {
-			<app-chat></app-chat>
+			<app-chat (currentMessage)="message_for_thread($event)"></app-chat>
 		} @else {
 			<app-directmessages-chat></app-directmessages-chat>
 		}
-		<app-thread-reply></app-thread-reply>
+		<app-thread-reply [messageToReplyTo]="currentMessage"></app-thread-reply>
 	</div>
 
   @if (globalVariables.verifyText) {

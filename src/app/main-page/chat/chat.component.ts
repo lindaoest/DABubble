@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
@@ -36,6 +36,8 @@ export class ChatComponent {
 
   channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
+
+  @Output()currentMessage = new EventEmitter();
 
   constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
 
@@ -119,5 +121,9 @@ export class ChatComponent {
     })
     this.channelFirestore.addMessage(message)
     this.description = '';
+  }
+
+  start_thread(message: Messenges) {
+    this.currentMessage.emit(message);
   }
 }

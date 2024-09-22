@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
 import { Messenges } from '../../../../models/messenges.class';
+import { Thread } from '../../../../models/thread.class';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +81,32 @@ export class FirestoreHelperService {
     }, {});
   }
 
+  groupThreadsByDateAndChannel(threads: any[]): { [channel: string]: { [date: string]: any[] } } {
+    return threads.reduce((groups, thread) => {
+      if (!thread.channel || !thread.creationDate) {
+        console.warn('thread without creationDate or channel:', thread);
+        return groups;
+      }
+      const channel = thread.channel; // z.B. 'grafik' oder 'editing'
+      const date = thread.creationDate; // YYYY-MM-DD
+
+      if (!groups[channel]) {
+        groups[channel] = {};
+      }
+
+      if (!groups[channel][date]) {
+        groups[channel][date] = [];
+      }
+
+      groups[channel][date].push(thread);
+
+      // Sortiere die Nachrichten nach Zeit
+      groups[channel][date].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
+
+      return groups;
+    }, {});
+  }
+
   createSenderReceiverKey(sender: string, receiver: string): string {
     const participants = [sender, receiver].sort();  // Ensure consistent ordering
     return participants.join('-');
@@ -133,6 +160,19 @@ export class FirestoreHelperService {
       avatar: obj.avatar,
       creationDate: obj.creationDate,
       timeStamp: obj.timeStamp
+    }
+  }
+
+  getCleanJsonForThreads(obj: Thread) {
+    return {
+      channel: obj.channel,
+      text: obj.text,
+      time: obj.time,
+      sender: obj.sender,
+      avatar: obj.avatar,
+      creationDate: obj.creationDate,
+      timeStamp: obj.timeStamp,
+      message: obj.message
     }
   }
 }
