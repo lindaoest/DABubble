@@ -14,8 +14,8 @@
 	@if (certainMembers) {
 	<div class="certain-members-container">
 		<div class="input-box">
-			<div class="added-members" [ngStyle]="{'width': globalVariables.certainMember_Array.length > 0 ? '260px' : ''}">
-				@for (item of globalVariables.certainMember_Array; track item; let index = $index) {
+			<div class="added-members" [ngStyle]="{'width': selectedMember.length > 0 ? '260px' : ''}">
+				@for (item of selectedMember; track item; let index = $index) {
 				<div class="member">
 					<img src="{{ item.avatar }}" alt="">
 					<p>{{ item.member }}</p>
@@ -25,14 +25,7 @@
 			</div>
 			<input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input">
 		</div>
-		<div class="members-box">
-			@for (member of this.channelFirestore.members; track member; let index = $index) {
-			<div (click)="addMember(member, index)" class="member" [ngClass]="{'gray-filter-on': isClicked}">
-				<img src="{{ member.avatar }}" alt="">
-				<p>{{ member.member }}</p>
-			</div>
-			}
-		</div>
+		<app-members-box></app-members-box>
 	</div>
 	}
 	<div class="actions">

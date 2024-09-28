@@ -1,32 +1,25 @@
 <div class="create-new-chat">
-	<div class="info-top">
-		<h3>Neue Nachricht</h3>
-		<input (keyup)="observe_input()" type="text" [placeholder]="placeholder_value" [(ngModel)]="name">
-		@if (message_to_direct_message) {
-		<div class="members-box">
-			@for (member of this.channelFirestore.members; track member; let index = $index) {
-			<div (click)="addMember(member.member)" class="member">
-				<img src="{{ member.avatar }}" alt="">
-				<p>{{ member.member }}</p>
-			</div>
-			}
-		</div>
-		}
-	</div>
-	<div class="chat-block flex">
-		@for (item of channelFirestore.direct_message; track $index) {}
-	</div>
-	<div class="writing-box">
-		<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
-		<div class="bottom-icons">
-			<div class="reactions">
-				<img src="./assets/img/chat/add-reaction.svg" alt="">
-				<img src="./assets/img/chat/add-emoji.svg" alt="">
-				<img src="./assets/img/chat/tag-people.svg" alt="">
-			</div>
-			<div class="send-message">
-				<img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
-			</div>
-		</div>
-	</div>
+  <div class="info-top">
+    <h3>Neue Nachricht</h3>
+    <input (keyup)="observe_input()" type="text" [placeholder]="placeholder_value" [(ngModel)]="name">
+    @if (message_to_direct_message) {
+    <app-members-box></app-members-box>
+    }
+  </div>
+  <div class="chat-block flex">
+    @for (item of channelFirestore.direct_message; track $index) {}
+  </div>
+  <div class="writing-box">
+    <input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
+    <div class="bottom-icons">
+      <div class="reactions">
+        <img src="./assets/img/chat/add-reaction.svg" alt="">
+        <img src="./assets/img/chat/add-emoji.svg" alt="">
+        <img src="./assets/img/chat/tag-people.svg" alt="">
+      </div>
+      <div class="send-message">
+        <img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
+      </div>
+    </div>
+  </div>
 </div>

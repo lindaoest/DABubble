@@ -39,7 +39,11 @@
 		@if (editModus) {
 			<input type="text" placeholder="{{ description }}" class="input-description" [(ngModel)]="description" required>
 		} @else {
-			<p>{{ data.description ? data.description : channelFirestore.channels[0].description }}</p>
+      @if (data.description == "") {
+        <p>Keine Description vorhanden</p>
+      } @else {
+        <p>{{ data.description ? data.description : channelFirestore.channels[0].description }}</p>
+      }
 		}
 		<div class="created-by">
 			<p class="font-weight-700">Erstellt von</p>

@@ -12,6 +12,7 @@ import { Messenges } from '../../../../models/messenges.class';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { Subscription } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
+import { Thread } from '../../../../models/thread.class';
 
 @Component({
   selector: 'app-edit-profile',
@@ -50,6 +51,7 @@ export class EditProfileComponent {
     const updateMessages = this.firestore.messenges.filter(message => message.sender === this.globalVariables.signed_in_member.displayName);
     const updateDirectMessage = this.firestore.direct_message.filter(directMessage => directMessage.sender === this.globalVariables.signed_in_member.displayName || directMessage.receiver === this.globalVariables.signed_in_member.displayName);
     const updateChannel = this.channels.filter(channel => channel.creator === this.globalVariables.signed_in_member.displayName);
+    const updateThread = this.firestore.threads.filter(thread => thread.sender === this.globalVariables.signed_in_member.displayName);
 
     const member: Member = {
       id: updateMember.id,
@@ -138,6 +140,21 @@ export class EditProfileComponent {
         }
       })
       this.firestore.updateData('channels', channel)
+    })
+
+    updateThread.forEach(updateThread => {
+      const thread: Thread = {
+        id: updateThread.id,
+        channel: updateThread.channel,
+        text: updateThread.text,
+        time: updateThread.time,
+        sender: this.edit_profile_form.value.member,
+        avatar: updateThread.avatar,
+        creationDate: updateThread.creationDate,
+        timeStamp: updateThread.timeStamp,
+        message: updateThread.message
+      }
+      this.firestore.updateThread('threads', thread)
     })
 
     this.updateAuthentification();

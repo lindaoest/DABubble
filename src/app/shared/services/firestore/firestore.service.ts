@@ -208,6 +208,12 @@ export class FirestoreService {
     }
   }
 
+  async updateThread(colId: string, data: Thread) {
+    if(data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForThreads(data));
+    }
+  }
+
   async addDirectMessage(data: DirectMessage) {
     await addDoc(this.getDocRef('direct-message'), this.setObjectDirectMessage(data, ''));
   }

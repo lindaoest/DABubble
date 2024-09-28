@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="directmessage-container" [ngClass]="{'open' : directmessage_open}">
-      @for (item of personObjArray; track $index) {
+      @for (item of globalVariables.personObjArray; track $index) {
         <div (click)="open_directmessages_chat(item.member)" class="direct-message">
           <div class="avatar">
             <img src="{{ item.avatar }}" alt="">
