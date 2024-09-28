@@ -61,7 +61,6 @@ export class DialogAddChannelComponent {
     this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
       this.selectedMember = member;
     });
-    console.log('selectedMember', this.selectedMember)
 
     dialogRefMember.afterClosed().subscribe(result => {
       if (this.globalVariables.allMembers) {
@@ -82,11 +81,7 @@ export class DialogAddChannelComponent {
           creator: this.globalVariables.signed_in_member.displayName
         })
         this.channelFirestore.addData(newChannel);
-        console.log(result);
-
-        this.globalVariables.certainMember_Array = [];
       }
-      console.log('result', result)
     });
 
     this.globalVariables.certainMember_Array = [];

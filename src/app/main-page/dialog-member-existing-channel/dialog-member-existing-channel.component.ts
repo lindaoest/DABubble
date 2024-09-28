@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
@@ -124,6 +124,7 @@ export class DialogMemberExistingChannelComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
+    this.globalVariables.certainMember_Array = [];
   }
 
   // addMember(m: Member) {
@@ -134,22 +135,20 @@ export class DialogMemberExistingChannelComponent {
 
   deleteMember(i: number) {
     this.selectedMember.splice(i, 1);
-    this.checkMemberArray();
+    if(this.selectedMember.length == 0) {
+      this.checkMemberArray(true);
+    }
   }
 
-  checkMemberArray() {
-    if (this.selectedMember.length > 0) {
-      this.newMemberTrue = false;
-    } else {
-      this.newMemberTrue = true;
-    }
+  checkMemberArray(memberLength: Boolean) {
+    this.newMemberTrue = memberLength;
   }
 
   addToChannel() {
     this.selectedMember.forEach(element => {
       this.channelFirestore.updateArray('channels', this.globalVariables.activeChannel.id, element)
     })
-
+    this.globalVariables.certainMember_Array = [];
     this.dialogRef.close();
   }
 }

@@ -22,7 +22,7 @@
 			<input (click)="showMemberBox()" type="text" placeholder="Name eingeben">
 		</div>
     @if (notIncludedMembers.length > 0) {
-      <app-members-box></app-members-box>
+      <app-members-box [already_added_members]="already_added_members" (checkMemberLength)="checkMemberArray($event)"></app-members-box>
     }
 	</div>
 	<div class="actions">
