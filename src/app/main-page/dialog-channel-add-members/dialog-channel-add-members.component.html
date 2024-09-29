@@ -25,10 +25,10 @@
 			</div>
 			<input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input">
 		</div>
-		<app-members-box></app-members-box>
+		<app-members-box [notIncludedMembers]="notIncludedMembers" (checkMemberLength)="checkMemberArray($event)"></app-members-box>
 	</div>
 	}
 	<div class="actions">
-		<button class="button1" [mat-dialog-close]="data">Erstellen</button>
+		<button class="button1" [disabled]="newMemberTrue" [mat-dialog-close]="data">Erstellen</button>
 	</div>
 </div>

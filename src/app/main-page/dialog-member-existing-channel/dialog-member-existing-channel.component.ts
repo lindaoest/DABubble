@@ -88,8 +88,6 @@ export class DialogMemberExistingChannelComponent {
     this.notIncludedMembers = this.channelFirestore.members.filter(member =>
       !this.already_added_members.some(added_member => added_member.member === member.member)
     );
-
-    console.log('already added members', this.already_added_members)
   }
 
   // openDialog(): void {

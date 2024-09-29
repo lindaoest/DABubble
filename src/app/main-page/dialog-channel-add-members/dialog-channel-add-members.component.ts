@@ -38,6 +38,8 @@ export class DialogChannelAddMembersComponent {
   isClicked: Boolean = false;
   certainMember_Array_Subsription: Subscription = new Subscription;
   selectedMember: Member[] = [];
+  newMemberTrue: Boolean = true;
+  notIncludedMembers: Member[] = [];
 
   constructor(
     public dialogRefMember: MatDialogRef<DialogChannelAddMembersComponent>,
@@ -45,6 +47,11 @@ export class DialogChannelAddMembersComponent {
     this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
       this.selectedMember = member;
     });
+  }
+
+  ngOnInit() {
+    const creatorMember = this.channelFirestore.members.filter((obj: any) => obj.member !== this.globalVariables.signed_in_member.displayName);
+    this.notIncludedMembers.push(...creatorMember);
   }
 
   ngOnDestroy() {
@@ -59,16 +66,28 @@ export class DialogChannelAddMembersComponent {
 
   checkAllMembers() {
     this.allMembers = !this.allMembers;
-    this.globalVariables.allMembers = this.allMembers;
+    // this.globalVariables.allMembers = this.allMembers;
+    this.globalVariables.certainMember_Array = [];
+    this.globalVariables.certainMember_Array = this.channelFirestore.members;
     this.certainMembers = false;
+    this.checkMemberArray(false);
   }
 
   checkCertainMembers() {
     this.certainMembers = !this.certainMembers;
+    this.globalVariables.certainMember_Array = [];
     this.allMembers = false;
+    this.checkMemberArray(true);
+  }
+
+  checkMemberArray(memberLength: Boolean) {
+    this.newMemberTrue = memberLength;
   }
 
   deleteMember(i: number) {
     this.selectedMember.splice(i, 1);
+    if(this.selectedMember.length == 0) {
+      this.checkMemberArray(true);
+    }
   }
 }

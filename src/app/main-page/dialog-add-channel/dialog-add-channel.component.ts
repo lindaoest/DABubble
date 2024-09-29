@@ -63,28 +63,22 @@ export class DialogAddChannelComponent {
     });
 
     dialogRefMember.afterClosed().subscribe(result => {
-      if (this.globalVariables.allMembers) {
-        const newChannel = new Channel({
-          id: result.id,
-          name: result.name,
-          description: result.description,
-          members: this.channelFirestore.members,
-          creator: this.globalVariables.signed_in_member.displayName
-        })
-        this.channelFirestore.addData(newChannel);
-      } else {
-        const newChannel = new Channel({
-          id: result.id,
-          name: result.name,
-          description: result.description,
-          members: this.selectedMember,
-          creator: this.globalVariables.signed_in_member.displayName
-        })
-        this.channelFirestore.addData(newChannel);
+      const creatorMember = this.channelFirestore.members.find((obj: any) => obj.member === this.globalVariables.signed_in_member.displayName);
+      const alreadyExistMember = this.selectedMember.some(m => m.member === creatorMember.member);
+      if(!alreadyExistMember) {
+        this.selectedMember.push(creatorMember);
       }
-    });
 
-    this.globalVariables.certainMember_Array = [];
+      const newChannel = new Channel({
+        id: result.id,
+        name: result.name,
+        description: result.description,
+        members: this.selectedMember,
+        creator: this.globalVariables.signed_in_member.displayName
+      })
+      this.channelFirestore.addData(newChannel);
+      this.globalVariables.certainMember_Array = [];
+    });
   }
 
   onNoClick(): void {
@@ -93,6 +87,5 @@ export class DialogAddChannelComponent {
 
   checkFields() {
     this.disableButton = !this.name;
-    console.log(this.name.length)
   }
 }

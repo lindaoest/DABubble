@@ -13,16 +13,14 @@ import { CommonModule } from '@angular/common';
 })
 export class MembersBoxComponent {
 
-  @Output()checkMemberLength = new EventEmitter();
-  @Input()already_added_members: Member[] = [];
+  @Output() checkMemberLength = new EventEmitter();
+  @Input() notIncludedMembers: Member[] = [];
 
   isClicked: Boolean = false;
   memberArray: any[] = [];
   newMemberTrue: Boolean = false;
 
-  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
-    console.log('test', this.already_added_members)
-   }
+  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   addMember(m: Member) {
     const foundName = this.channelFirestore.members.find(obj => obj.member === m.member);
@@ -37,11 +35,11 @@ export class MembersBoxComponent {
     this.globalVariables.certainMember_Array = this.memberArray;
   }
 
-  deleteMember(i: number) {
-    this.memberArray.splice(i, 1);
-    this.setCertainMemberArray();
-    this.checkMemberArray();
-  }
+  // deleteMember(i: number) {
+  //   this.memberArray.splice(i, 1);
+  //   this.setCertainMemberArray();
+  //   this.checkMemberArray();
+  // }
 
   checkMemberArray() {
     if (this.memberArray.length > 0) {

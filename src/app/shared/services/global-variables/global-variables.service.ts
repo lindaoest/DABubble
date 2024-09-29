@@ -10,7 +10,7 @@ import { Messenges } from '../../../../models/messenges.class';
 })
 export class GlobalVariablesService {
 
-  allMembers: Boolean = false;
+  // allMembers: Boolean = false;
   // certainMember_Array: Member[] = [];
   newMember: Member = {
     member: '',
