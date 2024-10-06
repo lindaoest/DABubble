@@ -49,4 +49,8 @@ export class ThreadReplyComponent {
     this.description = '';
   }
 
+  close_thread() {
+    this.globalVariables.open_thread_reply = false;
+  }
+
 }

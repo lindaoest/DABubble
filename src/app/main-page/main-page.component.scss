@@ -1,57 +1,70 @@
 @import '../shared/mixin.scss';
 
 main {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container {
-	width: 100%;
-	justify-content: center;
+  width: 100%;
 }
 
 .da-bubble-logo {
-	padding: 24px 40px;
+  padding: 24px 40px;
 }
 
 .overlay {
-	position: absolute;
-    bottom: 0;
-    right: 0;
-	padding-bottom: 32px;
-    padding-right: 32px;
-	background-color: rgba(255, 255, 255, 0.6);
-    width: 100%;
-    height: 100%;
-	@include displayFlex($jc:flex-end, $ai:flex-end);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-bottom: 32px;
+  padding-right: 32px;
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 100%;
+  height: 100%;
+  @include displayFlex($jc: flex-end, $ai: flex-end);
 
-	.overlay-button {
-		background-color: #444DF2;
-		padding: 50px;
-		border-radius: 30px 30px 0 30px;
-		color: #FFFFFF;
-		font-weight: 700;
-	}
+  .overlay-button {
+    background-color: #444DF2;
+    padding: 50px;
+    border-radius: 30px 30px 0 30px;
+    color: #FFFFFF;
+    font-weight: 700;
+  }
 }
 
 app-site-menu {
-	max-width: 366px;
-    width: 19.062%;
-    min-width: 300px;
+  max-width: 366px;
+  width: 19.062%;
+  min-width: 300px;
+  margin-left: 16px;
 }
 
 app-chat,
 app-directmessages-chat {
-	width: 51.562%;
-    max-width: 990px;
-    min-width: 470px;
-	margin-left: 16px;
-	margin-right: 16px;
+  width: 51.562%;
+  max-width: 990px;
+  min-width: 470px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+app-chat.full-width,
+app-directmessages-chat {
+  width: 100%;
+  max-width: 100%;
 }
 
 app-thread-reply {
-	width: 25.26%;
-    max-width: 485px;
-    min-width: 360px;
+  width: 25.26%;
+  max-width: 485px;
+  min-width: 360px;
+}
+
+app-button-close-menu {
+  position: fixed;
+  left: -135px;
+  top: 71%;
+  transform: rotate(-90deg);
 }

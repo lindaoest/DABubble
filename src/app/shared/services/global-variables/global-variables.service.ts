@@ -31,6 +31,7 @@ export class GlobalVariablesService {
   open_directmessages_chat: Boolean = false;
   verifyText: Boolean = false;
   personObjArray: any[] = [];
+  open_thread_reply: Boolean = false;
   // active_privatechat: string = '';
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');
