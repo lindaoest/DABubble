@@ -7,17 +7,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileComponent } from '../../profile/profile.component';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { Subscription } from 'rxjs';
+import { WritingBoxComponent } from "../../../shared/components/writing-box/writing-box.component";
 
 @Component({
   selector: 'app-directmessages-chat',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, WritingBoxComponent],
   templateUrl: './directmessages-chat.component.html',
   styleUrl: './directmessages-chat.component.scss'
 })
 export class DirectmessagesChatComponent {
 
-  description: string = '';
   activeMember: any;
   active_privatechatSubscription: Subscription = new Subscription;
 
@@ -55,20 +55,4 @@ export class DirectmessagesChatComponent {
   trackByFn(index: number, item: any): number {
     return index;
   }
-
-  addMessage() {
-    const message: DirectMessage = new DirectMessage({
-      sender: this.globalVariables.signed_in_member.displayName,
-      receiver: this.activeMember[0].member,
-      text: this.description,
-      time: this.globalVariables.currentTime(),
-      avatar: this.globalVariables.signed_in_member.photoURL,
-      creationDate: new Date().toISOString().slice(0, 10),
-      timeStamp: new Date().getTime()
-    })
-
-    this.channelFirestore.addDirectMessage(message);
-    this.description = '';
-  }
-
 }

@@ -132,31 +132,3 @@ app-create-new-chat {
 		}
 	}
 }
-
-.writing-box {
-	border: 1px solid #ADB0D9;
-	border-radius: 30px;
-	margin: 8px 32px;
-
-	input {
-		border: none;
-		width: 100%;
-
-		&:focus-visible {
-			border: none;
-			outline: none;
-		}
-	}
-
-	.bottom-icons {
-		@include displayFlex($jc: space-between);
-		margin-top: 40px;
-	}
-
-	.reactions img {
-
-		&:first-child {
-			border-right: 1px solid #ADB0D9;
-		}
-	}
-}

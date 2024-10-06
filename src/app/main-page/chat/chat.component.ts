@@ -13,18 +13,18 @@ import { privateConfig } from '../../app.config-private';
 import { FormsModule } from '@angular/forms';
 import { Messenges } from '../../../models/messenges.class';
 import { CreateNewChatComponent } from './create-new-chat/create-new-chat.component';
+import { WritingBoxComponent } from '../../shared/components/writing-box/writing-box.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, CreateNewChatComponent],
+  imports: [CommonModule, FormsModule, CreateNewChatComponent, WritingBoxComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
 
   name: string = '';
-  description: string = '';
 
   firebaseConfig = privateConfig;
 
@@ -107,20 +107,6 @@ export class ChatComponent {
     this.dialog.open(DialogMemberExistingChannelComponent, {
       data: this.globalVariables.activeChannel
     });
-  }
-
-  addMessage() {
-    const message: Messenges = new Messenges({
-      channel: this.globalVariables.activeChannel.name,
-      text: this.description,
-      time: this.globalVariables.currentTime(),
-      sender: this.globalVariables.signed_in_member.displayName,
-      avatar: this.globalVariables.signed_in_member.photoURL,
-      creationDate: new Date().toISOString().slice(0, 10),
-      timeStamp: new Date().getTime()
-    })
-    this.channelFirestore.addMessage(message)
-    this.description = '';
   }
 
   start_thread(message: Messenges) {

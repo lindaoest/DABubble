@@ -1,49 +1,38 @@
 <div class="chat">
-	<div class="info-top">
-	  <div (click)="openDialog()" class="team-name">
-		<img class="avatar" src="{{ activeMember[0].avatar }}" alt="">
-		<h3>{{ globalVariables.active_privatechat }}</h3>
-		<img src="./assets/img/channels/arrow_drop_down.svg" alt="">
-	  </div>
-	</div>
-	<div class="chat-block flex">
-		<ng-container *ngFor="let group of (this.channelFirestore.groupedDirectMessages | keyvalue); trackBy: trackByFn">
-			<ng-container *ngIf="isRelevantGroup(group.key)">
-				<ng-container *ngFor="let dateGroup of (group.value | keyvalue); trackBy: trackByFn">
-					<div class="date-block">
-						<div class="date">
-							<p>{{ dateGroup.key }}</p>
-						</div>
-						<ng-container *ngFor="let message of dateGroup.value; trackBy: trackByFn">
-							<div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
-								<img src="{{ message.avatar }}" alt="">
-								<div class="message-text">
-									<div class="top flex align-center gap-24">
-										<p class="font-weight-700">{{ message.sender }}</p>
-										<p class="font-small">{{ message.time }} Uhr</p>
-									</div>
-									<div class="text">
-										<p>{{ message.text }}</p>
-									</div>
-								</div>
-							</div>
-						</ng-container>
-					</div>
-				</ng-container>
-			</ng-container>
-		</ng-container>
-	</div>
-	<div class="writing-box">
-	  <input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
-	  <div class="bottom-icons">
-		<div class="reactions">
-		  <img src="./assets/img/chat/add-reaction.svg" alt="">
-		  <img src="./assets/img/chat/add-emoji.svg" alt="">
-		  <img src="./assets/img/chat/tag-people.svg" alt="">
-		</div>
-		<div class="send-message">
-		  <img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
-		</div>
-	  </div>
-	</div>
+  <div class="info-top">
+    <div (click)="openDialog()" class="team-name">
+      <img class="avatar" src="{{ activeMember[0].avatar }}" alt="">
+      <h3>{{ globalVariables.active_privatechat }}</h3>
+      <img src="./assets/img/channels/arrow_drop_down.svg" alt="">
+    </div>
   </div>
+  <div class="chat-block flex">
+    <ng-container *ngFor="let group of (this.channelFirestore.groupedDirectMessages | keyvalue); trackBy: trackByFn">
+      <ng-container *ngIf="isRelevantGroup(group.key)">
+        <ng-container *ngFor="let dateGroup of (group.value | keyvalue); trackBy: trackByFn">
+          <div class="date-block">
+            <div class="date">
+              <p>{{ dateGroup.key }}</p>
+            </div>
+            <ng-container *ngFor="let message of dateGroup.value; trackBy: trackByFn">
+              <div class="message flex"
+                [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+                <img src="{{ message.avatar }}" alt="">
+                <div class="message-text">
+                  <div class="top flex align-center gap-24">
+                    <p class="font-weight-700">{{ message.sender }}</p>
+                    <p class="font-small">{{ message.time }} Uhr</p>
+                  </div>
+                  <div class="text">
+                    <p>{{ message.text }}</p>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+  <app-writing-box [sendMessage]="'direct_message'" [activeMember]="activeMember"></app-writing-box>
+</div>

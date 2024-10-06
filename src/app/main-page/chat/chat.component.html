@@ -68,19 +68,7 @@
 			}
 			}
 		</div>
-		<div class="writing-box">
-			<input type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
-			<div class="bottom-icons">
-				<div class="reactions">
-					<img src="./assets/img/chat/add-reaction.svg" alt="">
-					<img src="./assets/img/chat/add-emoji.svg" alt="">
-					<img src="./assets/img/chat/tag-people.svg" alt="">
-				</div>
-				<div class="send-message">
-					<img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
-				</div>
-			</div>
-		</div>
+		<app-writing-box [sendMessage]="'message'"></app-writing-box>
 	} @else {
 		<app-create-new-chat></app-create-new-chat>
 	}
