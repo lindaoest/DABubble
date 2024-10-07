@@ -51,7 +51,7 @@ app-directmessages-chat {
 }
 
 app-chat.full-width,
-app-directmessages-chat {
+app-directmessages-chat.full-width {
   width: 100%;
   max-width: 100%;
 }
@@ -67,4 +67,14 @@ app-button-close-menu {
   left: -135px;
   top: 71%;
   transform: rotate(-90deg);
+}
+
+@media (max-width: 1200px) {
+  .hide-on-small {
+    display: none;
+  }
+  .w-full {
+    width: 100%;
+    max-width: 100%;
+  }
 }

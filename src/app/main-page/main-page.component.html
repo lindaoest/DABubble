@@ -3,12 +3,12 @@
 		<app-site-menu></app-site-menu>
     <!-- <app-button-close-menu></app-button-close-menu> -->
 		@if (!globalVariables.open_directmessages_chat) {
-			<app-chat [ngClass]="{'full-width': !globalVariables.open_thread_reply}" (currentMessage)="message_for_thread($event)"></app-chat>
+			<app-chat [ngClass]="{'full-width': !globalVariables.open_thread_reply, 'hide-on-small': globalVariables.open_thread_reply}" (currentMessage)="message_for_thread($event)"></app-chat>
 		} @else {
-			<app-directmessages-chat [ngClass]="{'full-width': !globalVariables.open_thread_reply}"></app-directmessages-chat>
+			<app-directmessages-chat [ngClass]="{'full-width': !globalVariables.open_thread_reply, 'hide-on-small': globalVariables.open_thread_reply}"></app-directmessages-chat>
 		}
     @if (globalVariables.open_thread_reply) {
-      <app-thread-reply [messageToReplyTo]="currentMessage"></app-thread-reply>
+      <app-thread-reply [ngClass]="{'w-full': globalVariables.open_thread_reply}" [messageToReplyTo]="currentMessage"></app-thread-reply>
     }
 	</div>
 
