@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -49,6 +49,7 @@ export class SiteMenuComponent {
   openChat(channelName: string) {
     this.globalVariables.open_directmessages_chat = false;
     this.globalVariables.create_new_chat = false;
+    this.globalVariables.mobile_chat = true;
     this.globalVariables.activeChat = channelName;
     if (this.globalVariables.activeChannel) {
       this.channelFirestore.channels$.subscribe(channels => {

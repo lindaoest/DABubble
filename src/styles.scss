@@ -1,166 +1,172 @@
 /* nunito-200 - cyrillic_latin_latin-ext */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: 'Nunito';
-	font-style: normal;
-	font-weight: 200;
-	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.woff2') format('woff2'),
-		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.woff') format('woff'),
-		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.ttf') format('truetype'),
-		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.svg#Nunito') format('svg');
-	/* Legacy iOS */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 200;
+  src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-200.svg#Nunito') format('svg');
+  /* Legacy iOS */
 }
 
 /* nunito-regular - cyrillic_latin_latin-ext */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: 'Nunito';
-	font-style: normal;
-	font-weight: 400;
-	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.woff2') format('woff2'),
-		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.woff') format('woff'),
-		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.ttf') format('truetype'),
-		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.svg#Nunito') format('svg');
-	/* Legacy iOS */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-regular.svg#Nunito') format('svg');
+  /* Legacy iOS */
 }
 
 /* nunito-600 - cyrillic_latin_latin-ext */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: 'Nunito';
-	font-style: normal;
-	font-weight: 600;
-	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.woff2') format('woff2'),
-		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.woff') format('woff'),
-		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.ttf') format('truetype'),
-		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.svg#Nunito') format('svg');
-	/* Legacy iOS */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-600.svg#Nunito') format('svg');
+  /* Legacy iOS */
 }
 
 /* nunito-700 - cyrillic_latin_latin-ext */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: 'Nunito';
-	font-style: normal;
-	font-weight: 700;
-	src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.woff2') format('woff2'),
-		/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.woff') format('woff'),
-		/* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.ttf') format('truetype'),
-		/* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-		url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.svg#Nunito') format('svg');
-	/* Legacy iOS */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('./assets/fonts/nunito/nunito-v26-cyrillic_latin_latin-ext-700.svg#Nunito') format('svg');
+  /* Legacy iOS */
 }
 
 * {
-	margin: 0;
+  margin: 0;
 }
 
 body {
-	font-family: 'Nunito';
-	font-size: 18px;
-	background-color: #ECEEFE;
+  font-family: 'Nunito';
+  font-size: 18px;
+  background-color: #ECEEFE;
 }
 
 .flex {
-	display: flex;
+  display: flex;
 }
 
 .align-center {
-	align-items: center;
+  align-items: center;
 }
 
 .gap-24 {
-	gap: 24px;
+  gap: 24px;
 }
 
 .blue-font {
-	color: #535AF1;
+  color: #535AF1;
 }
 
 .font-small {
-	font-size: 0.777rem;
+  font-size: 0.777rem;
 }
 
 .font-weight-700 {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 .p-t-24 {
-	padding-top: 24px;
+  padding-top: 24px;
 }
 
 .p-t-32 {
-	padding-top: 32px;
+  padding-top: 32px;
 }
 
 .p-t-40 {
-	padding-top: 40px;
+  padding-top: 40px;
 }
 
 h3 {
-	font-size: 1.333rem;
+  font-size: 1.333rem;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 input[type="file"] {
-	display: none;
+  display: none;
 }
 
 button {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .button1 {
-	border: none;
-	border-radius: 25px;
-	background-color: #444DF2;
-	padding: 12px 25px;
-	color: #FFFFFF;
-	font-weight: 700;
-	font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  background-color: #444DF2;
+  padding: 12px 25px;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .button2,
 #button-file {
-	border: 1px solid #444DF2;
-	border-radius: 25px;
-	background-color: transparent;
-	padding: 12px 25px;
-	color: #444DF2;
-	font-weight: 700;
-	font-size: 1rem;
+  border: 1px solid #444DF2;
+  border-radius: 25px;
+  background-color: transparent;
+  padding: 12px 25px;
+  color: #444DF2;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 button:disabled {
-	opacity: 0.4;
+  opacity: 0.4;
 }
 
 #button-file {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .error-message {
-	width: 100%;
-	color: red;
-	font-size: 0.8rem;
+  width: 100%;
+  color: red;
+  font-size: 0.8rem;
 }
 
 .tac {
-	text-align: center;
+  text-align: center;
 }
 
 // .cdk-overlay-pane.mat-mdc-dialog-panel {
@@ -168,12 +174,12 @@ button:disabled {
 // }
 
 .mat-mdc-dialog-container {
-	width: auto;
+  width: auto;
 }
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
-	border-radius: 30px !important;
-	width: auto !important;
+  border-radius: 30px !important;
+  width: auto !important;
 }
 
 app-log-in,
@@ -181,41 +187,47 @@ app-registration,
 app-choose-avatar,
 app-reset-password,
 app-new-password {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	max-width: 606px;
-	height: 100%;
-	margin: 32px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 606px;
+  height: 100%;
+  margin: 32px auto;
 }
 
 /* width */
 ::-webkit-scrollbar {
-	width: 5px;
-	height: 5px;
+  width: 5px;
+  height: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-	border-radius: 30px;
+  border-radius: 30px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: lightgrey;
-	border-radius: 10px;
+  background: lightgrey;
+  border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: lightgray;
+  background: lightgray;
 }
 
 .cursorPointer {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 app-writing-box {
-  padding: 0!important;
+  padding: 0 !important;
   display: flex;
+}
+
+@media screen and (max-width: 475px) {
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    width: 100% !important;
+  }
 }

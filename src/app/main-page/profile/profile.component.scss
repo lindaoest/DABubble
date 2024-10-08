@@ -1,56 +1,73 @@
 @import '../../shared/mixin.scss';
 
 .profile-container {
-	width: 420px;
-	padding: 40px;
+  width: 420px;
+  padding: 40px;
 }
 
 .profile {
-	flex-direction: column;
+  flex-direction: column;
 }
 
 .close {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .edit {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .header,
 .edit {
-	@include displayFlex($jc: space-between);
+  @include displayFlex($jc: space-between);
 }
 
 .avatar {
-	margin: 40px auto;
-	width: 200px;
-	height: 200px;
-	border-radius: 50%;
+  margin: 40px auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }
 
 .active {
-	@include displayFlex($jc: flex-start);
-	margin-top: 16px;
-	gap: 16px;
-	color: #92C83E;
+  @include displayFlex($jc: flex-start);
+  margin-top: 16px;
+  gap: 16px;
+  color: #92C83E;
 
-	&::before {
-		content: '';
-		display: flex;
-		width: 16px;
-		height: 16px;
-		background-color: #92C83E;
-		border-radius: 50%;
-	}
+  &::before {
+    content: '';
+    display: flex;
+    width: 16px;
+    height: 16px;
+    background-color: #92C83E;
+    border-radius: 50%;
+  }
 }
 
 .email {
-	@include displayFlex($jc: flex-start);
-	gap: 16px;
-	margin: 40px 0 16px;
+  @include displayFlex($jc: flex-start);
+  gap: 16px;
+  margin: 40px 0 16px;
 }
 
 .email-address {
-	margin-left: 40px;
+  margin-left: 40px;
+}
+
+@media screen and (max-width: 630px) {
+  .profile-container {
+    width: 300px;
+  }
+
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .profile-container {
+    width: 230px;
+  }
 }

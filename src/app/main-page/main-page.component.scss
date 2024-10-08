@@ -4,10 +4,12 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 16px;
 }
 
 .container {
   width: 100%;
+  gap: 16px;
 }
 
 .da-bubble-logo {
@@ -38,7 +40,6 @@ app-site-menu {
   max-width: 366px;
   width: 25.062%;
   min-width: 300px;
-  margin-left: 16px;
 }
 
 app-chat,
@@ -46,8 +47,6 @@ app-directmessages-chat {
   width: 51.562%;
   max-width: 990px;
   min-width: 470px;
-  margin-left: 16px;
-  margin-right: 16px;
 }
 
 app-chat.full-width,
@@ -76,5 +75,20 @@ app-button-close-menu {
   .w-full {
     width: 100%;
     max-width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  app-chat,
+  app-directmessage-chat,
+  app-thread-reply {
+    display: none;
+  }
+  app-site-menu {
+    width: 100%;
+    max-width: 100%;
+  }
+  .mobile-flex {
+    display: flex;
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
 import { ChatComponent } from './chat/chat.component';
 import { ThreadReplyComponent } from './thread-reply/thread-reply.component';

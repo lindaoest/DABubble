@@ -1,58 +1,76 @@
 @import '../mixin.scss';
 
 header {
-	display: flex;
-	justify-content: space-between;
-	padding: 24px 40px;
+  @include displayFlex($jc: space-between);
+  padding: 24px 40px;
 }
 
 .registration {
 
-	p+p {
-		padding-top: 16px;
-		cursor: pointer;
-	}
+  p+p {
+    padding-top: 16px;
+    cursor: pointer;
+  }
 }
 
 .profile {
-	@include displayFlex();
-	gap: 24px;
+  @include displayFlex();
+  gap: 24px;
 
-	.profile-img {
-		position: relative;
+  .profile-img {
+    position: relative;
 
-		img {
-			border-radius: 50%;
-		}
-
-		.online {
-			background-color: #92C83E;
-			width: 17px;
-			height: 17px;
-			border-radius: 50%;
-			position: absolute;
-			bottom: 0;
-			right: 0;
-			border: 2px solid #FFFFFF;
-		}
-	}
+    img {
+      border-radius: 50%;
+    }
+  }
 }
 
 .arrow-down {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .lightbox {
-	position: absolute;
-	top: 105px;
-	right: 44px;
-	background-color: #FFFFFF;
-	padding: 32px;
-	box-shadow: 0px 6px 10px 0px #00000033;
-	border-radius: 30px 0 30px 30px;
-	min-width: 130px;
-	gap: 16px;
-	@include displayFlex();
-	flex-direction: column;
-	cursor: pointer;
+  position: absolute;
+  top: 105px;
+  right: 44px;
+  background-color: #FFFFFF;
+  padding: 32px;
+  box-shadow: 0px 6px 10px 0px #00000033;
+  border-radius: 30px 0 30px 30px;
+  min-width: 130px;
+  gap: 16px;
+  @include displayFlex();
+  flex-direction: column;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .profile {
+    .profile-name {
+      max-width: 170px;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .logo {
+    width: 161px;
+    height: 45px;
+  }
+
+  .profile {
+    gap: 8px;
+
+    .profile-name {
+      display: none;
+    }
+
+    .profile-img {
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
 }
