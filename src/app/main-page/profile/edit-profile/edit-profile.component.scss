@@ -5,10 +5,6 @@
 	padding: 40px;
 }
 
-.profile {
-	flex-direction: column;
-}
-
 .close {
 	cursor: pointer;
 }
@@ -55,7 +51,7 @@ input {
 
 @media screen and (max-width: 630px) {
   .profile-container {
-    width: 300px;
+    width: auto;
   }
 
   .avatar {

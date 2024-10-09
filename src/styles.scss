@@ -84,6 +84,10 @@ body {
   align-items: center;
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
 .gap-24 {
   gap: 24px;
 }
@@ -229,5 +233,26 @@ app-writing-box {
 @media screen and (max-width: 475px) {
   .cdk-overlay-pane.mat-mdc-dialog-panel {
     width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: 100%!important;
+    margin: 0 64px;
+  }
+
+  .mdc-dialog__container {
+    width: 100vw;
+  }
+
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    margin: 0 24px;
   }
 }

@@ -5,14 +5,7 @@
   padding: 40px;
 }
 
-.profile {
-  flex-direction: column;
-}
-
-.close {
-  cursor: pointer;
-}
-
+.close,
 .edit {
   cursor: pointer;
 }
@@ -57,17 +50,11 @@
 
 @media screen and (max-width: 630px) {
   .profile-container {
-    width: 300px;
+    width: auto;
   }
 
   .avatar {
     width: 150px;
     height: 150px;
-  }
-}
-
-@media screen and (max-width: 475px) {
-  .profile-container {
-    width: 230px;
   }
 }
