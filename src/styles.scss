@@ -230,15 +230,20 @@ app-writing-box {
   display: flex;
 }
 
-@media screen and (max-width: 475px) {
-  .cdk-overlay-pane.mat-mdc-dialog-panel {
-    width: 100% !important;
+@media screen and (max-width: 700px) {
+  app-log-in,
+  app-registration,
+  app-choose-avatar,
+  app-reset-password,
+  app-new-password {
+    max-width: 100%;
+    margin: 32px 24px;
   }
 }
 
 @media screen and (max-width: 630px) {
   .cdk-overlay-pane.mat-mdc-dialog-panel {
-    max-width: 100%!important;
+    max-width: 100% !important;
     margin: 0 64px;
   }
 
@@ -254,5 +259,17 @@ app-writing-box {
 @media screen and (max-width: 550px) {
   .cdk-overlay-pane.mat-mdc-dialog-panel {
     margin: 0 24px;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  app-log-in {
+    flex-direction: column;
   }
 }

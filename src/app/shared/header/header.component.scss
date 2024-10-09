@@ -79,3 +79,9 @@ header {
     padding: 24px;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .registration {
+    display: none;
+  }
+}
