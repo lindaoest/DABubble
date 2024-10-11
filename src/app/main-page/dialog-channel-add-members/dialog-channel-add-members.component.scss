@@ -1,11 +1,8 @@
 @import '../../shared/mixin.scss';
 
 .dialog-add-channel {
-	display: flex;
-	flex-direction: column;
 	border-radius: 30px !important;
 	padding: 40px !important;
-	//width: 45.416%;
 }
 
 .headline {
@@ -31,7 +28,6 @@
 
 	.added-members {
 		@include displayFlex($jc: flex-start);
-		// width: 260px;
 		overflow-x: scroll;
 
 		.member {

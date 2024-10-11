@@ -93,3 +93,21 @@
 	@include displayFlex($jc: flex-end);
 	margin-top: 24px;
 }
+
+@media screen and (max-width: 1200px) {
+  .dialog-add-channel {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .dialog-add-channel {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .dialog-add-channel {
+    width: auto;
+  }
+}
