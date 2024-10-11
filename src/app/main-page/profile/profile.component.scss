@@ -5,36 +5,31 @@
   padding: 40px;
 }
 
-.close,
-.edit {
-  cursor: pointer;
-}
-
 .header,
 .edit {
   @include displayFlex($jc: space-between);
 }
 
 .avatar {
-  margin: 40px auto;
+  border-radius: 50%;
   width: 200px;
   height: 200px;
-  border-radius: 50%;
+  margin: 40px auto;
 }
 
 .active {
   @include displayFlex($jc: flex-start);
-  margin-top: 16px;
-  gap: 16px;
   color: #92C83E;
+  gap: 16px;
+  margin-top: 16px;
 
   &::before {
     content: '';
     display: flex;
+    border-radius: 50%;
+    background-color: #92C83E;
     width: 16px;
     height: 16px;
-    background-color: #92C83E;
-    border-radius: 50%;
   }
 }
 

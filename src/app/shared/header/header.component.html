@@ -3,7 +3,7 @@
 	@if (path == '/log-in') {
 	<div class="registration">
 		<p>Neu bei DaBubble?</p>
-		<p class="blue-font" [routerLink]="['/sign-in']">Konto erstellen</p>
+		<p class="blue-font c-pointer" [routerLink]="['/sign-in']">Konto erstellen</p>
 	</div>
 	}
 	@if (path == '') {
@@ -16,13 +16,13 @@
 			<img src="{{ globalVariables.signed_in_member.photoURL }}" width="70" height="70" alt="">
 			}
 		</div>
-		<img class="arrow-down" (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
+		<img class="arrow-down c-pointer" (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
 	</div>
 	}
 </header>
 
 @if (openLightboxVar) {
-<div class="lightbox">
+<div class="lightbox c-pointer">
 	<p (click)="openProfile()" class="font-weight-700">Profil</p>
 	<p (click)="logOut()" class="font-weight-700">Log out</p>
 </div>

@@ -3,32 +3,30 @@
 .registration {
   @include displayFlex($jc: flex-start, $ai: flex-start);
   flex-direction: column;
-  padding: 50px 60px;
   width: auto;
   background-color: #FFFFFF;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
   border-radius: 30px;
+  padding: 50px 60px;
 }
 
 .headline {
   @include displayFlex();
   position: relative;
-  width: 100%;
 
   img {
     position: absolute;
     left: 0;
-    cursor: pointer;
   }
 }
 
 .input-element {
   @include displayFlex($jc: flex-start);
+  background-color: #ECEEFE;
+  border-radius: 30px;
   width: calc(100% - 64px);
   margin-top: 40px;
   padding: 12px 32px;
-  background-color: #ECEEFE;
-  border-radius: 30px;
 
   input {
     border: none;
@@ -47,15 +45,12 @@
 }
 
 .checkbox-privacy {
-  width: 100%;
   margin-top: 32px;
   gap: 8px;
 }
 
 .buttons {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
+  @include displayFlex($jc: flex-end);
 }
 
 @media screen and (max-width: 630px) {

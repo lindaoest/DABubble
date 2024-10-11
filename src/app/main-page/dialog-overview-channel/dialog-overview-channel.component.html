@@ -4,15 +4,15 @@
 			<img src="./assets/img/chat/tag-black.svg" alt="">
 			<h3>{{ data.name }}</h3>
 		</div>
-		<img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
+		<img class="c-pointer" (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
 	</div>
 	<div class="content flex p-t-24">
 		<div class="edit">
 			<p class="font-weight-700">Channel Name</p>
 			@if (editModus) {
-				<p (click)="saveChanges()" class="blue-font">Speichern</p>
+				<p (click)="saveChanges()" class="blue-font c-pointer">Speichern</p>
 			} @else {
-				<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+				<p (click)="editChannel()" class="blue-font c-pointer">Bearbeiten</p>
 			}
 		</div>
 		@if (editModus) {

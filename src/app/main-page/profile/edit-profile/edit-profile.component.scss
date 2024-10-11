@@ -5,20 +5,16 @@
 	padding: 40px;
 }
 
-.close {
-	cursor: pointer;
-}
-
 .header,
 .edit {
 	@include displayFlex($jc: space-between);
 }
 
 .avatar {
+  border-radius: 50%;
 	margin: 40px auto;
 	width: 200px;
 	height: 200px;
-	border-radius: 50%;
 }
 
 .input-element {
@@ -32,11 +28,10 @@
 
 input {
 	border: 1px solid #ADB0D9;
-	padding-left: 32px;
+  border-radius: 30px;
+	width: calc(100% - 64px);
 	margin-top: 8px;
 	padding: 16px 24px;
-	border-radius: 30px;
-	width: calc(100% - 64px);
 
 	&:focus-visible {
 		outline: none;
@@ -44,9 +39,9 @@ input {
 }
 
 .buttons {
+  @include displayFlex();
+  gap: 32px;
 	margin-top: 40px;
-	justify-content: center;
-	gap: 32px;
 }
 
 @media screen and (max-width: 630px) {

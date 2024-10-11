@@ -88,6 +88,10 @@ body {
   flex-direction: column;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .gap-24 {
   gap: 24px;
 }
@@ -177,9 +181,13 @@ button:disabled {
   cursor: pointer;
 }
 
-// .cdk-overlay-pane.mat-mdc-dialog-panel {
-// 	width: 45.416%;
-// }
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
 
 .mat-mdc-dialog-container {
   width: auto;

@@ -3,24 +3,19 @@
 .log-in {
   @include displayFlex($jc:flex-start);
 	flex-direction: column;
-	padding: 50px 60px;
-	background-color: #FFFFFF;
+  background-color: #FFFFFF;
 	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
 	border-radius: 30px;
 	width: auto;
-}
-
-.forgot-password {
-	cursor: pointer;
+	padding: 50px 60px;
 }
 
 .input-element {
   @include displayFlex($jc:flex-start);
-	width: 100%;
+  background-color: #ECEEFE;
+	border-radius: 30px;
 	margin-top: 40px;
 	padding: 12px 32px;
-	background-color: #ECEEFE;
-	border-radius: 30px;
 
 	input {
 		border: none;
@@ -41,7 +36,6 @@
 .or-container {
   @include displayFlex();
 	position: relative;
-	width: 100%;
 
 	p {
     position: relative;
@@ -52,15 +46,13 @@
 
 	.line {
     position: absolute;
-		width: 100%;
+    background-color: #ADB0D9;
 		height: 1px;
-		background-color: #ADB0D9;
 	}
 }
 
 .google-login {
 	justify-content: center;
-	cursor: pointer;
 }
 
 .buttons {
@@ -82,9 +74,8 @@
   }
 
   .registration {
-    display: flex;
+    @include displayFlex($jc:flex-start);
     flex-direction: column;
-    align-items: center;
     margin-top: 32px;
   }
 

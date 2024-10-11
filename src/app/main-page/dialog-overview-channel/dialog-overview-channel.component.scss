@@ -17,10 +17,10 @@
 }
 
 .content {
+  border: 1px solid #ADB0D9;
+	border-radius: 30px;
 	flex-direction: column;
 	width: auto;
-	border: 1px solid #ADB0D9;
-	border-radius: 30px;
 	padding: 16px 24px;
 	margin-top: 16px;
 
@@ -33,19 +33,18 @@
 	}
 
 	.input-description {
-		width: auto;
-		border: 1px solid #ADB0D9;
+    border: 1px solid #ADB0D9;
 		border-radius: 30px;
+		width: auto;
 		padding: 16px 24px;
 		margin-top: 16px;
 	}
 
 	.channel-name-two-input {
 		@include displayFlex($jc: flex-start);
-		padding-top: 24px;
-		width: auto;
 		border: 1px solid #ADB0D9;
 		border-radius: 30px;
+		width: auto;
 		padding: 16px 24px;
 		margin-top: 16px;
 

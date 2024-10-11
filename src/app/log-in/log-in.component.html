@@ -1,26 +1,26 @@
 <form [formGroup]="login_form" class="log-in">
 	<h1 class="blue-font">Anmeldung</h1>
 	<p class="tac p-t-32">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
-	<div class="input-element input-email">
+	<div class="input-element input-email w-full">
 		<img src="./assets/img/log-in/mail.svg" alt="">
 		<input type="email" name="email" placeholder="beispielname@email.com" formControlName="email">
 	</div>
 	@if(this.login_form.get('email')?.invalid && this.login_form.get('email')?.touched) {
 		<span class="error-message">Gib eine gültige Email ein</span>
 	}
-	<div class="input-element input-password">
+	<div class="input-element input-password w-full">
 		<img src="./assets/img/log-in/lock.svg" alt="">
 		<input type="password" name="password" placeholder="Passwort" formControlName="password">
 	</div>
 	@if(this.login_form.get('password')?.invalid && this.login_form.get('password')?.touched) {
 		<span class="error-message">Gib dein Passwort ein</span>
 	}
-	<p [routerLink]="['/reset-password']" class="forgot-password blue-font p-t-40">Passwort vergessen?</p>
-	<div class="or-container p-t-40">
+	<p [routerLink]="['/reset-password']" class="forgot-password c-pointer blue-font p-t-40">Passwort vergessen?</p>
+	<div class="or-container w-full p-t-40">
 		<p>ODER</p>
-		<div class="line"></div>
+		<div class="line w-full"></div>
 	</div>
-	<div (click)="googleAuth()" class="input-element google-login">
+	<div (click)="googleAuth()" class="input-element google-login w-full c-pointer">
 		<img src="./assets/img/log-in/google.svg" alt="">
 		<p class="blue-font">Anmelden mit Google</p>
 	</div>

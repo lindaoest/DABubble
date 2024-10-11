@@ -1,12 +1,12 @@
 <form class="choose-avatar">
-	<div class="headline">
-		<img [routerLink]="['/sign-in']" src="./assets/img/sign-in/back-arrow.svg" alt="">
+	<div class="headline w-full">
+		<img class="c-pointer" [routerLink]="['/sign-in']" src="./assets/img/sign-in/back-arrow.svg" alt="">
 		<h1 class="blue-font">Wähle deinen Avatar</h1>
 	</div>
 	<img class="profile" [src]="profilePicture" alt="">
 	<h2 class="font-weight-700">{{ globalVariables.newMember ? globalVariables.newMember.member : '' }}</h2>
-	<p class="subtitle">Aus der Liste wählen</p>
-	<div class="avatar-images">
+	<p class="subtitle w-full">Aus der Liste wählen</p>
+	<div class="avatar-images w-full">
 		@for (item of [1,2,3,4,5,6]; track $index) {
 		<img (click)="addImage(item)" class="avatar-img" src="./assets/img/avatar/avatar-{{item}}.svg" alt="">
 		}
@@ -21,13 +21,13 @@
 	@if (user_already_exists) {
 		<p class="error-message">Dieser User existiert bereits</p>
 	}
-	<div class="buttons flex p-t-24">
+	<div class="buttons flex w-full p-t-24">
 		<button class="button1" (click)="addMember()" [disabled]="chooseImage">Weiter</button>
 	</div>
 </form>
 
 @if (successSignIn) {
-<div class="overlay">
+<div class="overlay w-full h-full">
 	<div class="overlay-button">
 		<p>Konto erfolgreich erstellt!</p>
 	</div>
