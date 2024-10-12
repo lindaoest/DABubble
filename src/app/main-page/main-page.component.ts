@@ -27,9 +27,42 @@ export class MainPageComponent {
     timeStamp: 0
   };
 
+  showMenu: boolean = true;
+  showChat: boolean = false;
+  showDirectChat: boolean = false;
+  showThreads: boolean = false;
+
   constructor(public globalVariables: GlobalVariablesService) {}
 
   message_for_thread(message: Messenges) {
     this.currentMessage = message;
+  }
+
+  openChat() {
+    this.showMenu = false;
+    this.showChat = true;
+    this.showDirectChat = false;
+    this.showThreads = false;
+  }
+
+  openDirectChat() {
+    this.showMenu = false;
+    this.showChat = false;
+    this.showDirectChat = true;
+    this.showThreads = false;
+  }
+
+  openThread() {
+    this.showMenu = false;
+    this.showChat = false;
+    this.showDirectChat = false;
+    this.showThreads = true;
+  }
+
+  goBack() {
+    this.showMenu = true;
+    this.showChat = false;
+    this.showDirectChat = false;
+    this.showThreads = false;
   }
 }

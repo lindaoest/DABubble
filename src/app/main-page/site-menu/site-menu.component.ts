@@ -20,6 +20,9 @@ import { Member } from '../../../models/member.class';
 })
 export class SiteMenuComponent {
 
+  @Output() mobileClickedChat = new EventEmitter();
+  @Output() mobileClickedDirectChat = new EventEmitter();
+
   name: string = '';
   description: string = '';
   members: [] = [];
@@ -62,6 +65,8 @@ export class SiteMenuComponent {
         }
       });
     }
+
+    this.mobileClickedChat.emit();
   }
 
   filterChats() {
@@ -113,6 +118,8 @@ export class SiteMenuComponent {
     if (get_active_chat) {
       this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
     }
+
+    this.mobileClickedDirectChat.emit();
   }
 
   uniqueReceivers(messages: any) {

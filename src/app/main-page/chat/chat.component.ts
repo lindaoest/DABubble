@@ -24,6 +24,8 @@ import { WritingBoxComponent } from '../../shared/components/writing-box/writing
 })
 export class ChatComponent {
 
+  @Output() mobileClickedThread = new EventEmitter();
+
   name: string = '';
 
   firebaseConfig = privateConfig;
@@ -112,5 +114,7 @@ export class ChatComponent {
   start_thread(message: Messenges) {
     this.globalVariables.open_thread_reply = true;
     this.currentMessage.emit(message);
+
+    this.mobileClickedThread.emit();
   }
 }

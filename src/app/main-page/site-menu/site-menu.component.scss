@@ -1,132 +1,127 @@
 @import '../../shared/mixin.scss';
 
 .site-menu {
-	background-color: #FFFFFF;
-	border-radius: 30px;
+  border-radius: 30px;
+  background-color: #FFFFFF;
 
-	>* {
-		padding: 32px
-	}
+  >* {
+    padding: 32px
+  }
 }
 
 .devspace-container {
-	@include displayFlex($jc: space-between);
+  @include displayFlex($jc: space-between);
 
-	.devspace {
-		@include displayFlex();
-		gap: 16px;
-	}
+  .devspace {
+    @include displayFlex();
+    gap: 16px;
+  }
 }
 
 .channels-container,
 .direct-messages {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .overview {
-	@include displayFlex($jc: space-between);
+  @include displayFlex($jc: space-between);
 
-	.left {
-		@include displayFlex();
-		gap: 16px;
-	}
-
-  .add-channel-svg {
-    cursor: pointer;
+  .left {
+    @include displayFlex();
+    gap: 16px;
   }
 
-	.arrow {
-		transform: rotate(-90deg);
-    cursor: pointer;
+  .arrow {
+    transform: rotate(-90deg);
 
-		&.open {
-			transform: rotate(0);
-		}
-	}
+    &.open {
+      transform: rotate(0);
+    }
+  }
 
-	.title {
-		@include displayFlex();
-		gap: 8px;
-	}
+  .title {
+    @include displayFlex();
+    gap: 8px;
+  }
 }
 
 .channel-container {
-	height: 0;
-	opacity: 0;
-	transition: all 0.2s ease-in-out;
-  cursor: pointer;
+  height: 0;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
 
-	&.open {
-		height: auto;
-		opacity: 1;
-		transition: all 0.2s ease-in-out;
-	}
+  &.open {
+    height: auto;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+  }
 }
 
 .team,
 .add-channel {
-	@include displayFlex($jc: flex-start);
-	margin-left: 45px;
-	margin-top: 24px;
-	gap: 8px;
+  @include displayFlex($jc: flex-start);
+  gap: 8px;
+  margin-left: 45px;
+  margin-top: 24px;
 }
 
 .direct-messages {
-	.overview {
-		justify-content: flex-start;
-		margin-bottom: 24px;
+  .overview {
+    justify-content: flex-start;
+    margin-bottom: 24px;
 
-		.arrow {
-			transform: rotate(-90deg);
-      cursor: pointer;
+    .arrow {
+      transform: rotate(-90deg);
 
-			&.open {
-				transform: rotate(0);
-			}
-		}
+      &.open {
+        transform: rotate(0);
+      }
+    }
 
-		.title {
-			margin-left: 16px;
-		}
-	}
+    .title {
+      margin-left: 16px;
+    }
+  }
 
-	.direct-message {
-		@include displayFlex($jc:flex-start);
-		gap: 16px;
-		margin-left: 40px;
+  .direct-message {
+    @include displayFlex($jc: flex-start);
+    gap: 16px;
+    margin-left: 40px;
 
-		.avatar {
-			position: relative;
-			width: 50px;
+    .avatar {
+      position: relative;
+      width: 50px;
 
-			img {
-				border-radius: 50%;
-				width: 50px;
-				height: 50px;
-			}
-
-			.online {
-				position: absolute;
-				bottom: 7px;
-				right: 0;
-				border: 2px solid #FFFFFF;
-				width: 12px;
-				height: 12px;
-				background-color: #92C83E;
-				border-radius: 50%;
-			}
-		}
-	}
+      img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
 }
 
 .directmessage-container {
-	height: 0;
-	opacity: 0;
-	transition: all 0.2s ease-in-out;
+  height: 0;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
 
-	&.open {
-		height: auto;
-		opacity: 1;
-		transition: all 0.2s ease-in-out;
-	}
+  &.open {
+    height: auto;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .devspace-container {
+    .devspace {
+      gap: 8px;
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
 }

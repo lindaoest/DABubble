@@ -77,14 +77,18 @@ app-button-close-menu {
 @media (max-width: 800px) {
   app-chat,
   app-directmessage-chat,
-  app-thread-reply {
-    display: none;
-  }
+  app-thread-reply,
   app-site-menu {
-    width: 100%;
-    max-width: 100%;
+    display: none;
   }
   .mobile-flex {
     display: flex;
+  }
+
+  .showContainer {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
   }
 }

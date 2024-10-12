@@ -1,7 +1,7 @@
 <div class="chat">
 	@if (!globalVariables.create_new_chat) {
 		<div class="info-top">
-			<div (click)="openDialog()" class="team-name">
+			<div (click)="openDialog()" class="team-name c-pointer">
 				<img src="./assets/img/channels/tag.svg" alt="">
 				@if (channels[0]) {
 				<h3>{{ activeChat ? activeChat : channels[0].name }}</h3>
@@ -31,22 +31,22 @@
 					<p>{{ getMembers().length }}</p>
 					}
 				</div>
-				<div (click)="addMembers()" class="add-member">
+				<div (click)="addMembers()" class="c-pointer">
 					<img src="./assets/img/chat/chat-add-member.svg" alt="">
 				</div>
 			</div>
 		</div>
-		<div class="chat-block flex">
+		<div class="chat-block flex flex-column">
 			@for (group of (this.channelFirestore.groupedMessages | keyvalue); track $index) {
 			@if (group.key == globalVariables.activeChannel.name) {
 				@for (dateGroup of (group.value | keyvalue); track $index) {
-				<div class="date-block">
+				<div class="date-block w-full">
 					<div class="date">
 						<p>{{ dateGroup.key }}</p>
 					</div>
 
 					@for (message of dateGroup.value; track $index) {
-					<div class="message flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+					<div class="message flex w-full" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
 						<img src="{{ message.avatar }}" alt="">
 						<div class="message-text">
 							<div class="top flex align-center gap-24">
@@ -57,7 +57,7 @@
 								<p>{{ message.text }}</p>
 							</div>
 							<div class="bottom flex align-center gap-24">
-								<p (click)="start_thread(message)" class="blue-font">Antworten</p>
+								<p (click)="start_thread(message)" class="blue-font c-pointer">Antworten</p>
 								<p class="font-small">Letzte Antwort 14:56</p>
 							</div>
 						</div>

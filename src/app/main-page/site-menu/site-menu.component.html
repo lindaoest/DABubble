@@ -9,16 +9,16 @@
 	<div class="channels-container">
 		<div class="overview">
 			<div class="left">
-				<img (click)="channel_open_function()" class="arrow" [ngClass]="{'open' : channel_open}"
+				<img (click)="channel_open_function()" class="arrow c-pointer" [ngClass]="{'open' : channel_open}"
 					src="./assets/img/channels/arrow_drop_down.svg" alt="">
 				<div class="title">
 					<img src="./assets/img/channels/workspaces.svg" alt="">
 					<h4>Channels</h4>
 				</div>
 			</div>
-			<img (click)="openDialog()" class="add-channel-svg" src="./assets/img/channels/add.svg" alt="">
+			<img (click)="openDialog()" class="c-pointer" src="./assets/img/channels/add.svg" alt="">
 		</div>
-		<div class="channel-container" [ngClass]="{'open' : channel_open}">
+		<div class="channel-container c-pointer" [ngClass]="{'open' : channel_open}">
       @if (channel_open) {
         @for (channel of getList(); track $index) {
           <div class="team-container" (click)="openChat(channel.name)">
@@ -37,7 +37,7 @@
 	</div>
 	<div class="direct-messages">
 		<div class="overview">
-			<img (click)="directmessage_open_function()" class="arrow" [ngClass]="{'open' : directmessage_open}"
+			<img (click)="directmessage_open_function()" class="arrow c-pointer" [ngClass]="{'open' : directmessage_open}"
 				src="./assets/img/channels/arrow_drop_down.svg" alt="">
 			<div class="title">
 				<img src="./assets/img/channels/account_circle.svg" alt="">
@@ -46,10 +46,9 @@
 		</div>
 		<div class="directmessage-container" [ngClass]="{'open' : directmessage_open}">
       @for (item of globalVariables.personObjArray; track $index) {
-        <div (click)="open_directmessages_chat(item.member)" class="direct-message">
+        <div (click)="open_directmessages_chat(item.member)" class="direct-message c-pointer">
           <div class="avatar">
             <img src="{{ item.avatar }}" alt="">
-            <div class="online"></div>
           </div>
           <p>{{ item.member }}</p>
         </div>
