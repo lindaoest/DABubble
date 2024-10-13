@@ -8,12 +8,10 @@ import {
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
+import { MembersBoxComponent } from "../../shared/components/members-box/members-box.component";
+import { Subscription } from 'rxjs';
+import { Member } from '../../../models/member.class';
 
-interface Member {
-  member: string,
-  email: string,
-  url?: string
-}
 export interface DialogData {
   name: string;
   description: string;
@@ -25,7 +23,8 @@ export interface DialogData {
   imports: [
     FormsModule,
     MatDialogClose,
-    CommonModule
+    CommonModule,
+    MembersBoxComponent
   ],
   templateUrl: './dialog-channel-add-members.component.html',
   styleUrl: './dialog-channel-add-members.component.scss'
@@ -37,12 +36,29 @@ export class DialogChannelAddMembersComponent {
   memberisChecked: Boolean = false;
   members: any[] = [];
   isClicked: Boolean = false;
-
-  //certainMember_Array: Member[] = [];
+  certainMember_Array_Subsription: Subscription = new Subscription;
+  selectedMember: Member[] = [];
+  newMemberTrue: Boolean = true;
+  notIncludedMembers: Member[] = [];
 
   constructor(
     public dialogRefMember: MatDialogRef<DialogChannelAddMembersComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
+    this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
+      this.selectedMember = member;
+    });
+  }
+
+  ngOnInit() {
+    const creatorMember = this.channelFirestore.members.filter((obj: any) => obj.member !== this.globalVariables.signed_in_member.displayName);
+    this.notIncludedMembers.push(...creatorMember);
+  }
+
+  ngOnDestroy() {
+    if (this.certainMember_Array_Subsription) {
+      this.certainMember_Array_Subsription.unsubscribe();
+    }
+  }
 
   onNoClick(): void {
     this.dialogRefMember.close();
@@ -50,26 +66,28 @@ export class DialogChannelAddMembersComponent {
 
   checkAllMembers() {
     this.allMembers = !this.allMembers;
-    this.globalVariables.allMembers = this.allMembers;
+    // this.globalVariables.allMembers = this.allMembers;
+    this.globalVariables.certainMember_Array = [];
+    this.globalVariables.certainMember_Array = this.channelFirestore.members;
     this.certainMembers = false;
+    this.checkMemberArray(false);
   }
 
   checkCertainMembers() {
     this.certainMembers = !this.certainMembers;
+    this.globalVariables.certainMember_Array = [];
     this.allMembers = false;
-    console.log(this.channelFirestore.members)
+    this.checkMemberArray(true);
   }
 
-  addMember(m:Member, i: number) {
-    const foundName = this.channelFirestore.members.find(obj => obj.member === m.member);
-    this.globalVariables.certainMember_Array.push(foundName);
-    console.log('certaimMember_array', this.globalVariables.certainMember_Array)
-    this.isClicked = true;
+  checkMemberArray(memberLength: Boolean) {
+    this.newMemberTrue = memberLength;
   }
 
   deleteMember(i: number) {
-    this.globalVariables.certainMember_Array.splice(i, 1);
-    console.log('splitted', this.globalVariables.certainMember_Array)
-    console.log('index', i)
+    this.selectedMember.splice(i, 1);
+    if(this.selectedMember.length == 0) {
+      this.checkMemberArray(true);
+    }
   }
 }

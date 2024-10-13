@@ -4,15 +4,15 @@
 			<img src="./assets/img/chat/tag-black.svg" alt="">
 			<h3>{{ data.name }}</h3>
 		</div>
-		<img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
+		<img class="c-pointer" (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
 	</div>
 	<div class="content flex p-t-24">
 		<div class="edit">
 			<p class="font-weight-700">Channel Name</p>
 			@if (editModus) {
-				<p (click)="saveChanges()" class="blue-font">Speichern</p>
+				<p (click)="saveChanges()" class="blue-font c-pointer">Speichern</p>
 			} @else {
-				<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+				<p (click)="editChannel()" class="blue-font c-pointer">Bearbeiten</p>
 			}
 		</div>
 		@if (editModus) {
@@ -39,7 +39,11 @@
 		@if (editModus) {
 			<input type="text" placeholder="{{ description }}" class="input-description" [(ngModel)]="description" required>
 		} @else {
-			<p>{{ data.description ? data.description : channelFirestore.channels[0].description }}</p>
+      @if (data.description == "") {
+        <p>Keine Description vorhanden</p>
+      } @else {
+        <p>{{ data.description ? data.description : channelFirestore.channels[0].description }}</p>
+      }
 		}
 		<div class="created-by">
 			<p class="font-weight-700">Erstellt von</p>

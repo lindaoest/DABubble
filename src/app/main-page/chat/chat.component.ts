@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
@@ -13,18 +13,20 @@ import { privateConfig } from '../../app.config-private';
 import { FormsModule } from '@angular/forms';
 import { Messenges } from '../../../models/messenges.class';
 import { CreateNewChatComponent } from './create-new-chat/create-new-chat.component';
+import { WritingBoxComponent } from '../../shared/components/writing-box/writing-box.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, CreateNewChatComponent],
+  imports: [CommonModule, FormsModule, CreateNewChatComponent, WritingBoxComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
 
+  @Output() mobileClickedThread = new EventEmitter();
+
   name: string = '';
-  description: string = '';
 
   firebaseConfig = privateConfig;
 
@@ -36,6 +38,8 @@ export class ChatComponent {
 
   channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
+
+  @Output()currentMessage = new EventEmitter();
 
   constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
 
@@ -107,17 +111,10 @@ export class ChatComponent {
     });
   }
 
-  addMessage() {
-    const message: Messenges = new Messenges({
-      channel: this.globalVariables.activeChannel.name,
-      text: this.description,
-      time: this.globalVariables.currentTime(),
-      sender: this.globalVariables.signed_in_member.displayName,
-      avatar: this.globalVariables.signed_in_member.photoURL,
-      creationDate: new Date().toISOString().slice(0, 10),
-      timeStamp: new Date().getTime()
-    })
-    this.channelFirestore.addMessage(message)
-    this.description = '';
+  start_thread(message: Messenges) {
+    this.globalVariables.open_thread_reply = true;
+    this.currentMessage.emit(message);
+
+    this.mobileClickedThread.emit();
   }
 }

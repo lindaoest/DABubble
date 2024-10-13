@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,13 +20,16 @@ import { Member } from '../../../models/member.class';
 })
 export class SiteMenuComponent {
 
+  @Output() mobileClickedChat = new EventEmitter();
+  @Output() mobileClickedDirectChat = new EventEmitter();
+
   name: string = '';
   description: string = '';
   members: [] = [];
   channel_open: Boolean = false;
   directmessage_open: Boolean = false;
   filteredChats: Messenges[] = [];
-  personObjArray: any[] = [];
+  //globalVariables.personObjArray: any[] = [];
   channels: Channel[] = [];
 
   constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
@@ -49,6 +52,7 @@ export class SiteMenuComponent {
   openChat(channelName: string) {
     this.globalVariables.open_directmessages_chat = false;
     this.globalVariables.create_new_chat = false;
+    this.globalVariables.mobile_chat = true;
     this.globalVariables.activeChat = channelName;
     if (this.globalVariables.activeChannel) {
       this.channelFirestore.channels$.subscribe(channels => {
@@ -61,6 +65,8 @@ export class SiteMenuComponent {
         }
       });
     }
+
+    this.mobileClickedChat.emit();
   }
 
   filterChats() {
@@ -81,15 +87,17 @@ export class SiteMenuComponent {
     this.channelFirestore.direct_message.forEach(message => {
       if (message.sender == this.globalVariables.signed_in_member.displayName) {
         let direct_message_receiver = this.channelFirestore.members.find(member => message.receiver == member.member);
-        if(direct_message_receiver && !this.personObjArray.some(person => person.member === direct_message_receiver.member)) {
+        if(direct_message_receiver && !this.globalVariables.personObjArray.some(person => person.member === direct_message_receiver.member)) {
           console.log('member1', direct_message_receiver);
-          this.personObjArray.push(direct_message_receiver);
+          this.globalVariables.personObjArray.push(direct_message_receiver);
+          console.log('receiver', this.globalVariables.personObjArray)
         }
       } else if (message.receiver == this.globalVariables.signed_in_member.displayName) {
         let direct_message_sender = this.channelFirestore.members.find(member => message.sender == member.member);
-        if(direct_message_sender && !this.personObjArray.some(person => person.member === direct_message_sender.member)) {
+        if(direct_message_sender && !this.globalVariables.personObjArray.some(person => person.member === direct_message_sender.member)) {
           console.log('member2', direct_message_sender);
-          this.personObjArray.push(direct_message_sender);
+          this.globalVariables.personObjArray.push(direct_message_sender);
+          console.log('sender', this.globalVariables.personObjArray)
         }
       }
     });
@@ -110,6 +118,8 @@ export class SiteMenuComponent {
     if (get_active_chat) {
       this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
     }
+
+    this.mobileClickedDirectChat.emit();
   }
 
   uniqueReceivers(messages: any) {

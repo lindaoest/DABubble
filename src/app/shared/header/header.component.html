@@ -1,29 +1,28 @@
 <header>
-	<img src="./assets/img/dabubble-logo.svg" alt="">
+	<img class="logo" src="./assets/img/dabubble-logo.svg" alt="">
 	@if (path == '/log-in') {
 	<div class="registration">
 		<p>Neu bei DaBubble?</p>
-		<p class="blue-font" [routerLink]="['/sign-in']">Konto erstellen</p>
+		<p class="blue-font c-pointer" [routerLink]="['/sign-in']">Konto erstellen</p>
 	</div>
 	}
 	@if (path == '') {
 	<div class="profile">
 		@if (globalVariables.signed_in_member) {
-		<h1>{{ globalVariables.signed_in_member.displayName }}</h1>
+		<h1 class="profile-name truncate">{{ globalVariables.signed_in_member.displayName }}</h1>
 		}
 		<div class="profile-img">
 			@if (globalVariables.signed_in_member) {
 			<img src="{{ globalVariables.signed_in_member.photoURL }}" width="70" height="70" alt="">
 			}
-			<div class="online"></div>
 		</div>
-		<img class="arrow-down" (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
+		<img class="arrow-down c-pointer" (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
 	</div>
 	}
 </header>
 
 @if (openLightboxVar) {
-<div class="lightbox">
+<div class="lightbox c-pointer">
 	<p (click)="openProfile()" class="font-weight-700">Profil</p>
 	<p (click)="logOut()" class="font-weight-700">Log out</p>
 </div>

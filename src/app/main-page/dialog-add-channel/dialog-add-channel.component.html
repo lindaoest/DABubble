@@ -4,14 +4,14 @@
     <img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
   </div>
   <p class="p-t-24">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.</p>
-  <div class="content flex p-t-24">
+  <div class="content flex flex-column p-t-24">
     <p>Channel Name</p>
     <div class="channel-name-input">
       <img src="./assets/img/channels/tag-gray.svg" alt="">
       <input type="text" placeholder="z.B. Kooperationsprojekte" (keyup)="checkFields()" [(ngModel)]="name" required>
     </div>
   </div>
-  <div class="content flex p-t-24">
+  <div class="content flex flex-column p-t-24">
     <p>Beschreibung (optional)</p>
     <input class="input-description" type="text" placeholder="Dein Text hier" [(ngModel)]="description">
   </div>

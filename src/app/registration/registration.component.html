@@ -1,6 +1,6 @@
 <form [formGroup]="registration_form" (ngSubmit)="onSubmit()" class="registration">
-	<div class="headline">
-		<img [routerLink]="['/log-in']" src="./assets/img/sign-in/back-arrow.svg" alt="">
+	<div class="headline w-full">
+		<img class="c-pointer" [routerLink]="['/log-in']" src="./assets/img/sign-in/back-arrow.svg" alt="">
 		<h1 class="blue-font">Konto erstellen</h1>
 	</div>
 	<p class="tac p-t-32">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
@@ -25,7 +25,7 @@
 	@if(this.registration_form.get('password')?.invalid && this.registration_form.get('password')?.touched) {
 		<span class="error-message">Gib dein Passwort ein</span>
 	}
-	<div class="checkbox-privacy flex">
+	<div class="checkbox-privacy flex w-full">
 		<input type="checkbox" name="checkbox" formControlName="privacyChecked" (click)="onPrivacyChange()" required>
 		<div class="privacy-text">
 			<p class="font-small">Ich stimme der <a class="blue-font">Datenschutzerklärung</a> zu.</p>
@@ -34,7 +34,7 @@
 	@if (this.registration_form.get('privacyChecked')?.invalid && this.registration_form.get('privacyChecked')?.touched) {
 		<span class="error-message">Bestätige unseren Datenschutz</span>
 	}
-	<div class="buttons flex">
+	<div class="buttons w-full">
 		<button type="submit" class="button1" [disabled]="!registration_form.valid">Weiter</button>
 	</div>
 </form>

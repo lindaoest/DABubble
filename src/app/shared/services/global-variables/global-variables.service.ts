@@ -10,8 +10,8 @@ import { Messenges } from '../../../../models/messenges.class';
 })
 export class GlobalVariablesService {
 
-  allMembers: Boolean = false;
-  certainMember_Array: Member[] = [];
+  // allMembers: Boolean = false;
+  // certainMember_Array: Member[] = [];
   newMember: Member = {
     member: '',
     email: '',
@@ -30,6 +30,11 @@ export class GlobalVariablesService {
   create_new_chat: Boolean = false;
   open_directmessages_chat: Boolean = false;
   verifyText: Boolean = false;
+  personObjArray: any[] = [];
+  open_thread_reply: Boolean = false;
+  mobile_chat: Boolean = false;
+  mobile_thread: Boolean = false;
+  mobile_site_menu: Boolean = false;
   // active_privatechat: string = '';
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');
@@ -38,12 +43,19 @@ export class GlobalVariablesService {
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();
 
+  private certainMember_Array_Subject = new BehaviorSubject<any>([]);
+  certainMember_Array$ = this.certainMember_Array_Subject.asObservable();
+
   set activeChat(value: string) {
     this.activeChatSubject.next(value);
   }
 
   set active_privatechat(value: string) {
     this.active_privatechatSubject.next(value);
+  }
+
+  set certainMember_Array(value: any[]) {
+    this.certainMember_Array_Subject.next(value);
   }
 
   constructor() {
