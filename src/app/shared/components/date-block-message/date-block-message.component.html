@@ -1,0 +1,9 @@
+<div class="date-block w-full">
+  <div class="date">
+    <p>{{ dateGroup.key }}</p>
+  </div>
+
+  @for (message of dateGroup.value; track $index) {
+  <app-message [style]="{'width': '100%'}" [message]="message" (currentMessage)="currentMessage_for_thread($event)"></app-message>
+  }
+</div>

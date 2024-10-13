@@ -4,7 +4,7 @@
       <h3>Thread</h3>
       <p># {{ messageToReplyTo.channel }}</p>
     </div>
-    <img (click)="close_thread()" src="./assets/img/thread/close.svg" alt="">
+    <img (click)="close_thread()" class="c-pointer" src="./assets/img/thread/close.svg" alt="">
   </div>
   <div class="chat-block flex">
     <div class="date-block">
@@ -27,10 +27,8 @@
     @for (group of (this.channelFirestore.groupedThreads | keyvalue); track $index) {
     @if (group.key == globalVariables.activeChannel.name) {
     @for (dateGroup of (group.value | keyvalue); track $index) {
-    <div class="date-block">
-      <!-- <div class="date">
-						<p>{{ dateGroup.key }}</p>
-					</div> -->
+    <app-date-block-message [dateGroup]="dateGroup.value"></app-date-block-message>
+    <!-- <div class="date-block">
 
       @for (message of dateGroup.value; track $index) {
       @if (message.message.text == messageToReplyTo.text) {
@@ -49,7 +47,7 @@
       </div>
       }
       }
-    </div>
+    </div> -->
     }
     }
     }

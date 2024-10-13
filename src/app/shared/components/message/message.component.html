@@ -1,0 +1,16 @@
+<div class="message flex w-full" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+  <img src="{{ message.avatar }}" alt="">
+  <div class="message-text">
+    <div class="top flex align-center gap-24">
+      <p class="font-weight-700">{{ message.sender }}</p>
+      <p class="font-small">{{ message.time }} Uhr</p>
+    </div>
+    <div class="text">
+      <p>{{ message.text }}</p>
+    </div>
+    <div class="bottom flex align-center gap-24">
+      <p (click)="start_thread(message)" class="blue-font c-pointer">Antworten</p>
+      <p class="font-small">Letzte Antwort 14:56</p>
+    </div>
+  </div>
+</div>

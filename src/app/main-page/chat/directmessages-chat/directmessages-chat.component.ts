@@ -5,14 +5,14 @@ import { GlobalVariablesService } from '../../../shared/services/global-variable
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileComponent } from '../../profile/profile.component';
-import { DirectMessage } from '../../../../models/direct-message.class';
 import { Subscription } from 'rxjs';
 import { WritingBoxComponent } from "../../../shared/components/writing-box/writing-box.component";
+import { DateBlockMessageComponent } from '../../../shared/components/date-block-message/date-block-message.component';
 
 @Component({
   selector: 'app-directmessages-chat',
   standalone: true,
-  imports: [FormsModule, CommonModule, WritingBoxComponent],
+  imports: [FormsModule, CommonModule, WritingBoxComponent, DateBlockMessageComponent],
   templateUrl: './directmessages-chat.component.html',
   styleUrl: './directmessages-chat.component.scss'
 })

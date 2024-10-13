@@ -14,11 +14,13 @@ import { FormsModule } from '@angular/forms';
 import { Messenges } from '../../../models/messenges.class';
 import { CreateNewChatComponent } from './create-new-chat/create-new-chat.component';
 import { WritingBoxComponent } from '../../shared/components/writing-box/writing-box.component';
+import { MessageComponent } from '../../shared/components/message/message.component';
+import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, CreateNewChatComponent, WritingBoxComponent],
+  imports: [CommonModule, FormsModule, CreateNewChatComponent, WritingBoxComponent, DateBlockMessageComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
@@ -39,7 +41,7 @@ export class ChatComponent {
   channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
 
-  @Output()currentMessage = new EventEmitter();
+  @Output() currentMessage = new EventEmitter();
 
   constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
 
@@ -112,7 +114,6 @@ export class ChatComponent {
   }
 
   start_thread(message: Messenges) {
-    this.globalVariables.open_thread_reply = true;
     this.currentMessage.emit(message);
 
     this.mobileClickedThread.emit();

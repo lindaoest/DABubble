@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 import { CommonModule } from '@angular/common';
-import { Thread } from '../../../models/thread.class';
 import { WritingBoxComponent } from "../../shared/components/writing-box/writing-box.component";
+import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
 
 @Component({
   selector: 'app-thread-reply',
   standalone: true,
-  imports: [CommonModule, FormsModule, WritingBoxComponent],
+  imports: [CommonModule, FormsModule, WritingBoxComponent, DateBlockMessageComponent],
   templateUrl: './thread-reply.component.html',
   styleUrl: './thread-reply.component.scss'
 })

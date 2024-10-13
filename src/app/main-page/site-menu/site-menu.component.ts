@@ -106,6 +106,7 @@ export class SiteMenuComponent {
   open_new_chat() {
     this.globalVariables.open_directmessages_chat = false;
     this.globalVariables.create_new_chat = true;
+    this.mobileClickedChat.emit();
   }
 
   async open_directmessages_chat(receiver: string) {
