@@ -1,4 +1,5 @@
-<div class="message flex w-full" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+<div class="message flex w-full"
+  [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
   <img src="{{ message.avatar }}" alt="">
   <div class="message-text">
     <div class="top flex align-center gap-24">

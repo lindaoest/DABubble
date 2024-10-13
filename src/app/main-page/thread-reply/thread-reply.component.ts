@@ -6,11 +6,12 @@ import { GlobalVariablesService } from '../../shared/services/global-variables/g
 import { CommonModule } from '@angular/common';
 import { WritingBoxComponent } from "../../shared/components/writing-box/writing-box.component";
 import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
+import { MessageComponent } from '../../shared/components/message/message.component';
 
 @Component({
   selector: 'app-thread-reply',
   standalone: true,
-  imports: [CommonModule, FormsModule, WritingBoxComponent, DateBlockMessageComponent],
+  imports: [CommonModule, FormsModule, WritingBoxComponent, DateBlockMessageComponent, MessageComponent],
   templateUrl: './thread-reply.component.html',
   styleUrl: './thread-reply.component.scss'
 })

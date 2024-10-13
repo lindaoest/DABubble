@@ -7,47 +7,15 @@
     <img (click)="close_thread()" class="c-pointer" src="./assets/img/thread/close.svg" alt="">
   </div>
   <div class="chat-block flex">
-    <div class="date-block">
-      <div class="message flex">
-        <img src="{{ messageToReplyTo.avatar }}" alt="">
-        <div class="message-text">
-          <div class="top flex align-center gap-24">
-            <p class="font-weight-700">{{ messageToReplyTo.sender }}</p>
-            <p class="font-small">{{ messageToReplyTo.time }} Uhr</p>
-          </div>
-          <div class="text">
-            <p>{{ messageToReplyTo.text }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-message [style]="{'width': '100%'}" [message]="messageToReplyTo"></app-message>
     <div class="answers-number">
       <p class="answer-number-text">2 Antworten</p>
     </div>
     @for (group of (this.channelFirestore.groupedThreads | keyvalue); track $index) {
     @if (group.key == globalVariables.activeChannel.name) {
     @for (dateGroup of (group.value | keyvalue); track $index) {
-    <app-date-block-message [dateGroup]="dateGroup.value"></app-date-block-message>
-    <!-- <div class="date-block">
-
-      @for (message of dateGroup.value; track $index) {
-      @if (message.message.text == messageToReplyTo.text) {
-      <div class="message flex"
-        [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
-        <img src="{{ message.avatar }}" alt="">
-        <div class="message-text">
-          <div class="top flex align-center gap-24">
-            <p class="font-weight-700">{{ message.sender }}</p>
-            <p class="font-small">{{ message.time }} Uhr</p>
-          </div>
-          <div class="text">
-            <p>{{ message.text }}</p>
-          </div>
-        </div>
-      </div>
-      }
-      }
-    </div> -->
+    <app-date-block-message [dateGroup]="dateGroup" [threadMessage]="true"
+      [messageToReplyTo]="messageToReplyTo"></app-date-block-message>
     }
     }
     }
