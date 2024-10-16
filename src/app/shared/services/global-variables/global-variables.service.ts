@@ -10,8 +10,6 @@ import { Messenges } from '../../../../models/messenges.class';
 })
 export class GlobalVariablesService {
 
-  // allMembers: Boolean = false;
-  // certainMember_Array: Member[] = [];
   newMember: Member = {
     member: '',
     email: '',
@@ -35,7 +33,6 @@ export class GlobalVariablesService {
   mobile_chat: Boolean = false;
   mobile_thread: Boolean = false;
   mobile_site_menu: Boolean = false;
-  // active_privatechat: string = '';
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');
   active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();

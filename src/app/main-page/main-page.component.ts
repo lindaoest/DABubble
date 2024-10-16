@@ -5,13 +5,12 @@ import { ThreadReplyComponent } from './thread-reply/thread-reply.component';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { DirectmessagesChatComponent } from './chat/directmessages-chat/directmessages-chat.component';
 import { Messenges } from '../../models/messenges.class';
-import { ButtonCloseMenuComponent } from '../button-close-menu/button-close-menu.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [CommonModule, SiteMenuComponent, ChatComponent, ThreadReplyComponent, DirectmessagesChatComponent, ButtonCloseMenuComponent],
+  imports: [CommonModule, SiteMenuComponent, ChatComponent, ThreadReplyComponent, DirectmessagesChatComponent],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })

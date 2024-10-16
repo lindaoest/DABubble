@@ -17,8 +17,6 @@ import { MessageComponent } from '../../shared/components/message/message.compon
 })
 export class ThreadReplyComponent {
 
-  name: string = '';
-
   @Input()messageToReplyTo: Messenges = {
     channel: '',
     text: '',
@@ -30,10 +28,6 @@ export class ThreadReplyComponent {
   };
 
   constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {}
-
-  ngOnChanges() {
-    console.log('Thread updated:', this.channelFirestore.groupedThreads);
-  }
 
   close_thread() {
     this.globalVariables.open_thread_reply = false;

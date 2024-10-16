@@ -57,13 +57,6 @@ app-thread-reply {
   min-width: 360px;
 }
 
-app-button-close-menu {
-  position: fixed;
-  left: -135px;
-  top: 71%;
-  transform: rotate(-90deg);
-}
-
 @media (max-width: 1200px) {
   .hide-on-small {
     display: none;

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
-import { DirectMessage } from '../../../../models/direct-message.class';
 import { GlobalVariablesService } from '../../../shared/services/global-variables/global-variables.service';
 import { MembersBoxComponent } from '../../../shared/components/members-box/members-box.component';
 import { Member } from '../../../../models/member.class';

@@ -1,7 +1,6 @@
 <main>
 	<div class="container flex w-full">
 		<app-site-menu [ngClass]="{'showContainer': showMenu}" (mobileClickedChat)="openChat()" (mobileClickedDirectChat)="openDirectChat()"></app-site-menu>
-    <!-- <app-button-close-menu></app-button-close-menu> -->
 		@if (!globalVariables.open_directmessages_chat) {
 			<app-chat [ngClass]="{'showContainer': showChat, 'full-width': !globalVariables.open_thread_reply, 'hide-on-small': globalVariables.open_thread_reply}" (mobileClickedThread)="openThread()" (currentMessage)="message_for_thread($event)"></app-chat>
 		} @else {
