@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../../shared/services/global-variables/global-variables.service';
 import { MembersBoxComponent } from '../../../shared/components/members-box/members-box.component';
-import { Member } from '../../../../models/member.class';
 import { WritingBoxComponent } from '../../../shared/components/writing-box/writing-box.component';
 
 @Component({
@@ -18,35 +17,39 @@ export class CreateNewChatComponent {
 
   placeholder_value: string = "An: @jemand";
   name: string = '';
-  message_to_direct_message: boolean = false;
+  open_member_box: boolean = false;
+
+  //Subscription
   certainMember_Array_Subsription: Subscription = new Subscription;
-  selectedMember: Member[] = [];
 
   constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
     this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
-      this.selectedMember = member;
-      if(this.selectedMember.length > 0) {
-        this.addMemberToInput(this.selectedMember[0].member);
+      if (member.length > 0) {
+        this.addMemberToInput(member[0].member);
       }
     });
   }
 
   ngOnDestroy() {
-    if (this.certainMember_Array_Subsription) {
-      this.certainMember_Array_Subsription.unsubscribe();
-    }
+    this.certainMember_Array_Subsription.unsubscribe();
   }
 
+  /**
+   * Observes the input in `name` and checks if it contains an '@' symbol.
+   * If found, sets `open_member_box` to `true`, otherwise sets it to `false`.
+   */
   observe_input() {
-    if (this.name.includes('@')) {
-      this.message_to_direct_message = true;
-    } else {
-      this.message_to_direct_message = false;
-    }
+    this.name.includes('@') ? this.open_member_box = true : this.open_member_box = false;
   }
 
+  /**
+   * Adds a member to the input by setting `name` to the given member string prefixed with '@'.
+   * Closes the member box by setting `open_member_box` to `false`.
+   *
+   * @param {string} m - The member to add to the input.
+   */
   addMemberToInput(m: string) {
     this.name = '@' + m;
-    this.message_to_direct_message = false;
+    this.open_member_box = false;
   }
 }

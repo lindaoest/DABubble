@@ -2,12 +2,12 @@
   <div class="info-top">
     <h3>Neue Nachricht</h3>
     <input (keyup)="observe_input()" type="text" [placeholder]="placeholder_value" [(ngModel)]="name">
-    @if (message_to_direct_message) {
+    @if (open_member_box) {
     <app-members-box></app-members-box>
     }
   </div>
-  <div class="chat-block flex">
-    @for (item of channelFirestore.direct_message; track $index) {}
+  <div class="chat-block flex align-end">
+    <p>Starte einen neuen Chat!</p>
   </div>
   <app-writing-box [sendMessage]="'create_new_message'" [name]="name"></app-writing-box>
 </div>
