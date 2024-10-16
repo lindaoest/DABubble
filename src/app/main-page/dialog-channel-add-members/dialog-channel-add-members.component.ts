@@ -43,14 +43,14 @@ export class DialogChannelAddMembersComponent {
 
   constructor(
     public dialogRefMember: MatDialogRef<DialogChannelAddMembersComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {
     this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
       this.selectedMember = member;
     });
   }
 
   ngOnInit() {
-    const creatorMember = this.channelFirestore.members.filter((obj: any) => obj.member !== this.globalVariables.signed_in_member.displayName);
+    const creatorMember = this.firestoreService.members.filter((obj: any) => obj.member !== this.globalVariables.signed_in_member.displayName);
     this.notIncludedMembers.push(...creatorMember);
   }
 
@@ -68,7 +68,7 @@ export class DialogChannelAddMembersComponent {
     this.allMembers = !this.allMembers;
     // this.globalVariables.allMembers = this.allMembers;
     this.globalVariables.certainMember_Array = [];
-    this.globalVariables.certainMember_Array = this.channelFirestore.members;
+    this.globalVariables.certainMember_Array = this.firestoreService.members;
     this.certainMembers = false;
     this.checkMemberArray(false);
   }

@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="chat-block flex flex-column">
-    <ng-container *ngFor="let group of (this.channelFirestore.groupedDirectMessages | keyvalue); trackBy: trackByFn">
+    <ng-container *ngFor="let group of (this.firestoreService.groupedDirectMessages | keyvalue); trackBy: trackByFn">
       <ng-container *ngIf="isRelevantGroup(group.key)">
         <ng-container *ngFor="let dateGroup of (group.value | keyvalue); trackBy: trackByFn">
           <app-date-block-message [dateGroup]="dateGroup"></app-date-block-message>

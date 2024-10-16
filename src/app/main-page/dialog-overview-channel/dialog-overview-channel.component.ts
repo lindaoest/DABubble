@@ -34,7 +34,7 @@ export class DialogOverviewChannelComponent {
   editModus: Boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewChannelComponent>, public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService,
+    public dialogRef: MatDialogRef<DialogOverviewChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.setModel();
     }
@@ -55,7 +55,7 @@ export class DialogOverviewChannelComponent {
   saveChanges() {
     this.data.name = this.name;
     this.data.description = this.description;
-    this.channelFirestore.updateData('channels', this.data);
+    this.firestoreService.updateData('channels', this.data);
     this.editModus = false;
     this.globalVariables.activeChat = this.data.name;
   }

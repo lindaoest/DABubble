@@ -38,7 +38,7 @@ export class DialogAddChannelComponent {
   selectedMember: Member[] = [];
 
   constructor(
-    public dialogRef: MatDialogRef<DialogAddChannelComponent>, public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService,
+    public dialogRef: MatDialogRef<DialogAddChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
         this.selectedMember = member;
@@ -63,7 +63,7 @@ export class DialogAddChannelComponent {
     });
 
     dialogRefMember.afterClosed().subscribe(result => {
-      const creatorMember = this.channelFirestore.members.find((obj: any) => obj.member === this.globalVariables.signed_in_member.displayName);
+      const creatorMember = this.firestoreService.members.find((obj: any) => obj.member === this.globalVariables.signed_in_member.displayName);
       const alreadyExistMember = this.selectedMember.some(m => m.member === creatorMember.member);
       if(!alreadyExistMember) {
         this.selectedMember.push(creatorMember);
@@ -76,7 +76,7 @@ export class DialogAddChannelComponent {
         members: this.selectedMember,
         creator: this.globalVariables.signed_in_member.displayName
       })
-      this.channelFirestore.addData(newChannel);
+      this.firestoreService.addData(newChannel);
       this.globalVariables.certainMember_Array = [];
     });
   }

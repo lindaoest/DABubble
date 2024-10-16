@@ -22,7 +22,7 @@ export class CreateNewChatComponent {
   //Subscription
   certainMember_Array_Subsription: Subscription = new Subscription;
 
-  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) {
+  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {
     this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
       if (member.length > 0) {
         this.addMemberToInput(member[0].member);

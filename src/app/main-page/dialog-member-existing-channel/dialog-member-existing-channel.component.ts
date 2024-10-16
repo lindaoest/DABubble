@@ -52,7 +52,7 @@ export class DialogMemberExistingChannelComponent {
   selectedMember: Member[] = [];
 
   constructor(
-    public dialogRef: MatDialogRef<DialogMemberExistingChannelComponent>, public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService,
+    public dialogRef: MatDialogRef<DialogMemberExistingChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
       this.selectedMember = member;
@@ -60,7 +60,7 @@ export class DialogMemberExistingChannelComponent {
   }
 
   ngOnInit() {
-    this.channelSubscription = this.channelFirestore.channels$.subscribe(channels => {
+    this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
       this.channels = channels;
     });
   }
@@ -72,7 +72,7 @@ export class DialogMemberExistingChannelComponent {
   }
 
   showMemberBox() {
-    this.channelFirestore.channels$.subscribe(channels => {
+    this.firestoreService.channels$.subscribe(channels => {
       const foundChannel: any = channels.find((obj: any) => obj.name === this.globalVariables.activeChannel.name);
       channels.forEach((element: any) => {
         if (foundChannel) {
@@ -85,7 +85,7 @@ export class DialogMemberExistingChannelComponent {
       })
     });
 
-    this.notIncludedMembers = this.channelFirestore.members.filter(member =>
+    this.notIncludedMembers = this.firestoreService.members.filter(member =>
       !this.already_added_members.some(added_member => added_member.member === member.member)
     );
   }
@@ -103,9 +103,9 @@ export class DialogMemberExistingChannelComponent {
   //         id: result.id,
   //         name: result.name,
   //         description: result.description,
-  //         members: this.channelFirestore.members
+  //         members: this.firestoreService.members
   //       })
-  //       this.channelFirestore.addData(newChannel);
+  //       this.firestoreService.addData(newChannel);
   //     } else {
   //       const newChannel = new Channel({
   //         id: result.id,
@@ -113,7 +113,7 @@ export class DialogMemberExistingChannelComponent {
   //         description: result.description,
   //         members: this.globalVariables.certainMember_Array
   //       })
-  //       this.channelFirestore.addData(newChannel);
+  //       this.firestoreService.addData(newChannel);
 
   //       this.globalVariables.certainMember_Array = [];
   //     }
@@ -144,7 +144,7 @@ export class DialogMemberExistingChannelComponent {
 
   addToChannel() {
     this.selectedMember.forEach(element => {
-      this.channelFirestore.updateArray('channels', this.globalVariables.activeChannel.id, element)
+      this.firestoreService.updateArray('channels', this.globalVariables.activeChannel.id, element)
     })
     this.globalVariables.certainMember_Array = [];
     this.dialogRef.close();

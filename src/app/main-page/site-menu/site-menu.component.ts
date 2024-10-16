@@ -28,10 +28,10 @@ export class SiteMenuComponent {
   filteredChats: Messenges[] = [];
   channels: Channel[] = [];
 
-  constructor(public dialog: MatDialog, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   getList() {
-    this.channelFirestore.channels$.subscribe(channels => {
+    this.firestoreService.channels$.subscribe(channels => {
       this.channels = channels.filter((channel: Channel) =>
         channel.members.some((user: Member) => user && user.member === this.globalVariables.signed_in_member.displayName)
       );
@@ -51,7 +51,7 @@ export class SiteMenuComponent {
     this.globalVariables.mobile_chat = true;
     this.globalVariables.activeChat = channelName;
     if (this.globalVariables.activeChannel) {
-      this.channelFirestore.channels$.subscribe(channels => {
+      this.firestoreService.channels$.subscribe(channels => {
         const foundChannel = channels.find((obj:any) => obj.name === channelName);
         if (foundChannel) {
           this.globalVariables.activeChannel = foundChannel;
@@ -67,9 +67,9 @@ export class SiteMenuComponent {
 
   filterChats() {
     this.globalVariables.messenges = [];
-    this.filteredChats = this.channelFirestore.messenges.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
+    this.filteredChats = this.firestoreService.messenges.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
     this.filteredChats.forEach(element => {
-      this.globalVariables.messenges.push(this.channelFirestore.setObjectMessenges(element, ''));
+      this.globalVariables.messenges.push(this.firestoreService.setObjectMessenges(element, ''));
     });
   }
 
@@ -80,16 +80,16 @@ export class SiteMenuComponent {
   directmessage_open_function() {
     this.directmessage_open = !this.directmessage_open;
 
-    this.channelFirestore.direct_message.forEach(message => {
+    this.firestoreService.direct_message.forEach(message => {
       if (message.sender == this.globalVariables.signed_in_member.displayName) {
-        let direct_message_receiver = this.channelFirestore.members.find(member => message.receiver == member.member);
+        let direct_message_receiver = this.firestoreService.members.find(member => message.receiver == member.member);
         if(direct_message_receiver && !this.globalVariables.personObjArray.some(person => person.member === direct_message_receiver.member)) {
           console.log('member1', direct_message_receiver);
           this.globalVariables.personObjArray.push(direct_message_receiver);
           console.log('receiver', this.globalVariables.personObjArray)
         }
       } else if (message.receiver == this.globalVariables.signed_in_member.displayName) {
-        let direct_message_sender = this.channelFirestore.members.find(member => message.sender == member.member);
+        let direct_message_sender = this.firestoreService.members.find(member => message.sender == member.member);
         if(direct_message_sender && !this.globalVariables.personObjArray.some(person => person.member === direct_message_sender.member)) {
           console.log('member2', direct_message_sender);
           this.globalVariables.personObjArray.push(direct_message_sender);

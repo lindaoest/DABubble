@@ -30,7 +30,7 @@ export class WritingBoxComponent {
 
   description: string = '';
 
-  constructor(public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
+  constructor(public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
 
   async addMessage() {
     if (this.sendMessage == 'message') {
@@ -43,7 +43,7 @@ export class WritingBoxComponent {
         creationDate: new Date().toISOString().slice(0, 10),
         timeStamp: new Date().getTime()
       })
-      this.channelFirestore.addMessage(message);
+      this.firestoreService.addMessage(message);
 
     } else if (this.sendMessage == 'direct_message') {
       const direct_message: DirectMessage = new DirectMessage({
@@ -55,7 +55,7 @@ export class WritingBoxComponent {
         creationDate: new Date().toISOString().slice(0, 10),
         timeStamp: new Date().getTime()
       })
-      this.channelFirestore.addDirectMessage(direct_message);
+      this.firestoreService.addDirectMessage(direct_message);
 
     } else if (this.sendMessage == 'thread') {
       const thread: Thread = new Thread({
@@ -68,7 +68,7 @@ export class WritingBoxComponent {
         timeStamp: new Date().getTime(),
         message: this.messageToReplyTo
       })
-      this.channelFirestore.addThread(thread);
+      this.firestoreService.addThread(thread);
     } else if (this.sendMessage == 'create_new_message') {
       const create_new_message: DirectMessage = new DirectMessage({
         sender: this.globalVariables.signed_in_member.displayName,
@@ -80,7 +80,7 @@ export class WritingBoxComponent {
         timeStamp: new Date().getTime()
       })
 
-      await this.channelFirestore.addDirectMessage(create_new_message);
+      await this.firestoreService.addDirectMessage(create_new_message);
       this.globalVariables.certainMember_Array = [];
     }
 

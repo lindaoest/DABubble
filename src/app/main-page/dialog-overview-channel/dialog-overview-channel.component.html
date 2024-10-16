@@ -23,7 +23,7 @@
 		} @else {
 			<div class="channel-name-two">
 				<img src="./assets/img/chat/tag-black.svg" alt="">
-				<p>{{ data.name ? data.name : channelFirestore.channels[0].name }}</p>
+				<p>{{ data.name ? data.name : firestoreService.channels[0].name }}</p>
 			</div>
 		}
 	</div>
@@ -42,7 +42,7 @@
       @if (data.description == "") {
         <p>Keine Description vorhanden</p>
       } @else {
-        <p>{{ data.description ? data.description : channelFirestore.channels[0].description }}</p>
+        <p>{{ data.description ? data.description : firestoreService.channels[0].description }}</p>
       }
 		}
 		<div class="created-by">

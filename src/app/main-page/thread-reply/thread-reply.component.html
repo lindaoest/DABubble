@@ -11,7 +11,7 @@
     <div class="answers-number">
       <p class="answer-number-text">2 Antworten</p>
     </div>
-    @for (group of (this.channelFirestore.groupedThreads | keyvalue); track $index) {
+    @for (group of (this.firestoreService.groupedThreads | keyvalue); track $index) {
     @if (group.key == globalVariables.activeChannel.name) {
     @for (dateGroup of (group.value | keyvalue); track $index) {
     <app-date-block-message [dateGroup]="dateGroup" [threadMessage]="true"

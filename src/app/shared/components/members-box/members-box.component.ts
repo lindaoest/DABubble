@@ -20,10 +20,10 @@ export class MembersBoxComponent {
   memberArray: any[] = [];
   newMemberTrue: Boolean = false;
 
-  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
+  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   addMember(m: Member) {
-    const foundName = this.channelFirestore.members.find(obj => obj.member === m.member);
+    const foundName = this.firestoreService.members.find(obj => obj.member === m.member);
     this.memberArray.push(foundName)
     // console.log('membersArray', this.memberArray)
     this.setCertainMemberArray();

@@ -31,7 +31,7 @@ export class ChooseAvatarComponent {
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
-  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) {
+  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) {
     console.log(this.globalVariables.newMember)
   }
 
@@ -94,7 +94,7 @@ export class ChooseAvatarComponent {
       });
 
     if (!this.user_already_exists) {
-      this.channelFirestore.addMember(newMember);
+      this.firestoreService.addMember(newMember);
       this.successSignIn = true;
 
       setTimeout(() => {

@@ -37,7 +37,7 @@ export class LogInComponent {
 
   login_form: FormGroup = new FormGroup({});
 
-  constructor(public router: Router, public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService) { }
+  constructor(public router: Router, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   async ngOnInit() {
     this.login_form = new FormGroup({
@@ -48,7 +48,7 @@ export class LogInComponent {
   }
 
   async checkLogin() {
-    const activeMember = this.channelFirestore.members.find(obj => obj.email === this.login_form.value.email && obj.password === this.login_form.value.password);
+    const activeMember = this.firestoreService.members.find(obj => obj.email === this.login_form.value.email && obj.password === this.login_form.value.password);
 
     await this.signInWithEmail(this.login_form.value.email, this.login_form.value.password);
 
@@ -93,9 +93,9 @@ export class LogInComponent {
           avatar: user.photoURL || ''
         }
 
-        const emailAlreadyUsed = this.channelFirestore.members.filter(userEmail => userEmail.email === user.email);
+        const emailAlreadyUsed = this.firestoreService.members.filter(userEmail => userEmail.email === user.email);
         if (emailAlreadyUsed.length == 0) {
-          this.channelFirestore.addMember(newMember);
+          this.firestoreService.addMember(newMember);
         }
       }).catch((error) => {
         console.error(error)

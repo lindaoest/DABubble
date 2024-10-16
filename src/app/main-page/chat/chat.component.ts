@@ -43,14 +43,14 @@ export class ChatComponent {
 
   @Output() currentMessage = new EventEmitter();
 
-  constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public channelFirestore: FirestoreService) { }
+  constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
 
   ngOnInit() {
     this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
       this.activeChat = chat;
     });
 
-    this.channelSubscription = this.channelFirestore.channels$.subscribe(channels => {
+    this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
       this.channels = channels;
     });
 
@@ -90,7 +90,7 @@ export class ChatComponent {
 
   openDialog(): void {
     if (this.globalVariables.activeChannel) {
-      this.channelFirestore.channels$.subscribe((channels: any) => {
+      this.firestoreService.channels$.subscribe((channels: any) => {
         if (!this.activeChat) {
           this.activeChat = channels[0].name;
         }

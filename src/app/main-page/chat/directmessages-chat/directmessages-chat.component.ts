@@ -19,13 +19,15 @@ import { DateBlockMessageComponent } from '../../../shared/components/date-block
 export class DirectmessagesChatComponent {
 
   activeMember: any;
+
+  //Subscription
   active_privatechatSubscription: Subscription = new Subscription;
 
-  constructor(public channelFirestore: FirestoreService, public globalVariables: GlobalVariablesService, public dialog: MatDialog,) { }
+  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService, public dialog: MatDialog,) { }
 
   ngOnInit() {
     this.active_privatechatSubscription = this.globalVariables.active_privatechat$.subscribe(subscriber => {
-      this.activeMember = this.channelFirestore.members.filter(member => member.member === subscriber);
+      this.activeMember = this.firestoreService.members.filter(member => member.member === subscriber);
       console.log('subscriber', subscriber)
     });
   }

@@ -7,7 +7,7 @@
   </div>
   }
   } @else {
-  @for (member of channelFirestore.members; track member; let index = $index) {
+  @for (member of firestoreService.members; track member; let index = $index) {
   <div (click)="addMember(member)" class="member c-pointer" [ngClass]="{'gray-filter-on': isClicked}">
     <img src="{{ member.avatar }}" alt="">
     <p>{{ member.member }}</p>
