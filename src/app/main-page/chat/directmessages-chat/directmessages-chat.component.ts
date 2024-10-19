@@ -38,6 +38,13 @@ export class DirectmessagesChatComponent {
     }
   }
 
+  /**
+   * Opens a dialog with the `ProfileComponent` and passes the data of the active member.
+   *
+   * @function openDialog
+   * @memberof YourComponent
+   * @returns {void}
+   */
   openDialog() {
     this.dialog.open(ProfileComponent, {
       data: {
@@ -48,13 +55,29 @@ export class DirectmessagesChatComponent {
     });
   }
 
+  /**
+   * Checks if the provided group key corresponds to a group that includes the signed-in member and the active member.
+   *
+   * @function isRelevantGroup
+   * @memberof YourComponent
+   * @param {string} key - The group key to check.
+   * @returns {boolean} - Returns true if the key matches the participants, false otherwise.
+   */
   isRelevantGroup(key: string): boolean {
     const signedInMember = this.globalVariables.signed_in_member.displayName;
     const participants = [signedInMember, this.activeMember[0].member].sort().join('-');
     return key === participants;
   }
 
-  trackByFn(index: number, item: any): number {
+  /**
+   * Tracking function for *ngFor, used to optimize rendering by returning a unique identifier for each item.
+   *
+   * @function trackByFn
+   * @memberof YourComponent
+   * @param {number} index - The index of the item in the array.
+   * @returns {number} - The index of the item.
+   */
+  trackByFn(index: number): number {
     return index;
   }
 }

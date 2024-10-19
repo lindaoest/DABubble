@@ -7,14 +7,13 @@ import { Subscription } from 'rxjs';
 import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialog-overview-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { DialogMemberExistingChannelComponent } from '../dialog-member-existing-channel/dialog-member-existing-channel.component';
-import { getAuth, signInWithEmailAndPassword, connectAuthEmulator, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../app.config-private';
 import { FormsModule } from '@angular/forms';
 import { Messenges } from '../../../models/messenges.class';
 import { CreateNewChatComponent } from './create-new-chat/create-new-chat.component';
 import { WritingBoxComponent } from '../../shared/components/writing-box/writing-box.component';
-import { MessageComponent } from '../../shared/components/message/message.component';
 import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
 
 @Component({
@@ -27,21 +26,21 @@ import { DateBlockMessageComponent } from '../../shared/components/date-block-me
 export class ChatComponent {
 
   @Output() mobileClickedThread = new EventEmitter();
+  @Output() currentMessage = new EventEmitter();
 
   name: string = '';
 
+  //Authentification firebase
   firebaseConfig = privateConfig;
-
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
+  //Subscription
   private activeChatSubscription: Subscription = new Subscription;
   activeChat: string = '';
 
   channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
-
-  @Output() currentMessage = new EventEmitter();
 
   constructor(public dialog: MatDialog, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
 
@@ -56,39 +55,34 @@ export class ChatComponent {
 
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        const uid = user.uid;
         this.globalVariables.signed_in_member = user;
       }
     });
-
-    const user = this.auth.currentUser;
-    if (user !== null) {
-      // The user object has basic properties such as display name, email, etc.
-      const displayName = user.displayName;
-      const email = user.email;
-      const photoURL = user.photoURL;
-      const emailVerified = user.emailVerified;
-
-      console.log('email', email);
-
-      // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
-      const uid = user.uid;
-    }
   }
 
   ngOnDestroy() {
-    if (this.activeChatSubscription) {
-      this.activeChatSubscription.unsubscribe();
-    }
+    this.activeChatSubscription.unsubscribe();
   }
 
+  /**
+   * Retrieves the list of members from the active channel.
+   *
+   * @function getMembers
+   * @memberof YourComponent
+   * @returns {any[]} - An array of members from the active channel.
+   */
   getMembers() {
     return this.globalVariables.activeChannel.members;
   }
 
-  openDialog(): void {
+  /**
+   * Opens a dialog for the active channel and ensures the active chat is set.
+   * Subscribes to `channels$` from `firestoreService`, searches for the active chat within the channels,
+   * sets the active channel in `globalVariables`, and opens a dialog to display the channel data.
+   *
+   * @returns {void}
+   */
+  openDialogChannel(): void {
     if (this.globalVariables.activeChannel) {
       this.firestoreService.channels$.subscribe((channels: any) => {
         if (!this.activeChat) {
@@ -107,15 +101,25 @@ export class ChatComponent {
     }
   }
 
+  /**
+   * Opens a dialog to add members to the active channel.
+   *
+   * @returns {void}
+   */
   addMembers() {
     this.dialog.open(DialogMemberExistingChannelComponent, {
       data: this.globalVariables.activeChannel
     });
   }
 
+  /**
+   * Starts a thread by emitting the selected message and triggers the mobile thread click event.
+   *
+   * @param {Message} message - The message object used to start the thread.
+   * @returns {void}
+   */
   start_thread(message: Messenges) {
     this.currentMessage.emit(message);
-
     this.mobileClickedThread.emit();
   }
 }

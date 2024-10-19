@@ -17,7 +17,7 @@ import { MessageComponent } from '../../shared/components/message/message.compon
 })
 export class ThreadReplyComponent {
 
-  @Input()messageToReplyTo: Messenges = {
+  @Input() messageToReplyTo: Messenges = {
     channel: '',
     text: '',
     time: '',
@@ -27,7 +27,7 @@ export class ThreadReplyComponent {
     timeStamp: 0
   };
 
-  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {}
+  constructor( public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService ) { }
 
   close_thread() {
     this.globalVariables.open_thread_reply = false;

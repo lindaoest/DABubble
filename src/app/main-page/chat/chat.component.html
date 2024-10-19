@@ -1,7 +1,7 @@
 <div class="chat">
   @if (!globalVariables.create_new_chat) {
   <div class="info-top">
-    <div (click)="openDialog()" class="team-name c-pointer">
+    <div (click)="openDialogChannel()" class="team-name c-pointer">
       <img src="./assets/img/channels/tag.svg" alt="">
       @if (channels[0]) {
       <h3>{{ activeChat ? activeChat : channels[0].name }}</h3>

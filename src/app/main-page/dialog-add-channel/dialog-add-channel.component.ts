@@ -1,9 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogClose,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogClose } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Channel } from '../../../models/channel.class';
@@ -16,6 +12,7 @@ import { Member } from '../../../models/member.class';
 export interface DialogData {
   name: string;
   description: string;
+  members: []
 }
 
 @Component({
@@ -33,22 +30,20 @@ export class DialogAddChannelComponent {
   name: string = '';
   description: string = '';
   members: [] = [];
-  disableButton: Boolean = true;
+  disableButton: boolean = true;
+
+  //Subscription
   certainMember_Array_Subsription: Subscription = new Subscription;
   selectedMember: Member[] = [];
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogAddChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
-        this.selectedMember = member;
-      });
-    }
+  constructor( public dialogRef: MatDialogRef<DialogAddChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
+      this.selectedMember = member;
+    });
+  }
 
   ngOnDestroy() {
-    if (this.certainMember_Array_Subsription) {
-      this.certainMember_Array_Subsription.unsubscribe();
-    }
+    this.certainMember_Array_Subsription.unsubscribe();
   }
 
   openDialog(): void {
@@ -58,6 +53,7 @@ export class DialogAddChannelComponent {
       data: { name: this.name, description: this.description, members: this.members },
     });
 
+    //Subscription
     this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
       this.selectedMember = member;
     });
@@ -69,13 +65,13 @@ export class DialogAddChannelComponent {
         this.selectedMember.push(creatorMember);
       }
 
-      const newChannel = new Channel({
+      const newChannel: Channel = {
         id: result.id,
         name: result.name,
         description: result.description,
         members: this.selectedMember,
         creator: this.globalVariables.signed_in_member.displayName
-      })
+      }
       this.firestoreService.addData(newChannel);
       this.globalVariables.certainMember_Array = [];
     });

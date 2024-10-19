@@ -1,20 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogClose,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogClose } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Channel } from '../../../models/channel.class';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
-import { DialogChannelAddMembersComponent } from '../dialog-channel-add-members/dialog-channel-add-members.component';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
-
-export interface DialogData {
-  name: string;
-  description: string;
-}
+import { Channel } from '../../../models/channel.class';
 
 @Component({
   selector: 'app-dialog-overview-channel',
@@ -28,21 +18,9 @@ export interface DialogData {
 })
 export class DialogOverviewChannelComponent {
 
-  name: string = '';
-  description: string = '';
+  editModus: boolean = false;
 
-  editModus: Boolean = false;
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.setModel();
-    }
-
-  setModel() {
-    this.name = this.data.name;
-    this.description = this.data.description;
-  }
+  constructor( public dialogRef: MatDialogRef<DialogOverviewChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService, @Inject(MAT_DIALOG_DATA) public data: Channel ) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -53,8 +31,6 @@ export class DialogOverviewChannelComponent {
   }
 
   saveChanges() {
-    this.data.name = this.name;
-    this.data.description = this.description;
     this.firestoreService.updateData('channels', this.data);
     this.editModus = false;
     this.globalVariables.activeChat = this.data.name;

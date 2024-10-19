@@ -18,7 +18,7 @@
 		@if (editModus) {
 			<div class="channel-name-two-input">
 				<img src="./assets/img/chat/tag-black.svg" alt="">
-				<input type="text" placeholder="{{ name }}" [(ngModel)]="name" required>
+				<input type="text" placeholder="{{ data.name }}" [(ngModel)]="data.name" required>
 			</div>
 		} @else {
 			<div class="channel-name-two">
@@ -31,13 +31,13 @@
 		<div class="edit">
 			<p class="font-weight-700">Beschreibung</p>
 			@if (editModus) {
-				<p (click)="saveChanges()" class="blue-font">Speichern</p>
+				<p (click)="saveChanges()" class="blue-font c-pointer">Speichern</p>
 			} @else {
-				<p (click)="editChannel()" class="blue-font">Bearbeiten</p>
+				<p (click)="editChannel()" class="blue-font c-pointer">Bearbeiten</p>
 			}
 		</div>
 		@if (editModus) {
-			<input type="text" placeholder="{{ description }}" class="input-description" [(ngModel)]="description" required>
+			<input type="text" placeholder="{{ data.description }}" class="input-description" [(ngModel)]="data.description" required>
 		} @else {
       @if (data.description == "") {
         <p>Keine Description vorhanden</p>
