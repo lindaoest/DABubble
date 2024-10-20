@@ -11,7 +11,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../app.config-private';
 import { FormsModule } from '@angular/forms';
-import { Messenges } from '../../../models/messenges.class';
+import { Message } from '../../../models/message.class';
 import { CreateNewChatComponent } from './create-new-chat/create-new-chat.component';
 import { WritingBoxComponent } from '../../shared/components/writing-box/writing-box.component';
 import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
@@ -118,7 +118,7 @@ export class ChatComponent {
    * @param {Message} message - The message object used to start the thread.
    * @returns {void}
    */
-  start_thread(message: Messenges) {
+  start_thread(message: Message) {
     this.currentMessage.emit(message);
     this.mobileClickedThread.emit();
   }

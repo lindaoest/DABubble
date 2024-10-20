@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
-import { Messenges } from '../../../../models/messenges.class';
+import { Message } from '../../../../models/message.class';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class GlobalVariablesService {
     description: '',
     creator: ''
   };
-  messenges: Messenges[] = [];
+  messages: Message[] = [];
   create_new_chat: boolean = false;
   open_directmessages_chat: boolean = false;
   verifyText: boolean = false;

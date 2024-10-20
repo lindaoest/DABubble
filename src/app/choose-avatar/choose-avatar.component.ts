@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../shared/services/firestore/firestore.service';
-import { Firestore } from '@angular/fire/firestore';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { Member } from '../../models/member.class';
 import { Router, RouterModule } from '@angular/router';
@@ -30,7 +29,7 @@ export class ChooseAvatarComponent {
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
-  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
+  constructor(public router: Router, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
 
   addImage(item: number) {
     this.profilePicture = `./assets/img/avatar/avatar-${item}.svg`;
@@ -45,9 +44,7 @@ export class ChooseAvatarComponent {
       const storage = getStorage();
       const starsRef = ref(storage, `images/${this.file.name}`);
 
-      await uploadBytes(starsRef, this.file).then((snapshot) => {
-        console.log(snapshot)
-      });
+      await uploadBytes(starsRef, this.file);
 
       await getDownloadURL(starsRef)
         .then((url) => {

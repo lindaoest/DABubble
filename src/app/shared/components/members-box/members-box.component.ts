@@ -24,7 +24,10 @@ export class MembersBoxComponent {
 
   addMember(m: Member) {
     const foundName = this.firestoreService.members.find(obj => obj.member === m.member);
-    this.memberArray.push(foundName)
+
+    if(foundName) {
+      this.memberArray.push(foundName);
+    }
     this.isClicked = true;
     this.setCertainMemberArray();
     this.checkMemberArray();

@@ -31,7 +31,7 @@ export class DialogOverviewChannelComponent {
   }
 
   saveChanges() {
-    this.firestoreService.updateData('channels', this.data);
+    this.firestoreService.updateChannel('channels', this.data);
     this.editModus = false;
     this.globalVariables.activeChat = this.data.name;
   }

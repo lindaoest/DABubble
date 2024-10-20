@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
-import { Messenges } from '../../../../models/messenges.class';
+import { Message } from '../../../../models/message.class';
 import { FirestoreService } from '../../services/firestore/firestore.service';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../../../../models/direct-message.class';
@@ -16,7 +16,7 @@ import { Thread } from '../../../../models/thread.class';
 export class WritingBoxComponent {
 
   @Input() sendMessage: string = '';
-  @Input() messageToReplyTo: Messenges = {
+  @Input() messageToReplyTo: Message = {
     channel: '',
     text: '',
     time: '',
@@ -34,7 +34,7 @@ export class WritingBoxComponent {
 
   async addMessage() {
     if (this.sendMessage == 'message') {
-      const message: Messenges = new Messenges({
+      const message: Message = new Message({
         channel: this.globalVariables.activeChannel.name,
         text: this.description,
         time: this.globalVariables.currentTime(),

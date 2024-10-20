@@ -1,38 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
-import { Messenges } from '../../../../models/messenges.class';
+import { Message } from '../../../../models/message.class';
 import { Thread } from '../../../../models/thread.class';
+import { DirectMessage } from '../../../../models/direct-message.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreHelperService {
 
-  allMessages(obj: any): { text: any; time: any; avatar: any; creationDate: any; }[] | undefined {
-    if (obj.messages) {
-      let allMessages = [];
-      for (let i = 0; i < obj.messages.length; i++) {
-        let message = obj.messages[i];
-        allMessages.push({
-          text: message.text,
-          time: message.time,
-          avatar: message.avatar,
-          creationDate: message.creationDate
-        });
-      }
-      return allMessages;
-    }
-    return undefined;
-  }
+  // allMessages(obj: any): { text: any; time: any; avatar: any; creationDate: any; }[] | undefined {
+  //   if (obj.messages) {
+  //     let allMessages = [];
+  //     for (let i = 0; i < obj.messages.length; i++) {
+  //       let message = obj.messages[i];
+  //       allMessages.push({
+  //         text: message.text,
+  //         time: message.time,
+  //         avatar: message.avatar,
+  //         creationDate: message.creationDate
+  //       });
+  //     }
+  //     return allMessages;
+  //   }
+  //   return undefined;
+  // }
 
-  groupMessagesByDateAndChannel(messages: any[]): { [channel: string]: { [date: string]: any[] } } {
+  groupByDateAndChannel(messages: any[]): { [channel: string]: { [date: string]: any[] } } {
     return messages.reduce((groups, message) => {
       if (!message.channel || !message.creationDate) {
         console.warn('Message without creationDate or channel:', message);
         return groups;
       }
-      const channel = message.channel; // z.B. 'grafik' oder 'editing'
+      const channel = message.channel;
       const date = message.creationDate; // YYYY-MM-DD
 
       if (!groups[channel]) {
@@ -45,7 +46,7 @@ export class FirestoreHelperService {
 
       groups[channel][date].push(message);
 
-      // Sortiere die Nachrichten nach Zeit
+      // Sort messages at time
       groups[channel][date].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
 
       return groups;
@@ -72,34 +73,8 @@ export class FirestoreHelperService {
 
       groups[senderReceiverKey][dateKey].push(direct_message);
 
-      // Sortiere die Nachrichten nach Zeit
+      // Sort messages at time
       groups[senderReceiverKey][dateKey].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
-
-      return groups;
-    }, {});
-  }
-
-  groupThreadsByDateAndChannel(threads: any[]): { [channel: string]: { [date: string]: any[] } } {
-    return threads.reduce((groups, thread) => {
-      if (!thread.channel || !thread.creationDate) {
-        console.warn('thread without creationDate or channel:', thread);
-        return groups;
-      }
-      const channel = thread.channel; // z.B. 'grafik' oder 'editing'
-      const date = thread.creationDate; // YYYY-MM-DD
-
-      if (!groups[channel]) {
-        groups[channel] = {};
-      }
-
-      if (!groups[channel][date]) {
-        groups[channel][date] = [];
-      }
-
-      groups[channel][date].push(thread);
-
-      // Sortiere die Nachrichten nach Zeit
-      groups[channel][date].sort((a: any, b: any) => a.timeStamp - b.timeStamp);
 
       return groups;
     }, {});
@@ -110,8 +85,17 @@ export class FirestoreHelperService {
     return participants.join('-');
   }
 
+  //Get clean json
+  getCleanJsonForChannel(obj: Channel): Partial<Channel> {
+    return {
+      name: obj.name,
+      description: obj.description,
+      members: obj.members,
+      creator: obj.creator
+    }
+  }
 
-  getCleanJson(obj: Member) {
+  getCleanJsonForMember(obj: Member): Partial<Member> {
     return {
       member: obj.member,
       email: obj.email,
@@ -120,7 +104,7 @@ export class FirestoreHelperService {
     }
   }
 
-  getCleanJsonForMessenges(obj: Messenges) {
+  getCleanJsonForMessage(obj: Message): Partial<Message> {
     return {
       channel: obj.channel,
       text: obj.text,
@@ -132,25 +116,7 @@ export class FirestoreHelperService {
     }
   }
 
-  getCleanJsonForChannel(obj: Channel) {
-    return {
-      name: obj.name,
-      description: obj.description,
-      members: obj.members,
-      creator: obj.creator
-    }
-  }
-
-  getCleanJsonForArray(obj: any) {
-    return {
-      text: obj.text,
-      time: obj.time,
-      avatar: obj.avatar,
-      creationDate: obj.creationDate
-    }
-  }
-
-  getCleanJsonForDirectMessage(obj: any) {
+  getCleanJsonForDirectMessage(obj: DirectMessage): Partial<DirectMessage> {
     return {
       sender: obj.sender,
       receiver: obj.receiver,
@@ -162,7 +128,7 @@ export class FirestoreHelperService {
     }
   }
 
-  getCleanJsonForThreads(obj: Thread) {
+  getCleanJsonForThread(obj: Thread): Partial<Thread> {
     return {
       channel: obj.channel,
       text: obj.text,
@@ -174,4 +140,13 @@ export class FirestoreHelperService {
       message: obj.message
     }
   }
+
+  // getCleanJsonForArray(obj: any) {
+  //   return {
+  //     text: obj.text,
+  //     time: obj.time,
+  //     avatar: obj.avatar,
+  //     creationDate: obj.creationDate
+  //   }
+  // }
 }

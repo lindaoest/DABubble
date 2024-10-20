@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { doc, onSnapshot, collection, addDoc, updateDoc, deleteDoc, arrayUnion } from "firebase/firestore";
+import { doc, onSnapshot, collection, addDoc, updateDoc, deleteDoc, arrayUnion, DocumentData } from "firebase/firestore";
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
 import { Member } from '../../../../models/member.class';
-import { Messenges } from '../../../../models/messenges.class';
+import { Message } from '../../../../models/message.class';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { FirestoreHelperService } from '../firestoreHelper/firestore-helper.service';
 import { Thread } from '../../../../models/thread.class';
@@ -14,14 +14,22 @@ import { Thread } from '../../../../models/thread.class';
 })
 export class FirestoreService {
 
-  firestore: Firestore = inject(Firestore);
+  members: Member[] = [];
+  messages: Message[] = [];
+  direct_messages: DirectMessage[] = [];
+  threads: Thread[] = [];
+  groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
+  groupedDirectMessages: { [key: string]: any[] } = {};
+  groupedThreads: { [channel: string]: { [date: string]: any[] } } = {};
 
-  unsub: any;
-  unsubMembers: any;
-  unsubMessenges: any;
+  //Unsupscription
+  unsubChannel: any;
+  unsubMember: any;
+  unsubMessage: any;
   unsubDirectMessage: any;
-  unsubThreads: any;
+  unsubThread: any;
 
+  //Subscription
   private channelSubject = new BehaviorSubject([]);
   channels$ = this.channelSubject.asObservable();
 
@@ -29,65 +37,126 @@ export class FirestoreService {
     this.channelSubject.next(value);
   }
 
-  // channels: Channel[] = [];
-  members: any[] = [];
-  messenges: any[] = [];
-  direct_message: any[] = [];
-  threads: any[] = [];
-  groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
-  groupedDirectMessages: { [key: string]: any[] } = {};
-  groupedThreads: { [channel: string]: { [date: string]: any[] } } = {};
+  constructor(public firestoreHelper: FirestoreHelperService, public firestore: Firestore) {
 
-  constructor(public firestoreHelper: FirestoreHelperService) {
-    this.unsub = onSnapshot(this.getDocRef('channels'), (doc) => {
-        const tempChannels: any[] = [];  // Temporäres Array erstellen
+    this.unsubChannel = onSnapshot(this.getDocRef('channels'), (doc) => {
+      const tempChannels: Channel[] = [];
       doc.forEach(element => {
-          tempChannels.push(this.setObject(element.data(), element.id));
+        tempChannels.push(this.setObjectChannel(element.data(), element.id));
       });
-      this.channels = tempChannels;  // Das Array über den Setter setzen
+      this.channels = tempChannels;
     });
 
-    this.unsubMembers = onSnapshot(this.getDocRef('members'), (doc) => {
+    this.unsubMember = onSnapshot(this.getDocRef('members'), (doc) => {
       this.members = [];
       doc.forEach(element => {
-        this.members.push(this.setObjectMembers(element.data(), element.id))
+        this.members.push(this.setObjectMember(element.data(), element.id))
       });
     });
 
-    this.unsubMessenges = onSnapshot(this.getDocRef('messenges'), (doc) => {
-      this.messenges = [];
+    this.unsubMessage = onSnapshot(this.getDocRef('messages'), (doc) => {
+      this.messages = [];
       doc.forEach(element => {
-        this.messenges.push(this.setObjectMessenges(element.data(), element.id))
+        this.messages.push(this.setObjectMessage(element.data(), element.id))
       });
-      this.groupedMessages = this.firestoreHelper.groupMessagesByDateAndChannel(this.messenges);
+      this.groupedMessages = this.firestoreHelper.groupByDateAndChannel(this.messages);
     });
 
-    this.unsubDirectMessage = onSnapshot(this.getDocRef('direct-message'), (doc) => {
-      this.direct_message = [];
+    this.unsubDirectMessage = onSnapshot(this.getDocRef('direct-messages'), (doc) => {
+      this.direct_messages = [];
       doc.forEach(element => {
-        this.direct_message.push(this.setObjectDirectMessage(element.data(), element.id))
+        this.direct_messages.push(this.setObjectDirectMessage(element.data(), element.id))
       });
-      this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(this.direct_message);
-      // console.log('direct-message', this.groupedDirectMessages)
+      this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(this.direct_messages);
     });
 
-    this.unsubThreads = onSnapshot(this.getDocRef('threads'), (doc) => {
+    this.unsubThread = onSnapshot(this.getDocRef('threads'), (doc) => {
       this.threads = [];
       doc.forEach(element => {
-        this.threads.push(this.setObjectThreads(element.data(), element.id))
+        this.threads.push(this.setObjectThread(element.data(), element.id))
       });
-      this.groupedThreads = this.firestoreHelper.groupThreadsByDateAndChannel(this.threads);
+      this.groupedThreads = this.firestoreHelper.groupByDateAndChannel(this.threads);
     });
   }
 
   ngOnDestroy(): void {
-    this.unsub();
-    this.unsubMembers();
-    this.unsubMessenges();
-    this.unsubThreads();
+    this.unsubChannel();
+    this.unsubMember();
+    this.unsubMessage();
+    this.unsubDirectMessage();
+    this.unsubThread();
   }
 
-  setObject(obj: any, id: string) {
+  //Add Data
+  async addChannel(data: Channel) {
+    await addDoc(this.getDocRef('channels'), this.setObjectChannel(data, ''));
+  }
+
+  async addMember(data: Member) {
+    await addDoc(this.getDocRef('members'), this.setObjectMember(data, ''));
+  }
+
+  async addMessage(data: Message) {
+    await addDoc(this.getDocRef('messages'), this.setObjectMessage(data, ''));
+  }
+
+  async addDirectMessage(data: DirectMessage) {
+    await addDoc(this.getDocRef('direct-messages'), this.setObjectDirectMessage(data, ''));
+  }
+
+  async addThread(data: Thread) {
+    await addDoc(this.getDocRef('threads'), this.setObjectThread(data, ''));
+  }
+
+  //Update data
+  async updateChannel(colId: string, data: Channel) {
+    if (data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForChannel(data));
+    }
+  }
+
+  async updateMember(colId: string, data: Member) {
+    if (data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForMember(data));
+    }
+  }
+
+  async updateMessage(colId: string, data: Message) {
+    if (data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForMessage(data));
+    }
+  }
+
+  async updateDirectMessage(colId: string, data: DirectMessage) {
+    if (data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForDirectMessage(data));
+    }
+  }
+
+  async updateThread(colId: string, data: Thread) {
+    if (data.id) {
+      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForThread(data));
+    }
+  }
+
+  async updateArray(colId: string, id: string, newKey: Member) {
+    if (id) {
+      await updateDoc(this.getSingleDocRef(colId, id), {
+        members: arrayUnion(this.firestoreHelper.getCleanJsonForMember(newKey))
+      });
+    }
+  }
+
+  // async updateArrayMessages(colId: string, id: string, newKey: any) {
+  //   if (id) {
+  //     await updateDoc(this.getSingleDocRef(colId, id), {
+  //       messages: arrayUnion(this.firestoreHelper.getCleanJsonForArray(newKey))
+  //     });
+  //   }
+  // }
+
+  //Set object
+  setObjectChannel(obj: Channel | DocumentData, id: string): Channel {
     return {
       id: id,
       name: obj.name,
@@ -97,9 +166,9 @@ export class FirestoreService {
     }
   }
 
-  setObjectMembers(obj: any, id: string): Member {
+  setObjectMember(obj: Member | DocumentData, id: string): Member {
     return {
-      id: id || '',
+      id: id || obj.id || '',
       member: obj.member,
       email: obj.email,
       password: obj.password,
@@ -107,7 +176,7 @@ export class FirestoreService {
     }
   }
 
-  setObjectMessenges(obj: any, id: string): Messenges {
+  setObjectMessage(obj: Message | DocumentData, id: string): Message {
     return {
       id: id || '',
       channel: obj.channel,
@@ -120,7 +189,7 @@ export class FirestoreService {
     }
   }
 
-  setObjectDirectMessage(obj: any, id: string) {
+  setObjectDirectMessage(obj: DirectMessage | DocumentData, id: string): DirectMessage {
     return {
       id: id,
       sender: obj.sender,
@@ -133,16 +202,16 @@ export class FirestoreService {
     }
   }
 
-  setObjectDirectMessage2(obj: any, id: string) {
-    return {
-      id: id,
-      sender: obj.sender,
-      receiver: obj.receiver,
-      messages: this.firestoreHelper.allMessages(obj)
-    }
-  }
+  // setObjectDirectMessage2(obj: any, id: string) {
+  //   return {
+  //     id: id,
+  //     sender: obj.sender,
+  //     receiver: obj.receiver,
+  //     messages: this.firestoreHelper.allMessages(obj)
+  //   }
+  // }
 
-  setObjectThreads(obj: any, id: string): Thread {
+  setObjectThread(obj: Thread | DocumentData, id: string): Thread {
     return {
       id: id || '',
       channel: obj.channel,
@@ -154,72 +223,6 @@ export class FirestoreService {
       timeStamp: obj.timeStamp,
       message: obj.message
     }
-  }
-
-  async addData(data: Channel) {
-    await addDoc(this.getDocRef('channels'), this.setObject(data, ''));
-  }
-
-  async updateData(colId: string, data: Channel) {
-    if(data.id) {
-      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForChannel(data));
-    }
-  }
-
-  async updateArray(colId: string, id: string, newKey: Member) {
-    if(id) {
-      await updateDoc(this.getSingleDocRef(colId, id), {
-        members: arrayUnion(this.firestoreHelper.getCleanJson(newKey))
-    });
-    }
-  }
-
-  async updateArrayMessages(colId: string, id: string, newKey: any) {
-    if(id) {
-      await updateDoc(this.getSingleDocRef(colId, id), {
-        messages: arrayUnion(this.firestoreHelper.getCleanJsonForArray(newKey))
-    });
-    }
-  }
-
-  async addMember(data: Member) {
-    await addDoc(this.getDocRef('members'), data);
-  }
-
-  async updateMember(colId: string, data: Member) {
-    if(data.id) {
-      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJson(data));
-    }
-  }
-
-  async addMessage(data: Messenges) {
-    await addDoc(this.getDocRef('messenges'), this.setObjectMessenges(data, ''));
-  }
-
-  async updateMessage(colId: string, data: Messenges) {
-    if(data.id) {
-      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForMessenges(data));
-    }
-  }
-
-  async updateDirectMessage(colId: string, data: DirectMessage) {
-    if(data.id) {
-      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForDirectMessage(data));
-    }
-  }
-
-  async updateThread(colId: string, data: Thread) {
-    if(data.id) {
-      await updateDoc(this.getSingleDocRef(colId, data.id), this.firestoreHelper.getCleanJsonForThreads(data));
-    }
-  }
-
-  async addDirectMessage(data: DirectMessage) {
-    await addDoc(this.getDocRef('direct-message'), this.setObjectDirectMessage(data, ''));
-  }
-
-  async addThread(data: Thread) {
-    await addDoc(this.getDocRef('threads'), this.setObjectThreads(data, ''));
   }
 
   getDocRef(colId: string) {

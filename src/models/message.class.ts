@@ -1,4 +1,4 @@
-export class Messenges {
+export class Message {
 	id?: string;
 	channel: string;
 	text: string;

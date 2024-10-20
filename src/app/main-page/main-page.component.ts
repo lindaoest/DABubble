@@ -4,7 +4,7 @@ import { ChatComponent } from './chat/chat.component';
 import { ThreadReplyComponent } from './thread-reply/thread-reply.component';
 import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
 import { DirectmessagesChatComponent } from './chat/directmessages-chat/directmessages-chat.component';
-import { Messenges } from '../../models/messenges.class';
+import { Message } from '../../models/message.class';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 })
 export class MainPageComponent {
 
-  currentMessage: Messenges = {
+  currentMessage: Message = {
     channel: '',
     text: '',
     time: '',
@@ -32,7 +32,7 @@ export class MainPageComponent {
 
   constructor(public globalVariables: GlobalVariablesService) {}
 
-  message_for_thread(message: Messenges) {
+  message_for_thread(message: Message) {
     this.currentMessage = message;
   }
 

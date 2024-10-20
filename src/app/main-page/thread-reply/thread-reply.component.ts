@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Messenges } from '../../../models/messenges.class';
+import { Message } from '../../../models/message.class';
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
@@ -17,7 +17,7 @@ import { MessageComponent } from '../../shared/components/message/message.compon
 })
 export class ThreadReplyComponent {
 
-  @Input() messageToReplyTo: Messenges = {
+  @Input() messageToReplyTo: Message = {
     channel: '',
     text: '',
     time: '',

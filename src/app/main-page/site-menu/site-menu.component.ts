@@ -5,8 +5,9 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
 import { Channel } from '../../../models/channel.class';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
-import { Messenges } from '../../../models/messenges.class';
+import { Message } from '../../../models/message.class';
 import { Member } from '../../../models/member.class';
+import { DirectMessage } from '../../../models/direct-message.class';
 
 @Component({
   selector: 'app-site-menu',
@@ -25,7 +26,7 @@ export class SiteMenuComponent {
   members: [] = [];
   channel_open: boolean = false;
   directmessage_open: boolean = false;
-  filteredChats: Messenges[] = [];
+  filteredChats: Message[] = [];
   channels: Channel[] = [];
 
   constructor(public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
@@ -50,26 +51,31 @@ export class SiteMenuComponent {
     this.globalVariables.create_new_chat = false;
     this.globalVariables.mobile_chat = true;
     this.globalVariables.activeChat = channelName;
-    if (this.globalVariables.activeChannel) {
-      this.firestoreService.channels$.subscribe(channels => {
-        const foundChannel = channels.find((obj:any) => obj.name === channelName);
-        if (foundChannel) {
-          this.globalVariables.activeChannel = foundChannel;
-          this.filterChats();
-        } else {
-          console.warn('Channel not found');
-        }
-      });
-    }
+
+    this.setActiveChannel(channelName);
 
     this.mobileClickedChat.emit();
   }
 
+  setActiveChannel(channelName: string) {
+    if (this.globalVariables.activeChannel) {
+      this.firestoreService.channels$.subscribe(channels => {
+        const foundChannel = channels.find((obj: Channel) => obj.name === channelName);
+        if (foundChannel) {
+          this.globalVariables.activeChannel = foundChannel;
+          this.filterChats();
+        } else {
+          console.error('Channel not found');
+        }
+      });
+    }
+  }
+
   filterChats() {
-    this.globalVariables.messenges = [];
-    this.filteredChats = this.firestoreService.messenges.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
+    this.globalVariables.messages = [];
+    this.filteredChats = this.firestoreService.messages.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
     this.filteredChats.forEach(element => {
-      this.globalVariables.messenges.push(this.firestoreService.setObjectMessenges(element, ''));
+      this.globalVariables.messages.push(this.firestoreService.setObjectMessage(element, ''));
     });
   }
 
@@ -80,23 +86,27 @@ export class SiteMenuComponent {
   directmessage_open_function() {
     this.directmessage_open = !this.directmessage_open;
 
-    this.firestoreService.direct_message.forEach(message => {
+    this.firestoreService.direct_messages.forEach(message => {
       if (message.sender == this.globalVariables.signed_in_member.displayName) {
-        let direct_message_receiver = this.firestoreService.members.find(member => message.receiver == member.member);
-        if(direct_message_receiver && !this.globalVariables.personObjArray.some(person => person.member === direct_message_receiver.member)) {
-          console.log('member1', direct_message_receiver);
-          this.globalVariables.personObjArray.push(direct_message_receiver);
-          console.log('receiver', this.globalVariables.personObjArray)
-        }
+        this.show_all_directmessages_sender(message);
       } else if (message.receiver == this.globalVariables.signed_in_member.displayName) {
-        let direct_message_sender = this.firestoreService.members.find(member => message.sender == member.member);
-        if(direct_message_sender && !this.globalVariables.personObjArray.some(person => person.member === direct_message_sender.member)) {
-          console.log('member2', direct_message_sender);
-          this.globalVariables.personObjArray.push(direct_message_sender);
-          console.log('sender', this.globalVariables.personObjArray)
-        }
+        this.show_all_directmessages_receiver(message);
       }
     });
+  }
+
+  show_all_directmessages_sender(message: DirectMessage) {
+    let direct_message_receiver = this.firestoreService.members.find(member => message.receiver == member.member);
+    if (direct_message_receiver && !this.globalVariables.personObjArray.some(person => person.member === direct_message_receiver!.member)) {
+      this.globalVariables.personObjArray.push(direct_message_receiver);
+    }
+  }
+
+  show_all_directmessages_receiver(message: DirectMessage) {
+    let direct_message_sender = this.firestoreService.members.find(member => message.sender == member.member);
+    if (direct_message_sender && !this.globalVariables.personObjArray.some(person => person.member === direct_message_sender!.member)) {
+      this.globalVariables.personObjArray.push(direct_message_sender);
+    }
   }
 
   open_new_chat() {
@@ -117,19 +127,6 @@ export class SiteMenuComponent {
     }
 
     this.mobileClickedDirectChat.emit();
-  }
-
-  uniqueReceivers(messages: any) {
-    // console.log('messages', messages)
-    // const receivers = new Set();
-    // messages.forEach(message => {
-    //   if (message.sender === this.globalVariables.signed_in_member.displayName) {
-    //     receivers.add(message.receiver);
-    //   } else if (message.receiver === this.globalVariables.signed_in_member.displayName) {
-    //     receivers.add(message.sender);
-    //   }
-    // });
-    // return Array.from(receivers);
   }
 
   trackByFn(index: number, item: any): number {

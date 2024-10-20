@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageComponent } from '../message/message.component';
-import { Messenges } from '../../../../models/messenges.class';
+import { Message } from '../../../../models/message.class';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,11 +13,11 @@ import { CommonModule } from '@angular/common';
 export class DateBlockMessageComponent {
 
   @Input() dateGroup!: any;
-  @Input() messageToReplyTo!: Messenges;
+  @Input() messageToReplyTo!: Message;
   @Input() threadMessage: Boolean = false;
   @Output() currentMessage = new EventEmitter();
 
-  currentMessage_for_thread(message: Messenges) {
+  currentMessage_for_thread(message: Message) {
     this.currentMessage.emit(message);
   }
 }
