@@ -23,7 +23,6 @@ export class HeaderComponent {
   constructor(public dialog: MatDialog, private router: Router, private location: Location, public globalVariables: GlobalVariablesService) { }
 
   ngOnInit(): void {
-    // Abonniere die Router-Events und filtere nur NavigationEnd-Ereignisse
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -51,10 +50,8 @@ export class HeaderComponent {
         name: this.globalVariables.signed_in_member.displayName,
         avatar: this.globalVariables.signed_in_member.photoURL,
         email: this.globalVariables.signed_in_member.email
-
       }
     });
-
     this.openLightboxVar = false;
   }
 }

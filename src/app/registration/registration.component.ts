@@ -21,13 +21,12 @@ export class RegistrationComponent {
     password: '',
     avatar: ''
   }
+  privacyChecked: boolean = false;
+  disableButton: boolean = true;
 
   registration_form: FormGroup = new FormGroup({});
 
   constructor(public router: Router, private globalVariables: GlobalVariablesService) { }
-
-  privacyChecked: boolean = false;
-  disableButton: Boolean = true;
 
   ngOnInit() {
     this.registration_form = new FormGroup({
@@ -44,7 +43,6 @@ export class RegistrationComponent {
 
   onSubmit() {
     if (this.registration_form.valid) {
-      // this.globalVariables.newMember.push(this.registration_form.value);
       this.router.navigate(['choose-avatar']);
       sessionStorage.setItem('new Member', JSON.stringify(this.registration_form.value));
       const newMemberData = sessionStorage.getItem('new Member');

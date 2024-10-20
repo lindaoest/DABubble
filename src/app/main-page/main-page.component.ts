@@ -25,7 +25,6 @@ export class MainPageComponent {
     creationDate: 0,
     timeStamp: 0
   };
-
   showMenu: boolean = true;
   showChat: boolean = false;
   showDirectChat: boolean = false;

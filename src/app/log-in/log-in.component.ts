@@ -24,17 +24,14 @@ export class LogInComponent {
     password: 'guestlogin12dabubble78&',
     avatar: './assets/img/channels/profile.svg'
   }
-
   email: string = '';
   password: string = '';
 
   firebaseConfig = privateConfig;
-
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
   provider = new GoogleAuthProvider();
-
   login_form: FormGroup = new FormGroup({});
 
   constructor(public router: Router, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
@@ -44,14 +41,11 @@ export class LogInComponent {
       email: new FormControl('', Validators.email),
       password: new FormControl('', Validators.required),
     });
-
   }
 
   async checkLogin() {
     const activeMember = this.firestoreService.members.find(obj => obj.email === this.login_form.value.email && obj.password === this.login_form.value.password);
-
     await this.signInWithEmail(this.login_form.value.email, this.login_form.value.password);
-
     if (activeMember && this.login_form.valid) {
       this.router.navigate(['']);
     }
@@ -64,8 +58,7 @@ export class LogInComponent {
         this.globalVariables.signed_in_member = user;
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.error(error);
       });
   }
 
@@ -77,15 +70,8 @@ export class LogInComponent {
   googleAuth() {
     signInWithPopup(this.auth, this.provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential) {
-          const token = credential.accessToken;
-        }
-        // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+
         const newMember: Member = {
           member: user.displayName || '',
           email: user.email || '',
@@ -100,7 +86,6 @@ export class LogInComponent {
       }).catch((error) => {
         console.error(error)
       });
-
     this.router.navigate(['']);
   }
 }

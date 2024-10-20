@@ -16,18 +16,17 @@ export class MembersBoxComponent {
   @Output() checkMemberLength = new EventEmitter();
   @Input() notIncludedMembers: Member[] = [];
 
-  isClicked: Boolean = false;
-  memberArray: any[] = [];
-  newMemberTrue: Boolean = false;
+  isClicked: boolean = false;
+  memberArray: Member[] = [];
+  newMemberTrue: boolean = false;
 
   constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
 
   addMember(m: Member) {
     const foundName = this.firestoreService.members.find(obj => obj.member === m.member);
     this.memberArray.push(foundName)
-    // console.log('membersArray', this.memberArray)
-    this.setCertainMemberArray();
     this.isClicked = true;
+    this.setCertainMemberArray();
     this.checkMemberArray();
   }
 
@@ -35,18 +34,8 @@ export class MembersBoxComponent {
     this.globalVariables.certainMember_Array = this.memberArray;
   }
 
-  // deleteMember(i: number) {
-  //   this.memberArray.splice(i, 1);
-  //   this.setCertainMemberArray();
-  //   this.checkMemberArray();
-  // }
-
   checkMemberArray() {
-    if (this.memberArray.length > 0) {
-      this.newMemberTrue = false;
-    } else {
-      this.newMemberTrue = true;
-    }
+    this.memberArray.length > 0 ? this.newMemberTrue = false : this.newMemberTrue = true;
     this.checkMemberLength.emit(this.newMemberTrue);
   }
 }

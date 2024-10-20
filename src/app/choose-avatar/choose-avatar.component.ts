@@ -23,17 +23,14 @@ export class ChooseAvatarComponent {
   file: File | null = null;
   chooseImage: boolean = true;
   url: string = '';
-  successSignIn: Boolean = false;
-  user_already_exists: Boolean = false;
+  successSignIn: boolean = false;
+  user_already_exists: boolean = false;
 
   firebaseConfig = privateConfig;
-
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
-  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) {
-    console.log(this.globalVariables.newMember)
-  }
+  constructor(public router: Router, public firestore: Firestore, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
 
   addImage(item: number) {
     this.profilePicture = `./assets/img/avatar/avatar-${item}.svg`;

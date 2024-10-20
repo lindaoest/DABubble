@@ -4,7 +4,7 @@ import { GlobalVariablesService } from '../../../shared/services/global-variable
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
 import { Member } from '../../../../models/member.class';
-import { getAuth, signOut, updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
+import { getAuth, signOut, updateProfile, User, verifyBeforeUpdateEmail } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../../app.config-private';
 import { Router } from '@angular/router';
@@ -23,17 +23,20 @@ import { Thread } from '../../../../models/thread.class';
 })
 export class EditProfileComponent {
 
-  firebaseConfig = privateConfig;
+  edit_profile_form: FormGroup = new FormGroup({});
 
+  memberName = this.globalVariables.signed_in_member.displayName;
+  memberEmail = this.globalVariables.signed_in_member.email;
+
+  firebaseConfig = privateConfig;
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
-  edit_profile_form: FormGroup = new FormGroup({});
-
+  //Subscription
   channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
 
-  constructor(public dialogRef: MatDialogRef<EditProfileComponent>, public globalVariables: GlobalVariablesService, public firestore: FirestoreService, private router: Router,) { }
+  constructor(public dialogRef: MatDialogRef<EditProfileComponent>, public globalVariables: GlobalVariablesService, public firestore: FirestoreService, private router: Router) { }
 
   ngOnInit() {
     this.edit_profile_form = new FormGroup({
@@ -47,11 +50,18 @@ export class EditProfileComponent {
   }
 
   onSubmit() {
-    const updateMember = this.firestore.members.find(obj => obj.email === this.globalVariables.signed_in_member.email && obj.member === this.globalVariables.signed_in_member.displayName);
-    const updateMessages = this.firestore.messenges.filter(message => message.sender === this.globalVariables.signed_in_member.displayName);
-    const updateDirectMessage = this.firestore.direct_message.filter(directMessage => directMessage.sender === this.globalVariables.signed_in_member.displayName || directMessage.receiver === this.globalVariables.signed_in_member.displayName);
-    const updateChannel = this.channels.filter(channel => channel.creator === this.globalVariables.signed_in_member.displayName);
-    const updateThread = this.firestore.threads.filter(thread => thread.sender === this.globalVariables.signed_in_member.displayName);
+    this.updateMemberFunction();
+    this.updateMessageFunction();
+    this.updateDirectMessageFunction();
+    this.updateChannelFunction();
+    this.updateThreadFunction();
+
+    this.updateAuthentification();
+    this.dialogRef.close();
+  }
+
+  updateMemberFunction() {
+    const updateMember = this.firestore.members.find(obj => obj.email === this.memberEmail && obj.member === this.memberName);
 
     const member: Member = {
       id: updateMember.id,
@@ -61,6 +71,10 @@ export class EditProfileComponent {
       avatar: updateMember.avatar
     }
     this.firestore.updateMember('members', member);
+  }
+
+  updateMessageFunction() {
+    const updateMessages = this.firestore.messenges.filter(message => message.sender === this.memberName);
 
     updateMessages.forEach(updateMessage => {
       const message: Messenges = {
@@ -75,72 +89,41 @@ export class EditProfileComponent {
       }
       this.firestore.updateMessage('messenges', message)
     })
+  }
 
-    updateDirectMessage.forEach(updateDirectMessage => {
-      let directMessage: DirectMessage;
-      if (updateDirectMessage.sender === this.globalVariables.signed_in_member.displayName) {
-        directMessage = {
-          id: updateDirectMessage.id,
-          sender: this.edit_profile_form.value.member,
-          receiver: updateDirectMessage.receiver,
-          text: updateDirectMessage.text,
-          time: updateDirectMessage.time,
-          avatar: updateDirectMessage.avatar,
-          creationDate: updateDirectMessage.creationDate,
-          timeStamp: updateDirectMessage.timeStamp
-        }
-      } else {
-        directMessage = {
-          id: updateDirectMessage.id,
-          sender: updateDirectMessage.sender,
-          receiver: this.edit_profile_form.value.member,
-          text: updateDirectMessage.text,
-          time: updateDirectMessage.time,
-          avatar: updateDirectMessage.avatar,
-          creationDate: updateDirectMessage.creationDate,
-          timeStamp: updateDirectMessage.timeStamp
-        }
-      }
-      this.firestore.updateDirectMessage('direct-message', directMessage)
-    })
+  updateDirectMessageFunction() {
+    this.firestore.direct_message
+      .filter(directMessage => directMessage.sender === this.memberName || directMessage.receiver === this.memberName)
+      .forEach(directMessage => {
+        const directMessageUpdate: DirectMessage = {
+          ...directMessage, // copy all fields from the origin
+          sender: directMessage.sender === this.memberName ? this.edit_profile_form.value.member : directMessage.sender,
+          receiver: directMessage.receiver === this.memberName ? this.edit_profile_form.value.member : directMessage.receiver
+        };
+        this.firestore.updateDirectMessage('direct-message', directMessageUpdate);
+      });
+  }
 
+  updateChannelFunction() {
     this.channels.forEach(updateChannel => {
-      let membersArray: Member[] = [];
-      let channel: Channel = {
-        id: updateChannel.id,
-        name: updateChannel.name,
-        description: updateChannel.description,
+      let membersArray: Member[] = updateChannel.members.map(updateMember => ({
+        ...updateMember,
+        member: updateMember.member === this.memberName ? this.edit_profile_form.value.member : updateMember.member,
+        email: updateMember.member === this.memberName ? this.edit_profile_form.value.email : updateMember.email
+      }));
+
+      const channel: Channel = {
+        ...updateChannel,
         members: membersArray,
-        creator: updateChannel.creator
+        creator: updateChannel.creator === this.memberName ? this.edit_profile_form.value.member : updateChannel.creator
       };
-      if (updateChannel.creator == this.globalVariables.signed_in_member.displayName) {
-        channel = {
-          id: updateChannel.id,
-          name: updateChannel.name,
-          description: updateChannel.description,
-          members: membersArray,
-          creator: this.edit_profile_form.value.creator
-        }
-      }
-      updateChannel.members.forEach((updateMemberArray: Member) => {
-        if (updateMemberArray.member == this.globalVariables.signed_in_member.displayName) {
-          membersArray.push({
-            member: this.edit_profile_form.value.member,
-            email: this.edit_profile_form.value.email,
-		        password: updateMemberArray.password,
-		        avatar: updateMemberArray.avatar
-          })
-        } else {
-          membersArray.push({
-            member: updateMemberArray.member,
-            email: updateMemberArray.email,
-		        password: updateMemberArray.password,
-		        avatar: updateMemberArray.avatar
-          })
-        }
-      })
-      this.firestore.updateData('channels', channel)
-    })
+      this.firestore.updateData('channels', channel);
+    });
+  }
+
+
+  updateThreadFunction() {
+    const updateThread = this.firestore.threads.filter(thread => thread.sender === this.globalVariables.signed_in_member.displayName);
 
     updateThread.forEach(updateThread => {
       const thread: Thread = {
@@ -156,9 +139,6 @@ export class EditProfileComponent {
       }
       this.firestore.updateThread('threads', thread)
     })
-
-    this.updateAuthentification();
-    this.dialogRef.close();
   }
 
   updateAuthentification() {
@@ -172,7 +152,6 @@ export class EditProfileComponent {
       updateProfile(user, {
         displayName: newUsername
       }).then(() => {
-
         this.firebaseEmailReset(user, newEmail);
       }).catch((error) => {
         console.log(error);
@@ -180,7 +159,7 @@ export class EditProfileComponent {
     }
   }
 
-  firebaseEmailReset(user: any, email: any) {
+  firebaseEmailReset(user: User, email: string) {
     const auth = getAuth();
     try {
       verifyBeforeUpdateEmail(user, email);
@@ -193,7 +172,7 @@ export class EditProfileComponent {
         });
       }, 4000);
     } catch (error) {
-
+      console.log(error);
     }
   }
 

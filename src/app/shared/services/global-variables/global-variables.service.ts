@@ -25,14 +25,14 @@ export class GlobalVariablesService {
     creator: ''
   };
   messenges: Messenges[] = [];
-  create_new_chat: Boolean = false;
-  open_directmessages_chat: Boolean = false;
-  verifyText: Boolean = false;
-  personObjArray: any[] = [];
-  open_thread_reply: Boolean = false;
-  mobile_chat: Boolean = false;
-  mobile_thread: Boolean = false;
-  mobile_site_menu: Boolean = false;
+  create_new_chat: boolean = false;
+  open_directmessages_chat: boolean = false;
+  verifyText: boolean = false;
+  personObjArray: Member[] = [];
+  open_thread_reply: boolean = false;
+  mobile_chat: boolean = false;
+  mobile_thread: boolean = false;
+  mobile_site_menu: boolean = false;
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');
   active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();
@@ -66,5 +66,4 @@ export class GlobalVariablesService {
     let date = new Date();
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
-
 }

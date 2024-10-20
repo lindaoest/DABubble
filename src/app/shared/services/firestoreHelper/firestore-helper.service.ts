@@ -9,8 +9,6 @@ import { Thread } from '../../../../models/thread.class';
 })
 export class FirestoreHelperService {
 
-  constructor() { }
-
   allMessages(obj: any): { text: any; time: any; avatar: any; creationDate: any; }[] | undefined {
     if (obj.messages) {
       let allMessages = [];
@@ -138,7 +136,8 @@ export class FirestoreHelperService {
     return {
       name: obj.name,
       description: obj.description,
-      members: obj.members
+      members: obj.members,
+      creator: obj.creator
     }
   }
 
