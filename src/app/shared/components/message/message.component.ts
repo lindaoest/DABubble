@@ -13,6 +13,8 @@ import { Message } from '../../../../models/message.class';
 export class MessageComponent {
 
   @Input() message!: Message;
+  @Input() threadMessage: boolean = false;
+  @Input() chatMessage: boolean = false;
   @Output()currentMessage = new EventEmitter();
 
   constructor(public globalVariables: GlobalVariablesService) { }

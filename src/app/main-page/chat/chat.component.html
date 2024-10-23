@@ -25,10 +25,10 @@
       <div class="quantity">
         @if (getMembers().length == 0) {
         @if (channels[0]) {
-        <p>{{ channels[0].members.length }}</p>
+        <p class="font-weight-700">{{ channels[0].members.length }}</p>
         }
         } @else {
-        <p>{{ getMembers().length }}</p>
+        <p class="font-weight-700">{{ getMembers().length }}</p>
         }
       </div>
       <div (click)="addMembers()" class="c-pointer">
@@ -40,7 +40,7 @@
     @for (group of (this.firestoreService.groupedMessages | keyvalue); track $index) {
     @if (group.key == globalVariables.activeChannel.name) {
     @for (dateGroup of (group.value | keyvalue); track $index) {
-    <app-date-block-message [dateGroup]="dateGroup" (currentMessage)="start_thread($event)"></app-date-block-message>
+    <app-date-block-message [dateGroup]="dateGroup" (currentMessage)="start_thread($event)" [chatMessage]="true"></app-date-block-message>
     }
     }
     }

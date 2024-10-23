@@ -14,7 +14,8 @@ export class DateBlockMessageComponent {
 
   @Input() dateGroup!: any;
   @Input() messageToReplyTo!: Message;
-  @Input() threadMessage: Boolean = false;
+  @Input() threadMessage: boolean = false;
+  @Input() chatMessage: boolean = false;
   @Output() currentMessage = new EventEmitter();
 
   currentMessage_for_thread(message: Message) {

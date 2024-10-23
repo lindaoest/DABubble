@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { WritingBoxComponent } from "../../shared/components/writing-box/writing-box.component";
 import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
 import { MessageComponent } from '../../shared/components/message/message.component';
+import { Thread } from '../../../models/thread.class';
 
 @Component({
   selector: 'app-thread-reply',
@@ -27,7 +28,25 @@ export class ThreadReplyComponent {
     timeStamp: 0
   };
 
+  answerLength: number = 0;
+
   constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
+
+  ngOnChanges() {
+    this.answerTextLength();
+  }
+
+  answerTextLength() {
+    this.answerLength = 0;
+
+    this.firestoreService.threads.forEach((thread: Thread) => {
+      const message: any = thread.message;
+
+      if(message.timeStamp === this.messageToReplyTo.timeStamp) {
+        this.answerLength += 1;
+      }
+    })
+  }
 
   close_thread() {
     this.globalVariables.open_thread_reply = false;
