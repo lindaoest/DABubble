@@ -5,6 +5,8 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
+import { ImprintComponent } from './shared/footer/imprint/imprint.component';
+import { PrivacyComponent } from './shared/footer/privacy/privacy.component';
 
 export const routes: Routes = [
 	{ path: '', component: MainPageComponent },
@@ -13,4 +15,6 @@ export const routes: Routes = [
 	{ path: 'choose-avatar', component: ChooseAvatarComponent },
 	{ path: 'reset-password', component: ResetPasswordComponent },
 	{ path: 'new-password', component: NewPasswordComponent },
+	{ path: 'imprint', component: ImprintComponent },
+	{ path: 'privacy', component: PrivacyComponent },
 ];
