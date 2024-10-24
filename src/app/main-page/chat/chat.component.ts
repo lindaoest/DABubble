@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
-import { find, Subscription } from 'rxjs';
+import { find, Subscription, tap } from 'rxjs';
 import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialog-overview-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { DialogMemberExistingChannelComponent } from '../dialog-member-existing-channel/dialog-member-existing-channel.component';
@@ -30,7 +30,7 @@ export class ChatComponent {
   @Output() currentMessage = new EventEmitter();
 
   name: string = '';
-  memberArray: Member[] = [];
+  channelWithLoggedInUser!: Channel;
 
   //Authentification firebase
   firebaseConfig = privateConfig;
@@ -51,23 +51,28 @@ export class ChatComponent {
       this.activeChat = chat;
     });
 
-    this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
-      this.channels = channels;
-    });
+    this.channelSubscription = this.firestoreService.channels$.pipe(
+      tap((channels: Channel[]) => {
+        this.channels = channels;
+
+        this.channels.some(channel => {
+          const member = channel.members.find((findMember: any) => findMember.member === this.globalVariables.signed_in_member.displayName);
+
+          if (member) {
+            this.channelWithLoggedInUser = channel;
+            return true;
+          }
+
+          return false;
+        });
+      })
+    ).subscribe()
 
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.globalVariables.signed_in_member = user;
       }
     });
-
-
-
-    this.channels.forEach(channel => {
-      const member = channel.members.find((findMember: any) => findMember.member == this.globalVariables.signed_in_member.displayName)
-      console.log('member', member);
-
-    })
   }
 
   ngOnDestroy() {
