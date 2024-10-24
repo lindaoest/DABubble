@@ -33,6 +33,10 @@ app-create-new-chat {
     }
 
     .avatars {
+      @include displayFlex($jc:flex-end);
+      overflow: hidden;
+      width: 80px;
+
       img {
         border-radius: 50%;
         width: 40px;

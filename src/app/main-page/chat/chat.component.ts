@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
-import { Subscription } from 'rxjs';
+import { find, Subscription } from 'rxjs';
 import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialog-overview-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { DialogMemberExistingChannelComponent } from '../dialog-member-existing-channel/dialog-member-existing-channel.component';
@@ -15,6 +15,7 @@ import { Message } from '../../../models/message.class';
 import { CreateNewChatComponent } from './create-new-chat/create-new-chat.component';
 import { WritingBoxComponent } from '../../shared/components/writing-box/writing-box.component';
 import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
+import { Member } from '../../../models/member.class';
 
 @Component({
   selector: 'app-chat',
@@ -29,6 +30,7 @@ export class ChatComponent {
   @Output() currentMessage = new EventEmitter();
 
   name: string = '';
+  memberArray: Member[] = [];
 
   //Authentification firebase
   firebaseConfig = privateConfig;
@@ -58,6 +60,14 @@ export class ChatComponent {
         this.globalVariables.signed_in_member = user;
       }
     });
+
+
+
+    this.channels.forEach(channel => {
+      const member = channel.members.find((findMember: any) => findMember.member == this.globalVariables.signed_in_member.displayName)
+      console.log('member', member);
+
+    })
   }
 
   ngOnDestroy() {
@@ -69,7 +79,7 @@ export class ChatComponent {
    *
    * @function getMembers
    * @memberof YourComponent
-   * @returns {any[]} - An array of members from the active channel.
+   * @returns any - An array of members from the active channel.
    */
   getMembers() {
     return this.globalVariables.activeChannel.members;
@@ -115,8 +125,8 @@ export class ChatComponent {
   /**
    * Starts a thread by emitting the selected message and triggers the mobile thread click event.
    *
-   * @param {Message} message - The message object used to start the thread.
-   * @returns {void}
+   * @param  message - Message
+   * @returns - void
    */
   start_thread(message: Message) {
     this.currentMessage.emit(message);
