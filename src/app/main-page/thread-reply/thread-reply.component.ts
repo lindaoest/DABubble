@@ -8,6 +8,7 @@ import { WritingBoxComponent } from "../../shared/components/writing-box/writing
 import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';
 import { MessageComponent } from '../../shared/components/message/message.component';
 import { Thread } from '../../../models/thread.class';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-thread-reply',
@@ -30,10 +31,24 @@ export class ThreadReplyComponent {
 
   answerLength: number = 0;
 
+  //Subscription
+  private activeChatSubscription: Subscription = new Subscription;
+  activeChat: string = '';
+
   constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
+
+  ngOnInit() {
+    this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
+      this.activeChat = chat;
+    });
+  }
 
   ngOnChanges() {
     this.answerTextLength();
+  }
+
+  ngOnDestroy() {
+    this.activeChatSubscription.unsubscribe();
   }
 
   answerTextLength() {

@@ -12,7 +12,7 @@
       <p class="answer-number-text">{{ answerLength }} {{ answerLength == 1 ? 'Antwort' : 'Anworten'}}</p>
     </div>
     @for (group of (this.firestoreService.groupedThreads | keyvalue); track $index) {
-    @if (group.key == globalVariables.activeChannel.name) {
+    @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
     @for (dateGroup of (group.value | keyvalue); track $index) {
     <app-date-block-message [dateGroup]="dateGroup" [threadMessage]="true"
       [messageToReplyTo]="messageToReplyTo"></app-date-block-message>

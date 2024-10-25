@@ -30,7 +30,6 @@ export class ChatComponent {
   @Output() currentMessage = new EventEmitter();
 
   name: string = '';
-  channelWithLoggedInUser!: Channel;
 
   //Authentification firebase
   firebaseConfig = privateConfig;
@@ -59,7 +58,7 @@ export class ChatComponent {
           const member = channel.members.find((findMember: any) => findMember.member === this.globalVariables.signed_in_member.displayName);
 
           if (member) {
-            this.channelWithLoggedInUser = channel;
+            this.globalVariables.channelWithLoggedInUser = channel;
             return true;
           }
 

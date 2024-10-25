@@ -12,7 +12,7 @@
     @if (chatMessage) {
       <div class="bottom flex align-center gap-24">
         <p (click)="start_thread(message)" class="blue-font c-pointer">Antworten</p>
-        <p class="font-small">Letzte Antwort 14:56</p>
+        <p class="font-small">Letzte Antwort vom {{ message.creationDate | date:'d.MM.YYYY' }}</p>
       </div>
     }
   </div>

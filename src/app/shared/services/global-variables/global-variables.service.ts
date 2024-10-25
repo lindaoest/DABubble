@@ -33,6 +33,7 @@ export class GlobalVariablesService {
   mobile_chat: boolean = false;
   mobile_thread: boolean = false;
   mobile_site_menu: boolean = false;
+  channelWithLoggedInUser!: Channel;
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');
   active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();

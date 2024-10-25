@@ -5,6 +5,7 @@ import { FirestoreService } from '../../services/firestore/firestore.service';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { Thread } from '../../../../models/thread.class';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-writing-box',
@@ -30,12 +31,26 @@ export class WritingBoxComponent {
 
   description: string = '';
 
+  //Subscription
+  private activeChatSubscription: Subscription = new Subscription;
+  activeChat: string = '';
+
   constructor(public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
+
+  ngOnInit() {
+    this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
+      this.activeChat = chat;
+    });
+  }
+
+  ngOnDestroy() {
+    this.activeChatSubscription.unsubscribe();
+  }
 
   async addMessage() {
     if (this.sendMessage == 'message') {
       const message: Message = new Message({
-        channel: this.globalVariables.activeChannel.name,
+        channel: this.activeChat ? this.globalVariables.activeChannel.name : this.globalVariables.channelWithLoggedInUser.name,
         text: this.description,
         time: this.globalVariables.currentTime(),
         sender: this.globalVariables.signed_in_member.displayName,
@@ -59,7 +74,7 @@ export class WritingBoxComponent {
 
     } else if (this.sendMessage == 'thread') {
       const thread: Thread = new Thread({
-        channel: this.globalVariables.activeChannel.name,
+        channel: this.activeChat ? this.globalVariables.activeChannel.name : this.globalVariables.channelWithLoggedInUser.name,
         text: this.description,
         time: this.globalVariables.currentTime(),
         sender: this.globalVariables.signed_in_member.displayName,

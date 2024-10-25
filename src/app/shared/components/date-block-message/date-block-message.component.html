@@ -1,7 +1,7 @@
 <div class="date-block w-full">
   @if (!threadMessage) {
   <div class="date">
-    <p>{{ dateGroup.key }}</p>
+    <p>{{ dateGroup.key | date:'d.MM.YYYY' }}</p>
   </div>
   }
 
