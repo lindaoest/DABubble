@@ -1,0 +1,31 @@
+@import '../../mixin.scss';
+
+.privacy {
+  @include displayFlex();
+  flex-direction: column;
+  margin: 64px 0 32px;
+}
+
+.container {
+  border: 1px solid #444DF2;
+  border-radius: 25px;
+  width: 80%;
+  padding: 32px;
+
+  .title {
+    @include displayFlex($jc:flex-start);
+    margin-bottom: 32px;
+  }
+
+  p {
+    padding-top: 8px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    border: none;
+    width: calc(100% - 48px);
+    padding: 0 24px;
+  }
+}

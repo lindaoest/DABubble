@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PrivacyComponent } from './privacy/privacy.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -12,4 +12,9 @@ import { RouterModule } from '@angular/router';
 })
 export class FooterComponent {
 
+  constructor(public router: Router) { }
+
+  setRoute() {
+    sessionStorage.setItem('urlLink', this.router.url);
+  }
 }
