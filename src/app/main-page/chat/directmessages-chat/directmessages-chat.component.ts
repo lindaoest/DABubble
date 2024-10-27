@@ -28,7 +28,6 @@ export class DirectmessagesChatComponent {
   ngOnInit() {
     this.active_privatechatSubscription = this.globalVariables.active_privatechat$.subscribe(subscriber => {
       this.activeMember = this.firestoreService.members.filter(member => member.member === subscriber);
-      console.log('subscriber', subscriber)
     });
   }
 

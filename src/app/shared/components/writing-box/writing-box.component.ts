@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
 import { Message } from '../../../../models/message.class';
 import { FirestoreService } from '../../services/firestore/firestore.service';
@@ -28,6 +28,7 @@ export class WritingBoxComponent {
   };
   @Input() activeMember: any;
   @Input() name: string = '';
+  @Input() is_createNewChat_open: boolean = false;
 
   description: string = '';
 
@@ -100,5 +101,17 @@ export class WritingBoxComponent {
     }
 
     this.description = '';
+
+    if (this.is_createNewChat_open) {
+      this.globalVariables.create_new_chat = false;
+      this.globalVariables.open_directmessages_chat = true;
+      localStorage.setItem('active privatechat', JSON.stringify(this.name.substring(1)));
+
+      let get_active_chat = localStorage.getItem('active privatechat');
+
+      if (get_active_chat) {
+        this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
+      }
+    }
   }
 }

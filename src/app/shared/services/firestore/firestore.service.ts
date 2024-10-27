@@ -16,7 +16,7 @@ export class FirestoreService {
 
   members: Member[] = [];
   messages: Message[] = [];
-  direct_messages: DirectMessage[] = [];
+  // direct_messages: DirectMessage[] = [];
   threads: Thread[] = [];
   groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
   groupedDirectMessages: { [key: string]: any[] } = {};
@@ -30,17 +30,25 @@ export class FirestoreService {
   unsubThread: any;
 
   //Subscription
-  private channelSubject = new BehaviorSubject([]);
+  private channelSubject = new BehaviorSubject<Channel[]>([]);
   channels$ = this.channelSubject.asObservable();
 
-  set channels(value: any) {
+  private directMessageSubject = new BehaviorSubject<DirectMessage[]>([]);
+  directMessages$ = this.directMessageSubject.asObservable();
+
+  set channels(value: Channel[]) {
     this.channelSubject.next(value);
+  }
+
+  set direct_messages(value: DirectMessage[]) {
+    this.directMessageSubject.next(value);
   }
 
   constructor(public firestoreHelper: FirestoreHelperService, public firestore: Firestore) {
 
     this.unsubChannel = onSnapshot(this.getDocRef('channels'), (doc) => {
       const tempChannels: Channel[] = [];
+
       doc.forEach(element => {
         tempChannels.push(this.setObjectChannel(element.data(), element.id));
       });
@@ -63,11 +71,13 @@ export class FirestoreService {
     });
 
     this.unsubDirectMessage = onSnapshot(this.getDocRef('direct-messages'), (doc) => {
-      this.direct_messages = [];
+      const tempdirectMessages: DirectMessage[] = [];
+
       doc.forEach(element => {
-        this.direct_messages.push(this.setObjectDirectMessage(element.data(), element.id))
+        tempdirectMessages.push(this.setObjectDirectMessage(element.data(), element.id))
       });
-      this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(this.direct_messages);
+      this.direct_messages = tempdirectMessages;
+      this.groupedDirectMessages = this.firestoreHelper.groupDirectMessages(tempdirectMessages);
     });
 
     this.unsubThread = onSnapshot(this.getDocRef('threads'), (doc) => {

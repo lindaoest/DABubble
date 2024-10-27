@@ -58,7 +58,7 @@
 }
 
 .team-container:hover,
-.directmessage-container:hover {
+.direct-message:hover {
   border-radius: 25px;
   background-color: #ECEEFE;
 
@@ -101,6 +101,7 @@
   .direct-message {
     @include displayFlex($jc: flex-start);
     gap: 16px;
+    margin-top: 16px;
     margin-left: 40px;
 
     .avatar {

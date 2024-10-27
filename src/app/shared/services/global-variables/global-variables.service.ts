@@ -28,7 +28,7 @@ export class GlobalVariablesService {
   create_new_chat: boolean = false;
   open_directmessages_chat: boolean = false;
   verifyText: boolean = false;
-  personObjArray: Member[] = [];
+  // personObjArray: Member[] = [];
   open_thread_reply: boolean = false;
   mobile_chat: boolean = false;
   mobile_thread: boolean = false;
@@ -41,8 +41,11 @@ export class GlobalVariablesService {
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();
 
-  private certainMember_Array_Subject = new BehaviorSubject<any>([]);
+  private certainMember_Array_Subject = new BehaviorSubject<Member[]>([]);
   certainMember_Array$ = this.certainMember_Array_Subject.asObservable();
+
+  private personObjArray_Subject = new BehaviorSubject<any>([]);
+  personObjArray$ = this.personObjArray_Subject.asObservable();
 
   set activeChat(value: string) {
     this.activeChatSubject.next(value);
@@ -54,6 +57,10 @@ export class GlobalVariablesService {
 
   set certainMember_Array(value: any[]) {
     this.certainMember_Array_Subject.next(value);
+  }
+
+  set personObjArray(value: Member[]) {
+    this.personObjArray_Subject.next(value);
   }
 
   constructor() {

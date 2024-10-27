@@ -36,6 +36,9 @@ export class EditProfileComponent {
   channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
 
+  directMessageSubscription: Subscription = new Subscription;
+  direct_messages: DirectMessage[] = [];
+
   constructor(public dialogRef: MatDialogRef<EditProfileComponent>, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService, private router: Router) { }
 
   ngOnInit() {
@@ -47,6 +50,15 @@ export class EditProfileComponent {
     this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
       this.channels = channels;
     });
+
+    this.directMessageSubscription = this.firestoreService.directMessages$.subscribe(direct_messages => {
+      this.direct_messages = direct_messages;
+    });
+  }
+
+  ngOnDestroy() {
+    this.channelSubscription.unsubscribe();
+    this.directMessageSubscription.unsubscribe();
   }
 
   onSubmit() {
@@ -93,7 +105,7 @@ export class EditProfileComponent {
   }
 
   updateDirectMessageFunction() {
-    this.firestoreService.direct_messages
+    this.direct_messages
       .filter(directMessage => directMessage.sender === this.memberName || directMessage.receiver === this.memberName)
       .forEach(directMessage => {
         const directMessageUpdate: DirectMessage = {

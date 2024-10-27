@@ -8,6 +8,7 @@ import { GlobalVariablesService } from '../../shared/services/global-variables/g
 import { Message } from '../../../models/message.class';
 import { Member } from '../../../models/member.class';
 import { DirectMessage } from '../../../models/direct-message.class';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-site-menu',
@@ -27,16 +28,40 @@ export class SiteMenuComponent {
   channel_open: boolean = false;
   directmessage_open: boolean = false;
   filteredChats: Message[] = [];
+
+  //Subscription
+  channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
+  personObjArray_Subsription: Subscription = new Subscription;
+  personObjArray: Member[] = [];
+
+  directMessageSubscription: Subscription = new Subscription;
+  direct_messages: DirectMessage[] = [];
+
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {
+    this.directMessageSubscription = this.firestoreService.directMessages$.subscribe(directMessage => {
+      this.direct_messages = directMessage;
+    });
+
+    this.personObjArray_Subsription = this.globalVariables.personObjArray$.subscribe(member => {
+      this.personObjArray = member;
+    });
+  }
+
+  ngOnDestroy() {
+    this.directMessageSubscription.unsubscribe();
+    this.channelSubscription.unsubscribe();
+    this.personObjArray_Subsription.unsubscribe();
+  }
 
   getList() {
-    this.firestoreService.channels$.subscribe(channels => {
+    this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
       this.channels = channels.filter((channel: Channel) =>
         channel.members.some((user: Member) => user && user.member === this.globalVariables.signed_in_member.displayName)
       );
     });
+
     return this.channels;
   }
 
@@ -86,26 +111,28 @@ export class SiteMenuComponent {
   directmessage_open_function() {
     this.directmessage_open = !this.directmessage_open;
 
-    this.firestoreService.direct_messages.forEach(message => {
+    this.direct_messages.forEach(message => {
       if (message.sender == this.globalVariables.signed_in_member.displayName) {
         this.show_all_directmessages_sender(message);
       } else if (message.receiver == this.globalVariables.signed_in_member.displayName) {
         this.show_all_directmessages_receiver(message);
       }
     });
+
+    this.globalVariables.personObjArray = this.personObjArray;
   }
 
   show_all_directmessages_sender(message: DirectMessage) {
     let direct_message_receiver = this.firestoreService.members.find(member => message.receiver == member.member);
-    if (direct_message_receiver && !this.globalVariables.personObjArray.some(person => person.member === direct_message_receiver!.member)) {
-      this.globalVariables.personObjArray.push(direct_message_receiver);
+    if (direct_message_receiver && !this.personObjArray.some(person => person.member === direct_message_receiver!.member)) {
+      this.personObjArray.push(direct_message_receiver);
     }
   }
 
   show_all_directmessages_receiver(message: DirectMessage) {
     let direct_message_sender = this.firestoreService.members.find(member => message.sender == member.member);
-    if (direct_message_sender && !this.globalVariables.personObjArray.some(person => person.member === direct_message_sender!.member)) {
-      this.globalVariables.personObjArray.push(direct_message_sender);
+    if (direct_message_sender && !this.personObjArray.some(person => person.member === direct_message_sender!.member)) {
+      this.personObjArray.push(direct_message_sender);
     }
   }
 
@@ -115,7 +142,7 @@ export class SiteMenuComponent {
     this.mobileClickedChat.emit();
   }
 
-  async open_directmessages_chat(receiver: string) {
+  open_directmessages_chat(receiver: string) {
     this.globalVariables.create_new_chat = false;
     this.globalVariables.open_directmessages_chat = true;
     localStorage.setItem('active privatechat', JSON.stringify(receiver));
