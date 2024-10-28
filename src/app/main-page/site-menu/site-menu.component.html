@@ -37,7 +37,7 @@
   </div>
   <div class="direct-messages">
     <div class="overview">
-      <img (click)="directmessage_open_function()" class="arrow c-pointer" [ngClass]="{'open' : directmessage_open}"
+      <img (click)="openDirectMessages()" class="arrow c-pointer" [ngClass]="{'open' : directmessage_open}"
         src="./assets/img/channels/arrow_drop_down.svg" alt="">
       <div class="title">
         <img src="./assets/img/channels/account_circle.svg" alt="">
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="directmessage-container" [ngClass]="{'open' : directmessage_open}">
-      @for (item of personObjArray; track $index) {
+      @for (item of globalVariables.personObjArray; track $index) {
       <div (click)="open_directmessages_chat(item.member)" class="direct-message c-pointer">
         <div class="avatar">
           <img src="{{ item.avatar }}" alt="">
