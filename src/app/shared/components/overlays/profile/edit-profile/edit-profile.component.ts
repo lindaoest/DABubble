@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { GlobalVariablesService } from '../../../shared/services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../../services/global-variables/global-variables.service';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
-import { Member } from '../../../../models/member.class';
+import { FirestoreService } from '../../../../services/firestore/firestore.service';
+import { Member } from '../../../../../../models/member.class';
 import { getAuth, signOut, updateProfile, User, verifyBeforeUpdateEmail } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { privateConfig } from '../../../app.config-private';
+import { privateConfig } from '../../../../../app.config-private';
 import { Router } from '@angular/router';
-import { Message } from '../../../../models/message.class';
-import { DirectMessage } from '../../../../models/direct-message.class';
+import { Message } from '../../../../../../models/message.class';
+import { DirectMessage } from '../../../../../../models/direct-message.class';
 import { Subscription } from 'rxjs';
-import { Channel } from '../../../../models/channel.class';
-import { Thread } from '../../../../models/thread.class';
+import { Channel } from '../../../../../../models/channel.class';
+import { Thread } from '../../../../../../models/thread.class';
 
 @Component({
   selector: 'app-edit-profile',

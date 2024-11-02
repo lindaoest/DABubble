@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogClose } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { FirestoreService } from '../../shared/services/firestore/firestore.service';
-import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
-import { Channel } from '../../../models/channel.class';
+import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
+import { Channel } from '../../../../../models/channel.class';
 
 @Component({
   selector: 'app-dialog-overview-channel',

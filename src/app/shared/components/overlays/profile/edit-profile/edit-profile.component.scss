@@ -1,4 +1,4 @@
-@import '../../../shared/mixin.scss';
+@import '../../../../mixin.scss';
 
 .profile-container {
 	width: 420px;
@@ -47,6 +47,7 @@ input {
 @media screen and (max-width: 630px) {
   .profile-container {
     width: auto;
+    padding: 16px;
   }
 
   .avatar {

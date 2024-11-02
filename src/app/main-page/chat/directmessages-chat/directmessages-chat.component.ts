@@ -4,7 +4,7 @@ import { FirestoreService } from '../../../shared/services/firestore/firestore.s
 import { GlobalVariablesService } from '../../../shared/services/global-variables/global-variables.service';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ProfileComponent } from '../../profile/profile.component';
+import { ProfileComponent } from '../../../shared/components/overlays/profile/profile.component';
 import { Subscription } from 'rxjs';
 import { WritingBoxComponent } from "../../../shared/components/writing-box/writing-box.component";
 import { DateBlockMessageComponent } from '../../../shared/components/date-block-message/date-block-message.component';
@@ -78,5 +78,10 @@ export class DirectmessagesChatComponent {
    */
   trackByFn(index: number): number {
     return index;
+  }
+
+  closeDirectMessageMobile() {
+    this.globalVariables.showMenu = true;
+    this.globalVariables.showDirectChat = false;
   }
 }

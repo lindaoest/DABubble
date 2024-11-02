@@ -11,11 +11,12 @@
 }
 
 .headline {
-  @include displayFlex();
+  @include displayFlex($ai: flex-start);
   position: relative;
 
   img {
     position: absolute;
+    top: 5px;
     left: 0;
   }
 }

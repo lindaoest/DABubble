@@ -20,7 +20,7 @@ export class MessageComponent {
   constructor(public globalVariables: GlobalVariablesService) { }
 
   start_thread(message: Message) {
-    this.globalVariables.open_thread_reply = true;
+    this.globalVariables.showThreads = true;
     this.currentMessage.emit(message);
   }
 }

@@ -61,3 +61,11 @@
     font-size: 0.777rem;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .bottom {
+    p+p {
+      display: none;
+    }
+  }
+}

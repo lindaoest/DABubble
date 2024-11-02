@@ -88,6 +88,10 @@ body {
   align-items: flex-end;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .flex-column {
   flex-direction: column;
 }
@@ -193,28 +197,6 @@ button:disabled {
   height: 100%;
 }
 
-.mat-mdc-dialog-container {
-  width: auto;
-}
-
-.mat-mdc-dialog-container .mdc-dialog__surface {
-  border-radius: 30px !important;
-  width: auto !important;
-}
-
-app-log-in,
-app-registration,
-app-choose-avatar,
-app-reset-password,
-app-new-password {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 606px;
-  height: 100%;
-  margin: 32px auto;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
@@ -241,9 +223,41 @@ app-new-password {
   cursor: pointer;
 }
 
+.mat-mdc-dialog-container {
+  width: auto;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 30px !important;
+  width: auto !important;
+}
+
+app-log-in,
+app-registration,
+app-choose-avatar,
+app-reset-password,
+app-new-password {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 606px;
+  height: 100%;
+  margin: 32px auto;
+}
+
 app-writing-box {
   padding: 0 !important;
   display: flex;
+}
+
+.mobile-arrow {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .mobile-arrow {
+    display: flex;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -253,7 +267,7 @@ app-writing-box {
   app-reset-password,
   app-new-password {
     max-width: 100%;
-    margin: 32px 24px;
+    margin: 0 8px 16px;
   }
 }
 
@@ -274,7 +288,7 @@ app-writing-box {
 
 @media screen and (max-width: 550px) {
   .cdk-overlay-pane.mat-mdc-dialog-panel {
-    margin: 0 24px;
+    margin: 0 8px;
   }
 }
 

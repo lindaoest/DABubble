@@ -1,4 +1,4 @@
-@import '../../shared/mixin.scss';
+@import '../../../mixin.scss';
 
 .dialog-add-channel {
 	border-radius: 30px !important;
@@ -108,5 +108,6 @@
 @media screen and (max-width: 630px) {
   .dialog-add-channel {
     width: auto;
+    padding: 16px!important;
   }
 }

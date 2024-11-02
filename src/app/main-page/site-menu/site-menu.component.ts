@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
+import { DialogAddChannelComponent } from '../../shared/components/overlays/dialog-add-channel/dialog-add-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
@@ -66,9 +66,9 @@ export class SiteMenuComponent {
   }
 
   openChat(channelName: string) {
-    this.globalVariables.open_directmessages_chat = false;
+    this.globalVariables.showDirectChat = false;
     this.globalVariables.create_new_chat = false;
-    this.globalVariables.mobile_chat = true;
+    this.globalVariables.showChat = true;
     this.globalVariables.activeChat = channelName;
 
     this.setActiveChannel(channelName);
@@ -131,14 +131,14 @@ export class SiteMenuComponent {
   }
 
   open_new_chat() {
-    this.globalVariables.open_directmessages_chat = false;
+    this.globalVariables.showDirectChat = false;
     this.globalVariables.create_new_chat = true;
     this.mobileClickedChat.emit();
   }
 
-  open_directmessages_chat(receiver: string) {
+  showDirectChat(receiver: string) {
     this.globalVariables.create_new_chat = false;
-    this.globalVariables.open_directmessages_chat = true;
+    this.globalVariables.showDirectChat = true;
     localStorage.setItem('active privatechat', JSON.stringify(receiver));
 
     let get_active_chat = localStorage.getItem('active privatechat');

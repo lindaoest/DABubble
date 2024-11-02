@@ -1,4 +1,4 @@
-@import '../../shared/mixin.scss';
+@import '../../../mixin.scss';
 
 .dialog-add-channel {
 	border-radius: 30px !important;
@@ -59,4 +59,10 @@ input:focus-visible {
 .actions {
 	@include displayFlex($jc: flex-end);
 	margin-top: 24px;
+}
+
+@media screen and (max-width: 630px) {
+  .dialog-add-channel {
+    padding: 16px!important;
+}
 }

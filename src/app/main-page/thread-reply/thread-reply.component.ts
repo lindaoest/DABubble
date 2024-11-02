@@ -64,6 +64,7 @@ export class ThreadReplyComponent {
   }
 
   close_thread() {
-    this.globalVariables.open_thread_reply = false;
+    this.globalVariables.showThreads = false;
+    this.globalVariables.showChat = true;
   }
 }

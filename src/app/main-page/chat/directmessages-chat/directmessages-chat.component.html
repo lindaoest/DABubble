@@ -1,5 +1,6 @@
 <div class="chat">
   <div class="info-top">
+    <img class="c-pointer mobile-arrow" (click)="closeDirectMessageMobile()" src="./assets/img/back-arrow.svg" alt="">
     <div (click)="openDialog()" class="team-name c-pointer">
       <img class="avatar" src="{{ activeMember[0].avatar }}" alt="">
       <h3>{{ globalVariables.active_privatechat }}</h3>

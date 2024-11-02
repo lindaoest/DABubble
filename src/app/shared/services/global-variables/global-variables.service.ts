@@ -26,14 +26,14 @@ export class GlobalVariablesService {
   };
   messages: Message[] = [];
   create_new_chat: boolean = false;
-  open_directmessages_chat: boolean = false;
   verifyText: boolean = false;
   personObjArray: Member[] = [];
-  open_thread_reply: boolean = false;
-  mobile_chat: boolean = false;
-  mobile_thread: boolean = false;
-  mobile_site_menu: boolean = false;
   channelWithLoggedInUser!: Channel;
+
+  showMenu: boolean = true;
+  showChat: boolean = false;
+  showDirectChat: boolean = false;
+  showThreads: boolean = false;
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');
   active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();

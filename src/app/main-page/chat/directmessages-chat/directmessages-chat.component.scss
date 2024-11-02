@@ -48,3 +48,13 @@
 .chat-block {
   gap: 24px;
 }
+
+@media screen and (max-width: 800px) {
+  .chat {
+    padding: 0 0 16px 0;
+
+    >* {
+      padding: 16px;
+    }
+  }
+}

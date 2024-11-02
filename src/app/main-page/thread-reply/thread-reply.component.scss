@@ -40,3 +40,13 @@
 		}
 	}
 }
+
+@media screen and (max-width: 800px) {
+  .threads {
+    padding: 0 0 16px 0;
+
+    >* {
+      padding: 16px;
+    }
+  }
+}

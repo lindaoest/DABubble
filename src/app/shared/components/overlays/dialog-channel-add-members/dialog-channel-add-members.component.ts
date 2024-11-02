@@ -2,11 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogClose } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import { FirestoreService } from '../../shared/services/firestore/firestore.service';
-import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
-import { MembersBoxComponent } from "../../shared/components/members-box/members-box.component";
+import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
+import { MembersBoxComponent } from "../../members-box/members-box.component";
 import { Subscription } from 'rxjs';
-import { Member } from '../../../models/member.class';
+import { Member } from '../../../../../models/member.class';
 
 export interface DialogData {
   name: string;

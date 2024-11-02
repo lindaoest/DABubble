@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 export interface DialogData {

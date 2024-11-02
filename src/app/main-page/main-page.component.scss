@@ -45,8 +45,7 @@ app-directmessages-chat {
   min-width: 470px;
 }
 
-app-chat.full-width,
-app-directmessages-chat.full-width {
+.full-width {
   width: 100%;
   max-width: 100%;
 }
@@ -61,25 +60,25 @@ app-thread-reply {
   .hide-on-small {
     display: none;
   }
-  .mobile-w-full {
-    width: 100%;
-    max-width: 100%;
-  }
 }
 
 @media (max-width: 800px) {
+
   app-chat,
-  app-directmessage-chat,
   app-thread-reply,
+  app-directmessages-chat,
   app-site-menu {
     display: none;
   }
+
   app-directmessages-chat {
     min-width: 100%;
   }
+
   .mobile-flex {
     display: flex;
   }
+
   .showContainer {
     display: block;
     width: 100%;

@@ -9,7 +9,7 @@ import { ImprintComponent } from './shared/footer/imprint/imprint.component';
 import { PrivacyComponent } from './shared/footer/privacy/privacy.component';
 
 export const routes: Routes = [
-	{ path: '', component: MainPageComponent },
+	{ path: 'home', component: MainPageComponent },
 	{ path: 'log-in', component: LogInComponent },
 	{ path: 'sign-in', component: RegistrationComponent },
 	{ path: 'choose-avatar', component: ChooseAvatarComponent },
@@ -17,4 +17,6 @@ export const routes: Routes = [
 	{ path: 'new-password', component: NewPasswordComponent },
 	{ path: 'imprint', component: ImprintComponent },
 	{ path: 'privacy', component: PrivacyComponent },
+  { path: '', redirectTo: '/log-in', pathMatch: 'full' },  // Redirect to log-in for standard
+  { path: '**', redirectTo: '/log-in' }
 ];

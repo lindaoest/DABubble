@@ -1,12 +1,12 @@
 <header>
-	<img class="logo" src="./assets/img/dabubble-logo.svg" alt="">
+	<img class="logo" [routerLink]="['/home']" src="./assets/img/dabubble-logo.svg" alt="">
 	@if (path == '/log-in') {
 	<div class="registration">
 		<p>Neu bei DaBubble?</p>
 		<p class="blue-font c-pointer" [routerLink]="['/sign-in']">Konto erstellen</p>
 	</div>
 	}
-	@if (path == '') {
+	@if (path == '/home') {
 	<div class="profile">
 		@if (globalVariables.signed_in_member) {
 		<h1 class="profile-name truncate">{{ globalVariables.signed_in_member.displayName }}</h1>

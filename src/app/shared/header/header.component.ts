@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { GlobalVariablesService } from '../services/global-variables/global-variables.service';
 import { getAuth, signOut } from "firebase/auth";
-import { ProfileComponent } from '../../main-page/profile/profile.component';
+import { ProfileComponent } from '../components/overlays/profile/profile.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

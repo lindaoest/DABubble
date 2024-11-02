@@ -1,13 +1,13 @@
 <main>
 	<div class="container flex w-full">
-		<app-site-menu [ngClass]="{'showContainer': showMenu}" (mobileClickedChat)="openChat()" (mobileClickedDirectChat)="openDirectChat()"></app-site-menu>
-		@if (!globalVariables.open_directmessages_chat) {
-			<app-chat [ngClass]="{'showContainer': showChat, 'full-width': !globalVariables.open_thread_reply, 'hide-on-small': globalVariables.open_thread_reply}" (mobileClickedThread)="openThread()" (currentMessage)="message_for_thread($event)"></app-chat>
+		<app-site-menu [ngClass]="{'showContainer': globalVariables.showMenu}" (mobileClickedChat)="openChat()" (mobileClickedDirectChat)="openDirectChat()"></app-site-menu>
+		@if (!globalVariables.showDirectChat) {
+			<app-chat [ngClass]="{'showContainer': globalVariables.showChat, 'full-width': !globalVariables.showThreads, 'hide-on-small': globalVariables.showThreads}" (mobileClickedThread)="openThread()" (currentMessage)="message_for_thread($event)"></app-chat>
 		} @else {
-			<app-directmessages-chat [ngClass]="{'showContainer': showDirectChat, 'full-width': !globalVariables.open_thread_reply, 'hide-on-small': globalVariables.open_thread_reply}"></app-directmessages-chat>
+			<app-directmessages-chat [ngClass]="{'showContainer': globalVariables.showDirectChat, 'full-width': !globalVariables.showThreads, 'hide-on-small': globalVariables.showThreads}"></app-directmessages-chat>
 		}
-    @if (globalVariables.open_thread_reply) {
-      <app-thread-reply [ngClass]="{'showContainer': showThreads, 'mobile-w-full': globalVariables.open_thread_reply}" [messageToReplyTo]="currentMessage"></app-thread-reply>
+    @if (globalVariables.showThreads) {
+      <app-thread-reply [ngClass]="{'showContainer': globalVariables.showThreads}" [messageToReplyTo]="currentMessage"></app-thread-reply>
     }
 	</div>
 

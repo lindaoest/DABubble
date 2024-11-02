@@ -25,10 +25,7 @@ export class MainPageComponent {
     creationDate: 0,
     timeStamp: 0
   };
-  showMenu: boolean = true;
-  showChat: boolean = false;
-  showDirectChat: boolean = false;
-  showThreads: boolean = false;
+
 
   constructor(public globalVariables: GlobalVariablesService) {}
 
@@ -37,30 +34,30 @@ export class MainPageComponent {
   }
 
   openChat() {
-    this.showMenu = false;
-    this.showChat = true;
-    this.showDirectChat = false;
-    this.showThreads = false;
+    this.globalVariables.showMenu = false;
+    this.globalVariables.showChat = true;
+    this.globalVariables.showDirectChat = false;
+    this.globalVariables.showThreads = false;
   }
 
   openDirectChat() {
-    this.showMenu = false;
-    this.showChat = false;
-    this.showDirectChat = true;
-    this.showThreads = false;
+    this.globalVariables.showMenu = false;
+    this.globalVariables.showChat = false;
+    this.globalVariables.showDirectChat = true;
+    this.globalVariables.showThreads = false;
   }
 
   openThread() {
-    this.showMenu = false;
-    this.showChat = false;
-    this.showDirectChat = false;
-    this.showThreads = true;
+    this.globalVariables.showMenu = false;
+    this.globalVariables.showChat = false;
+    this.globalVariables.showDirectChat = false;
+    this.globalVariables.showThreads = true;
   }
 
   goBack() {
-    this.showMenu = true;
-    this.showChat = false;
-    this.showDirectChat = false;
-    this.showThreads = false;
+    this.globalVariables.showMenu = true;
+    this.globalVariables.showChat = false;
+    this.globalVariables.showDirectChat = false;
+    this.globalVariables.showThreads = false;
   }
 }

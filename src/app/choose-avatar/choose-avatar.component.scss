@@ -11,8 +11,12 @@
 }
 
 .headline {
-  @include displayFlex();
+  @include displayFlex($ai: flex-start);
   position: relative;
+
+  img {
+    margin-top: 5px;
+  }
 }
 
 .subtitle {
@@ -71,5 +75,9 @@
 @media screen and (max-width: 450px) {
   .choose-avatar {
     padding: 50px 16px;
+  }
+
+  .upload-image {
+    gap: 8px;
   }
 }

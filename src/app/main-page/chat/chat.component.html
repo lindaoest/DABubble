@@ -1,12 +1,13 @@
 <div class="chat">
   @if (!globalVariables.create_new_chat) {
   <div class="info-top">
-    <div (click)="openDialogChannel()" class="team-name c-pointer">
+    <div class="team-name c-pointer">
+      <img class="c-pointer mobile-arrow" (click)="closeChatMobile()" src="./assets/img/back-arrow.svg" alt="">
       <img src="./assets/img/channels/tag.svg" alt="">
       @if (globalVariables.channelWithLoggedInUser) {
-      <h3>{{ activeChat ? activeChat : globalVariables.channelWithLoggedInUser.name }}</h3>
+      <h3 class="headline truncate">{{ activeChat ? activeChat : globalVariables.channelWithLoggedInUser.name }}</h3>
       }
-      <img src="./assets/img/channels/arrow_drop_down.svg" alt="">
+      <img (click)="openDialogChannel()" src="./assets/img/channels/arrow_drop_down.svg" alt="">
     </div>
     <div class="members">
       <div class="avatars">

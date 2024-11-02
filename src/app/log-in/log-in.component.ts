@@ -47,7 +47,7 @@ export class LogInComponent {
     const activeMember = this.firestoreService.members.find(obj => obj.email === this.login_form.value.email && obj.password === this.login_form.value.password);
     await this.signInWithEmail(this.login_form.value.email, this.login_form.value.password);
     if (activeMember && this.login_form.valid) {
-      this.router.navigate(['']);
+      this.router.navigate(['/home']);
     }
   }
 
@@ -64,7 +64,7 @@ export class LogInComponent {
 
   async guestLogin() {
     await this.signInWithEmail(this.guestMember.email, this.guestMember.password);
-    this.router.navigate(['']);
+    this.router.navigate(['/home']);
   }
 
   googleAuth() {
@@ -86,6 +86,6 @@ export class LogInComponent {
       }).catch((error) => {
         console.error(error)
       });
-    this.router.navigate(['']);
+    this.router.navigate(['/home']);
   }
 }

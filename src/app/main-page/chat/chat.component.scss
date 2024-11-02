@@ -33,7 +33,7 @@ app-create-new-chat {
     }
 
     .avatars {
-      @include displayFlex($jc:flex-end);
+      @include displayFlex($jc: flex-end);
       overflow: hidden;
       width: 80px;
 
@@ -50,10 +50,33 @@ app-create-new-chat {
   gap: 24px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
   .chat {
+    padding: 0 0 16px 0;
+
     >* {
       padding: 16px;
     }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .headline {
+    width: 120px;
+  }
+
+  .info-top {
+    .members {
+      .quantity,
+      .avatars {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .headline {
+    width: 70px;
   }
 }

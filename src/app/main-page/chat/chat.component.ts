@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
 import { find, Subscription, tap } from 'rxjs';
-import { DialogOverviewChannelComponent } from '../dialog-overview-channel/dialog-overview-channel.component';
+import { DialogOverviewChannelComponent } from '../../shared/components/overlays/dialog-overview-channel/dialog-overview-channel.component';
 import { Channel } from '../../../models/channel.class';
-import { DialogMemberExistingChannelComponent } from '../dialog-member-existing-channel/dialog-member-existing-channel.component';
+import { DialogMemberExistingChannelComponent } from '../../shared/components/overlays/dialog-member-existing-channel/dialog-member-existing-channel.component';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../../app.config-private';
@@ -135,5 +135,10 @@ export class ChatComponent {
   start_thread(message: Message) {
     this.currentMessage.emit(message);
     this.mobileClickedThread.emit();
+  }
+
+  closeChatMobile() {
+    this.globalVariables.showMenu = true;
+    this.globalVariables.showChat = false;
   }
 }
