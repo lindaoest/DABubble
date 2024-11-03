@@ -98,11 +98,11 @@ export class SiteMenuComponent {
     });
   }
 
-  channel_open_function() {
+  open_channelList() {
     this.channel_open = !this.channel_open;
   }
 
-  openDirectMessages() {
+  openDirectMessageList() {
     this.directmessage_open = !this.directmessage_open;
   }
 
