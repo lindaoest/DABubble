@@ -8,6 +8,7 @@ import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopu
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../app.config-private';
 import { Member } from '../../models/member.class';
+import { UserStatusService } from '../shared/services/user-status/user-status.service';
 
 @Component({
   selector: 'app-log-in',
@@ -34,7 +35,7 @@ export class LogInComponent {
   provider = new GoogleAuthProvider();
   login_form: FormGroup = new FormGroup({});
 
-  constructor(public router: Router, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
+  constructor(public router: Router, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService, public userStatusService: UserStatusService) { }
 
   async ngOnInit() {
     this.login_form = new FormGroup({
@@ -52,14 +53,19 @@ export class LogInComponent {
   }
 
   async signInWithEmail(email: string, password: string) {
-    await signInWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        this.globalVariables.signed_in_member = user;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const user = userCredential.user;
+      const userId = user.uid;
+
+      // Observe online-/offline-status
+      this.userStatusService.initialize(userId);
+
+      this.globalVariables.signed_in_member = user;
+
+    } catch (error) {
+      console.error("Error signing in:", error);
+    }
   }
 
   async guestLogin() {
