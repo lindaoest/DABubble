@@ -80,7 +80,8 @@ export class EditProfileComponent {
         member: this.edit_profile_form.value.member,
         email: this.edit_profile_form.value.email,
         password: updateMember.password,
-        avatar: updateMember.avatar
+        avatar: updateMember.avatar,
+        isOnline: updateMember.isOnline
       }
       this.firestoreService.updateMember('members', member);
     }

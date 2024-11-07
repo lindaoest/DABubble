@@ -149,6 +149,17 @@
   }
 }
 
+.online {
+  width: 8px;
+  height: 8px;
+  background-color: #92C83E;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border: 2px solid #FFFFFF;
+}
+
 @media screen and (max-width: 400px) {
   .devspace-container {
     .devspace {

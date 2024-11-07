@@ -10,12 +10,7 @@ import { Message } from '../../../../models/message.class';
 })
 export class GlobalVariablesService {
 
-  newMember: Member = {
-    member: '',
-    email: '',
-    password: '',
-    avatar: ''
-  };
+  newMember!: Member;
   signed_in_member!: any;
   activeChannel: Channel = {
     id: '',

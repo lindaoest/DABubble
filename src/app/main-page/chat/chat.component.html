@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-  <div class="chat-block flex flex-column">
+  <!-- <div class="chat-block flex flex-column">
     @for (group of (this.firestoreService.groupedMessages | keyvalue); track $index) {
       @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
         @for (dateGroup of (group.value | keyvalue); track $index) {
@@ -41,7 +41,7 @@
         }
       }
     }
-  </div>
+  </div> -->
   <app-writing-box [sendMessage]="'message'"></app-writing-box>
   } @else {
   <app-create-new-chat></app-create-new-chat>

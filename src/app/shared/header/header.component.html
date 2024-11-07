@@ -13,7 +13,12 @@
 		}
 		<div class="profile-img">
 			@if (globalVariables.signed_in_member) {
-			<img src="{{ globalVariables.signed_in_member.photoURL }}" width="70" height="70" alt="">
+			  <img src="{{ globalVariables.signed_in_member.photoURL }}" width="70" height="70" alt="">
+        @for (member of firestoreService.members; track $index) {
+          @if (member.member === globalVariables.signed_in_member.displayName && member.isOnline) {
+            <div class="online"></div>
+          }
+        }
 			}
 		</div>
 		<img class="arrow-down c-pointer" (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">

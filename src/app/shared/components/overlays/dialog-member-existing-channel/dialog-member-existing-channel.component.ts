@@ -30,12 +30,7 @@ export interface DialogData {
 export class DialogMemberExistingChannelComponent {
 
   add_new_members_array: Member[] = [];
-  newMember: Member = {
-    member: '',
-    email: '',
-    password: '',
-    avatar: ''
-  };
+  newMember!: Member;
   newMemberTrue: boolean = true;
   notIncludedMembers: Member[] = [];
   already_added_members: Member[] = [];

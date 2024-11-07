@@ -5,6 +5,8 @@
   </div>
   }
 
+  <!-- ng-content verwenden -->
+
   @for (message of dateGroup.value; track $index) {
   <app-message *ngIf="!threadMessage || (threadMessage && message.message.text === messageToReplyTo.text)"
     [style]="{'width': '100%'}" [message]="message" [threadMessage]="threadMessage" [chatMessage]="chatMessage" (currentMessage)="currentMessage_for_thread($event)"></app-message>

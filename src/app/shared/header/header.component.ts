@@ -7,6 +7,7 @@ import { GlobalVariablesService } from '../services/global-variables/global-vari
 import { getAuth, signOut } from "firebase/auth";
 import { ProfileComponent } from '../components/overlays/profile/profile.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FirestoreService } from '../services/firestore/firestore.service';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ export class HeaderComponent {
   path: string = '';
   openLightboxVar: boolean = false;
 
-  constructor(public dialog: MatDialog, private router: Router, private location: Location, public globalVariables: GlobalVariablesService) { }
+  constructor(public dialog: MatDialog, private router: Router, private location: Location, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
     this.router.events.pipe(

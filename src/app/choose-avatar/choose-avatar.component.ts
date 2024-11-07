@@ -69,7 +69,8 @@ export class ChooseAvatarComponent {
       member: this.globalVariables.newMember.member,
       email: this.globalVariables.newMember.email,
       password: this.globalVariables.newMember.password,
-      avatar: this.globalVariables.newMember.avatar
+      avatar: this.globalVariables.newMember.avatar,
+      isOnline: false
     }
 
     await createUserWithEmailAndPassword(this.auth, this.globalVariables.newMember.email, this.globalVariables.newMember.password)

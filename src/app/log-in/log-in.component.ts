@@ -23,7 +23,8 @@ export class LogInComponent {
     member: 'Gast',
     email: 'guest@guestaccount.com',
     password: 'guestlogin12dabubble78&',
-    avatar: './assets/img/channels/profile.svg'
+    avatar: './assets/img/channels/profile.svg',
+    isOnline: false
   }
   email: string = '';
   password: string = '';
@@ -58,10 +59,10 @@ export class LogInComponent {
       const user = userCredential.user;
       const userId = user.uid;
 
+      this.globalVariables.signed_in_member = user;
+
       // Observe online-/offline-status
       this.userStatusService.initialize(userId);
-
-      this.globalVariables.signed_in_member = user;
 
     } catch (error) {
       console.error("Error signing in:", error);
@@ -82,7 +83,8 @@ export class LogInComponent {
           member: user.displayName || '',
           email: user.email || '',
           password: '',
-          avatar: user.photoURL || ''
+          avatar: user.photoURL || '',
+          isOnline: false
         }
 
         const emailAlreadyUsed = this.firestoreService.members.filter(userEmail => userEmail.email === user.email);

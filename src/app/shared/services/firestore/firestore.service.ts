@@ -182,7 +182,8 @@ export class FirestoreService {
       member: obj.member,
       email: obj.email,
       password: obj.password,
-      avatar: obj.avatar
+      avatar: obj.avatar,
+      isOnline: obj.isOnline
     }
   }
 

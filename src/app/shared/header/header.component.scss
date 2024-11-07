@@ -39,6 +39,17 @@ header {
   gap: 16px;
 }
 
+.online {
+  width: 12px;
+  height: 12px;
+  background-color: #92C83E;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+  border: 2px solid #FFFFFF;
+}
+
 @media screen and (max-width: 900px) {
   .profile {
     .profile-name {

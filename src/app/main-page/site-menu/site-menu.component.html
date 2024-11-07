@@ -53,6 +53,9 @@
       <div (click)="showDirectChat(item.member)" class="direct-message c-pointer">
         <div class="avatar">
           <img src="{{ item.avatar }}" alt="">
+          @if (item.isOnline) {
+            <div class="online"></div>
+          }
         </div>
         <p>{{ item.member }}</p>
       </div>

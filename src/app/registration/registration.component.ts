@@ -14,13 +14,7 @@ import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angula
 })
 export class RegistrationComponent {
 
-  data: Member = {
-    id: '',
-    member: '',
-    email: '',
-    password: '',
-    avatar: ''
-  }
+  data!: Member;
   privacyChecked: boolean = false;
   disableButton: boolean = true;
 

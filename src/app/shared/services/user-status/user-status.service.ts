@@ -3,6 +3,10 @@ import { getDatabase, ref, onValue, push, onDisconnect, set, serverTimestamp } f
 import { privateConfig } from '../../../app.config-private';
 import { initializeApp } from '@angular/fire/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { FirestoreService } from '../firestore/firestore.service';
+import { GlobalVariablesService } from '../global-variables/global-variables.service';
+import { Member } from '../../../../models/member.class';
+import { Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +17,12 @@ export class UserStatusService {
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
 
+  private afs!: Firestore;
+
   db = getDatabase(this.app);
   userId: string | null = null; // Diese ID sollte beim Login gesetzt werden
 
-  constructor() {
+  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {
     this.checkUserStatus();
   }
 
@@ -40,38 +46,52 @@ export class UserStatusService {
   }
 
 
-  setUpStatusListener() {
+  async setUpStatusListener() {
     if (!this.userId) return;
 
-
-    // Since I can connect from multiple devices or browser tabs, we store each connection instance separately
-    // any time that connectionsRef's value is null (i.e. has no children) I am offline
-    let myConnectionsRef = ref(this.db, `users/${this.userId}/connections`);
-
-    // stores the timestamp of my last disconnect (the last time I was seen online)
-    let lastOnlineRef = ref(this.db, `users/${this.userId}/lastOnline`);
+    const myConnectionsRef = ref(this.db, `users/${this.userId}/connections`);
+    const lastOnlineRef = ref(this.db, `users/${this.userId}/lastOnline`);
     const connectedRef = ref(this.db, '.info/connected');
 
-    onValue(connectedRef, (snap) => {
+    onValue(connectedRef, async (snap) => {
       if (snap.val() === true) {
-        console.log('Connected to Firebase Realtime Database');
-        // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
         const con = push(myConnectionsRef);
-        console.log(`Adding connection for user: ${this.userId}`);
 
-        // When I disconnect, remove this device
+        // Remove this device connection on disconnect
         onDisconnect(con).remove();
 
-        // Add this device to my connections list
-        // this value could contain info about the device or a timestamp too
-        set(con, true);
-        console.log(`User ${this.userId} is now online`);
+        // Set this device as online
+        await set(con, true);
 
-        // When I disconnect, update the last time I was seen online
-        onDisconnect(lastOnlineRef).set(serverTimestamp()).then(() => {
-          console.log(`Last online time for user ${this.userId} will be set on disconnect`);
-        });
+        // Update Firestore's `isOnline` status to true
+        await this.updateFirestoreStatus(true);
+
+        // Set last online time on disconnect
+        onDisconnect(lastOnlineRef).set(serverTimestamp());
+      } else {
+        // Set Firestore's `isOnline` status to false on disconnect
+        await this.updateFirestoreStatus(false);
       }
     });
+  }
+
+  // Helper method to update Firestore status
+  private async updateFirestoreStatus(isOnline: boolean) {
+    const updateMember = this.firestoreService.members.find(
+      (obj) => obj.member === this.globalVariables.signed_in_member.displayName
+    );
+
+    console.log('isOnline', isOnline);
+
+
+    if (updateMember) {
+      const member: Member = {
+        ...updateMember,
+        isOnline: isOnline,
+      };
+
+      await this.firestoreService.updateMember('members', member);
+      console.log(`Updated Firestore isOnline status to ${isOnline} for user ${this.userId}`);
+    }
   }
 }
