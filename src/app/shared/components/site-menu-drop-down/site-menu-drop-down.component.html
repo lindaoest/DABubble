@@ -1,0 +1,20 @@
+<div class="dropDown-container">
+  <div class="overview">
+    <div class="headline c-pointer" (click)="open_accordeon_items()">
+      <img class="arrow" [ngClass]="{'open' : open_accordeon}"
+        src="./assets/img/channels/arrow_drop_down.svg" alt="arrow-drop-down">
+      <div class="title">
+        <img [src]="'./assets/img/channels/' + icon + '.svg'" alt="">
+        <h4>{{ title | titlecase }}</h4>
+      </div>
+    </div>
+    @if (rightIcon) {
+      <div class="plus-icon icon-hover c-pointer">
+        <img (click)="openDialogAddChannel()" src="./assets/img/channels/add.svg" alt="">
+      </div>
+    }
+  </div>
+  <div class="hidden-list c-pointer" [ngClass]="{'open' : open_accordeon}">
+    <ng-content></ng-content>
+  </div>
+</div>

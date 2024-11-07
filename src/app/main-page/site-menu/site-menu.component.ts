@@ -9,11 +9,16 @@ import { Message } from '../../../models/message.class';
 import { Member } from '../../../models/member.class';
 import { DirectMessage } from '../../../models/direct-message.class';
 import { Subscription } from 'rxjs';
+import { SiteMenuDropDownComponent } from '../../shared/components/site-menu-drop-down/site-menu-drop-down.component';
+import { MembersBoxComponent } from '../../shared/components/members-box/members-box.component';
 
 @Component({
   selector: 'app-site-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    SiteMenuDropDownComponent
+  ],
   templateUrl: './site-menu.component.html',
   styleUrl: './site-menu.component.scss'
 })

@@ -8,7 +8,9 @@
       <img src="./assets/img/channels/edit_square.svg" alt="edit-square">
     </div>
   </div>
-  <div class="channels-container">
+  <!--ng-content channel & directmessage-->
+  <!--overview auslagern-->
+  <!-- <div class="channels-container">
     <div class="overview">
       <div class="headline c-pointer" (click)="open_channelList()">
         <img class="arrow" [ngClass]="{'open' : channel_open}"
@@ -38,8 +40,46 @@
         <p>Channel hinzufügen</p>
       </div>
     </div>
-  </div>
-  <div class="direct-messages-container c-pointer" (click)="openDirectMessageList()">
+  </div> -->
+  <app-site-menu-drop-down
+    [open_accordeon]="true"
+    [title]="'channels'"
+    [rightIcon]="true"
+    [name]="name"
+    [description]="description"
+    [members]="members"
+    [icon]="'workspaces'">
+    @if (channel_open) {
+      @for (channel of getList(); track $index) {
+        <div class="team" (click)="openChat(channel.name)">
+          <img src="./assets/img/channels/tag.svg" alt="">
+          <p>{{ channel.name }}</p>
+        </div>
+      }
+    }
+    <div class="add-channel-icon" (click)="openDialogAddChannel()">
+      <img src="./assets/img/channels/add_circle.svg" alt="">
+      <p>Channel hinzufügen</p>
+    </div>
+  </app-site-menu-drop-down>
+
+  <app-site-menu-drop-down
+  [open_accordeon]="true"
+  [title]="'direktnachrichten'"
+  [icon]="'account_circle'">
+    @for (item of globalVariables.personObjArray; track $index) {
+    <div (click)="showDirectChat(item.member)" class="direct-message c-pointer">
+      <div class="avatar">
+        <img src="{{ item.avatar }}" alt="">
+        @if (item.isOnline) {
+          <div class="online"></div>
+        }
+      </div>
+      <p>{{ item.member }}</p>
+    </div>
+    }
+  </app-site-menu-drop-down>
+  <!-- <div class="direct-messages-container c-pointer" (click)="openDirectMessageList()">
     <div class="overview">
       <img class="arrow" [ngClass]="{'open' : directmessage_open}"
         src="./assets/img/channels/arrow_drop_down.svg" alt="">
@@ -61,5 +101,5 @@
       </div>
       }
     </div>
-  </div>
+  </div> -->
 </div>

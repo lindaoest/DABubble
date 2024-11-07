@@ -1,0 +1,63 @@
+@import '../../mixin.scss';
+
+.dropDown-container {
+  overflow: hidden;
+  padding: 32px;
+}
+
+.overview {
+  @include displayFlex($jc: space-between);
+
+  .headline {
+    @include displayFlex();
+
+    &:hover {
+      filter: invert(30%) sepia(77%) saturate(3654%) hue-rotate(231deg) brightness(99%) contrast(90%);
+    }
+  }
+
+  .arrow {
+    transform: rotate(-90deg);
+
+    &.open {
+      transform: rotate(0);
+    }
+  }
+
+  .title {
+    @include displayFlex();
+    gap: 8px;
+  }
+
+  .plus-icon {
+    @include displayFlex();
+    padding: 3px;
+  }
+}
+
+.icon-hover {
+  width: 24px;
+  height: 24px;
+
+  &:hover {
+    border-radius: 50%;
+    background-color: #ECEEFE;
+
+    img {
+      filter: invert(30%) sepia(77%) saturate(3654%) hue-rotate(231deg) brightness(99%) contrast(90%);
+    }
+  }
+}
+
+.hidden-list {
+  height: 0;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+  margin-left: 32px;
+
+  &.open {
+    height: auto;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+  }
+}

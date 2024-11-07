@@ -8,6 +8,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { ProfileComponent } from '../components/overlays/profile/profile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../services/firestore/firestore.service';
+import { UserStatusService } from '../services/user-status/user-status.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,15 @@ export class HeaderComponent {
   path: string = '';
   openLightboxVar: boolean = false;
 
-  constructor(public dialog: MatDialog, private router: Router, private location: Location, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private location: Location,
+    public globalVariables: GlobalVariablesService,
+    public firestoreService: FirestoreService,
+    public userStatusService: UserStatusService
+  )
+    { }
 
   ngOnInit(): void {
     this.router.events.pipe(
@@ -40,6 +49,9 @@ export class HeaderComponent {
     signOut(auth).then(() => {
       this.router.navigate(['log-in']);
       this.openLightboxVar = false;
+
+      // Observe online-/offline-status
+      this.userStatusService.initialize(this.globalVariables.signed_in_member.uid);
     }).catch((error) => {
       console.log('logOut', error);
     });
