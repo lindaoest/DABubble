@@ -1,105 +1,55 @@
 <div class="site-menu">
+
+  <!-- Devspace -->
   <div class="devspace-container">
     <div class="devspace">
       <img src="./assets/img/channels/workspace-logo.svg" alt="">
       <h3>Devspace</h3>
     </div>
+
+    <!-- Write new message -->
     <div class="write-icon icon-hover c-pointer" (click)="open_new_chat()">
       <img src="./assets/img/channels/edit_square.svg" alt="edit-square">
     </div>
   </div>
-  <!--ng-content channel & directmessage-->
-  <!--overview auslagern-->
-  <!-- <div class="channels-container">
-    <div class="overview">
-      <div class="headline c-pointer" (click)="open_channelList()">
-        <img class="arrow" [ngClass]="{'open' : channel_open}"
-          src="./assets/img/channels/arrow_drop_down.svg" alt="arrow-drop-down">
-        <div class="title">
-          <img src="./assets/img/channels/workspaces.svg" alt="workspaces">
-          <h4>Channels</h4>
-        </div>
-      </div>
-      <div class="plus-icon icon-hover c-pointer">
-        <img (click)="openDialogAddChannel()" src="./assets/img/channels/add.svg" alt="">
-      </div>
-    </div>
-    <div class="channel-list hidden-list c-pointer" [ngClass]="{'open' : channel_open}">
-      @if (channel_open) {
-        @for (channel of getList(); track $index) {
 
-          <div class="team" (click)="openChat(channel.name)">
-            <img src="./assets/img/channels/tag.svg" alt="">
-            <p>{{ channel.name }}</p>
-          </div>
-
-        }
-      }
-      <div class="add-channel-icon" (click)="openDialogAddChannel()">
-        <img src="./assets/img/channels/add_circle.svg" alt="">
-        <p>Channel hinzufügen</p>
-      </div>
-    </div>
-  </div> -->
+  <!-- Channel accordion -->
   <app-site-menu-drop-down
-    [open_accordeon]="true"
+    [open_accordion]="true"
     [title]="'channels'"
     [rightIcon]="true"
     [name]="name"
     [description]="description"
     [members]="members"
-    [icon]="'workspaces'">
-    @if (channel_open) {
-      @for (channel of getList(); track $index) {
-        <div class="team" (click)="openChat(channel.name)">
-          <img src="./assets/img/channels/tag.svg" alt="">
-          <p>{{ channel.name }}</p>
-        </div>
-      }
-    }
-    <div class="add-channel-icon" (click)="openDialogAddChannel()">
-      <img src="./assets/img/channels/add_circle.svg" alt="">
-      <p>Channel hinzufügen</p>
+    [icon]="'workspaces'"
+    [openDialog]="true">
+    @for (channel of getList(); track $index) {
+
+      <!-- Channel -->
+      <div class="team" (click)="openChat(channel.name)">
+      <img src="./assets/img/channels/tag.svg" alt="">
+      <p>{{ channel.name }}</p>
     </div>
+    }
   </app-site-menu-drop-down>
 
+  <!-- Directmessage accordion -->
   <app-site-menu-drop-down
-  [open_accordeon]="true"
+  [open_accordion]="false"
   [title]="'direktnachrichten'"
   [icon]="'account_circle'">
     @for (item of globalVariables.personObjArray; track $index) {
-    <div (click)="showDirectChat(item.member)" class="direct-message c-pointer">
+
+    <!-- Directmessage -->
+    <div class="direct-message c-pointer" (click)="showDirectChat(item.member)">
       <div class="avatar">
         <img src="{{ item.avatar }}" alt="">
         @if (item.isOnline) {
-          <div class="online"></div>
+        <div class="online"></div>
         }
       </div>
       <p>{{ item.member }}</p>
     </div>
     }
   </app-site-menu-drop-down>
-  <!-- <div class="direct-messages-container c-pointer" (click)="openDirectMessageList()">
-    <div class="overview">
-      <img class="arrow" [ngClass]="{'open' : directmessage_open}"
-        src="./assets/img/channels/arrow_drop_down.svg" alt="">
-      <div class="title">
-        <img src="./assets/img/channels/account_circle.svg" alt="">
-        <h4>Direktnachrichten</h4>
-      </div>
-    </div>
-    <div class="direct-message-list hidden-list" [ngClass]="{'open' : directmessage_open}">
-      @for (item of globalVariables.personObjArray; track $index) {
-      <div (click)="showDirectChat(item.member)" class="direct-message c-pointer">
-        <div class="avatar">
-          <img src="{{ item.avatar }}" alt="">
-          @if (item.isOnline) {
-            <div class="online"></div>
-          }
-        </div>
-        <p>{{ item.member }}</p>
-      </div>
-      }
-    </div>
-  </div> -->
 </div>

@@ -15,13 +15,14 @@ import { Member } from '../../../../models/member.class';
 })
 export class SiteMenuDropDownComponent {
 
-  @Input() open_accordeon: boolean = false;
+  @Input() description!: string;
+  @Input() icon!: string;
+  @Input() members!: Member[];
+  @Input() name!: string;
+  @Input() open_accordion: boolean = false;
+  @Input() openDialog: boolean = false;
   @Input() rightIcon: boolean = false;
   @Input() title!: string;
-  @Input() name!: string;
-  @Input() description!: string;
-  @Input() members!: Member[];
-  @Input() icon!: string;
 
   constructor(
     public dialog: MatDialog
@@ -29,7 +30,7 @@ export class SiteMenuDropDownComponent {
 
 
   open_accordeon_items() {
-    this.open_accordeon = !this.open_accordeon;
+    this.open_accordion = !this.open_accordion;
   }
 
   openDialogAddChannel(): void {

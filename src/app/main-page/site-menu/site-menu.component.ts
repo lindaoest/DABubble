@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogAddChannelComponent } from '../../shared/components/overlays/dialog-add-channel/dialog-add-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { FirestoreService } from '../../shared/services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
@@ -10,7 +9,6 @@ import { Member } from '../../../models/member.class';
 import { DirectMessage } from '../../../models/direct-message.class';
 import { Subscription } from 'rxjs';
 import { SiteMenuDropDownComponent } from '../../shared/components/site-menu-drop-down/site-menu-drop-down.component';
-import { MembersBoxComponent } from '../../shared/components/members-box/members-box.component';
 
 @Component({
   selector: 'app-site-menu',
@@ -30,8 +28,6 @@ export class SiteMenuComponent {
   name: string = '';
   description: string = '';
   members: [] = [];
-  channel_open: boolean = false;
-  directmessage_open: boolean = false;
   filteredChats: Message[] = [];
 
   //Subscription
@@ -62,12 +58,6 @@ export class SiteMenuComponent {
     });
 
     return this.channels;
-  }
-
-  openDialogAddChannel(): void {
-    this.dialog.open(DialogAddChannelComponent, {
-      data: { name: this.name, description: this.description, members: this.members },
-    });
   }
 
   openChat(channelName: string) {
@@ -101,14 +91,6 @@ export class SiteMenuComponent {
     this.filteredChats.forEach(element => {
       this.globalVariables.messages.push(this.firestoreService.setObjectMessage(element, ''));
     });
-  }
-
-  open_channelList() {
-    this.channel_open = !this.channel_open;
-  }
-
-  openDirectMessageList() {
-    this.directmessage_open = !this.directmessage_open;
   }
 
   showDirectMessages() {

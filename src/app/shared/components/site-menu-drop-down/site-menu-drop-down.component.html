@@ -1,20 +1,36 @@
 <div class="dropDown-container">
+
+  <!-- Overview-list -->
   <div class="overview">
     <div class="headline c-pointer" (click)="open_accordeon_items()">
-      <img class="arrow" [ngClass]="{'open' : open_accordeon}"
-        src="./assets/img/channels/arrow_drop_down.svg" alt="arrow-drop-down">
+      <img class="arrow" [ngClass]="{'open' : open_accordion}"
+      src="./assets/img/channels/arrow_drop_down.svg" alt="arrow-drop-down">
+
+      <!-- Title -->
       <div class="title">
         <img [src]="'./assets/img/channels/' + icon + '.svg'" alt="">
         <h4>{{ title | titlecase }}</h4>
       </div>
     </div>
     @if (rightIcon) {
-      <div class="plus-icon icon-hover c-pointer">
-        <img (click)="openDialogAddChannel()" src="./assets/img/channels/add.svg" alt="">
-      </div>
+    <div class="plus-icon icon-hover c-pointer">
+      <img src="./assets/img/channels/add.svg" alt="add" (click)="openDialogAddChannel()">
+    </div>
     }
   </div>
-  <div class="hidden-list c-pointer" [ngClass]="{'open' : open_accordeon}">
+
+  <!-- Hidden-list -->
+  <div class="hidden-list c-pointer" [ngClass]="{'open' : open_accordion}">
+
+    <!-- Projectet content -->
     <ng-content></ng-content>
+
+    <!-- Create new channel -->
+    @if (openDialog) {
+    <div class="add-channel-icon" (click)="openDialogAddChannel()">
+      <img src="./assets/img/channels/add_circle.svg" alt="add_circle">
+      <p>Channel hinzufügen</p>
+    </div>
+    }
   </div>
 </div>
