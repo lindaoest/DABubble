@@ -1,35 +1,9 @@
-<div class="chat">
+<div class="chat-container">
   @if (!globalVariables.create_new_chat) {
-  <div class="info-top">
-    <div class="team-name c-pointer">
-      <img class="c-pointer mobile-arrow" (click)="closeChatMobile()" src="./assets/img/back-arrow.svg" alt="">
-      <img src="./assets/img/channels/tag.svg" alt="">
-      @if (globalVariables.channelWithLoggedInUser) {
-      <h3 class="headline truncate">{{ activeChat ? activeChat : globalVariables.channelWithLoggedInUser.name }}</h3>
-      }
-      <img (click)="openDialogChannel()" src="./assets/img/channels/arrow_drop_down.svg" alt="">
-    </div>
-    <div class="members">
-      <div class="avatars">
-        @if (getMembers().length == 0 && globalVariables.channelWithLoggedInUser) {
-          @for (avatar of globalVariables.channelWithLoggedInUser.members; track avatar; let index = $index) {
-          <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
-          }
-        } @else {
-          @for (avatar of getMembers(); track $index) {
-            <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 3 * -7}">
-          }
-        }
-      </div>
-      <div class="quantity">
-        <p class="font-weight-700">{{ getMembers().length == 0 && globalVariables.channelWithLoggedInUser ? globalVariables.channelWithLoggedInUser.members.length : getMembers().length }}</p>
-      </div>
-      <div (click)="addMembers()" class="c-pointer">
-        <img src="./assets/img/chat/chat-add-member.svg" alt="">
-      </div>
-    </div>
-  </div>
-  <!-- <div class="chat-block flex flex-column">
+  <app-top-bar-container>
+    <app-top-bar class="flex space-between" />
+  </app-top-bar-container>
+  <div class="chat-block flex flex-column">
     @for (group of (this.firestoreService.groupedMessages | keyvalue); track $index) {
       @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
         @for (dateGroup of (group.value | keyvalue); track $index) {
@@ -41,7 +15,7 @@
         }
       }
     }
-  </div> -->
+  </div>
   <app-writing-box [sendMessage]="'message'"></app-writing-box>
   } @else {
   <app-create-new-chat></app-create-new-chat>

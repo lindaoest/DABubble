@@ -1,11 +1,7 @@
 <div class="threads">
-  <div class="info-top">
-    <div class="thread-name">
-      <h3>Thread</h3>
-      <p class="font-small blue-font"># {{ messageToReplyTo.channel }}</p>
-    </div>
-    <img (click)="close_thread()" class="c-pointer" src="./assets/img/thread/close.svg" alt="">
-  </div>
+  <app-top-bar-container>
+    <app-top-bar-thread class="flex space-between" [messageToReplyTo]="messageToReplyTo" />
+  </app-top-bar-container>
   <div class="chat-block flex">
     <app-message [style]="{'width': '100%'}" [threadMessage]="true" [message]="messageToReplyTo"></app-message>
     <div class="answers-number">

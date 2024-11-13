@@ -1,0 +1,75 @@
+@import '../../../mixin.scss';
+
+.team-name {
+  @include displayFlex();
+  gap: 8px;
+  padding-left: 8px;
+
+  &:hover {
+    border-radius: 25px;
+    background-color: #ECEEFE;
+    padding: 4px 8px;
+    color: #535AF1;
+
+    img {
+      filter: invert(30%) sepia(77%) saturate(3654%) hue-rotate(231deg) brightness(99%) contrast(90%);
+    }
+  }
+}
+
+.profile-container {
+  @include displayFlex();
+  gap: 8px;
+}
+
+.members {
+  @include displayFlex();
+  padding: 4px;
+
+  .quantity {
+    margin: 0 16px 0 8px;
+  }
+
+  .avatars {
+    @include displayFlex($jc: flex-end);
+
+    img {
+      border-radius: 50%;
+      border: 2px solid #FFFFFF;
+      width: 40px;
+      height: 40px;
+      margin-left: -16px;
+    }
+  }
+
+  &:hover {
+    border-radius: 25px;
+    background-color: #ECEEFE;
+    color: #535AF1;
+    padding: 4px;
+  }
+}
+
+.person-add-icon {
+  border-radius: 50%;
+  background-color: #ECEEFE;
+  padding: 8px;
+  height: 24px;
+
+  &:hover {
+
+    img {
+      filter: invert(30%) sepia(77%) saturate(3654%) hue-rotate(231deg) brightness(99%) contrast(90%);
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .members {
+
+    .quantity,
+    .avatars {
+      display: none;
+    }
+  }
+}

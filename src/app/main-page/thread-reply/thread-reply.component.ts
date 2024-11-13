@@ -9,33 +9,39 @@ import { DateBlockMessageComponent } from '../../shared/components/date-block-me
 import { MessageComponent } from '../../shared/components/message/message.component';
 import { Thread } from '../../../models/thread.class';
 import { Subscription } from 'rxjs';
+import { TopBarContainerComponent } from '../../shared/components/top-bars/top-bar-container/top-bar-container.component';
+import { TopBarThreadComponent } from '../../shared/components/top-bars/top-bar-thread/top-bar-thread.component';
 
 @Component({
   selector: 'app-thread-reply',
   standalone: true,
-  imports: [CommonModule, FormsModule, WritingBoxComponent, DateBlockMessageComponent, MessageComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    WritingBoxComponent,
+    DateBlockMessageComponent,
+    MessageComponent,
+    TopBarContainerComponent,
+    TopBarThreadComponent
+  ],
   templateUrl: './thread-reply.component.html',
   styleUrl: './thread-reply.component.scss'
 })
 export class ThreadReplyComponent {
 
-  @Input() messageToReplyTo: Message = {
-    channel: '',
-    text: '',
-    time: '',
-    sender: '',
-    avatar: '',
-    creationDate: 0,
-    timeStamp: 0
-  };
+  @Input()
+  public messageToReplyTo!: Message;
 
-  answerLength: number = 0;
+  public answerLength: number = 0;
 
   //Subscription
   private activeChatSubscription: Subscription = new Subscription;
-  activeChat: string = '';
+  public activeChat: string = '';
 
-  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
+  constructor(
+    public firestoreService: FirestoreService,
+    public globalVariables: GlobalVariablesService
+  ) { }
 
   ngOnInit() {
     this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
@@ -51,7 +57,7 @@ export class ThreadReplyComponent {
     this.activeChatSubscription.unsubscribe();
   }
 
-  answerTextLength() {
+  public answerTextLength() {
     this.answerLength = 0;
 
     this.firestoreService.threads.forEach((thread: Thread) => {
@@ -61,10 +67,5 @@ export class ThreadReplyComponent {
         this.answerLength += 1;
       }
     })
-  }
-
-  close_thread() {
-    this.globalVariables.showThreads = false;
-    this.globalVariables.showChat = true;
   }
 }

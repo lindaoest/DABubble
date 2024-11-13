@@ -4,27 +4,12 @@
   border-radius: 30px;
 	background-color: #FFFFFF;
   padding: 0 0 40px 0;
-
-	>* {
-		padding: 32px;
-	}
-}
-
-.info-top {
-	@include displayFlex($jc: space-between);
-	gap: 24px;
-	box-shadow: 0px 2px 10px 0px #00000014;
-	border-radius: 30px;
-
-	.thread-name {
-		@include displayFlex();
-		gap: 8px;
-	}
 }
 
 .chat-block {
 	flex-direction: column;
 	gap: 24px;
+  padding: 32px;
 
 	.answer-number-text {
 		@include displayFlex($jc: space-between);
