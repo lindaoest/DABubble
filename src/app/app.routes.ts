@@ -7,9 +7,22 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { ImprintComponent } from './shared/footer/imprint/imprint.component';
 import { PrivacyComponent } from './shared/footer/privacy/privacy.component';
+import { DirectmessagesChatComponent } from './main-page/chat/directmessages-chat/directmessages-chat.component';
+import { ChatComponent } from './main-page/chat/chat.component';
 
 export const routes: Routes = [
-	{ path: 'home', component: MainPageComponent },
+	{ path: 'home', component: MainPageComponent,
+    children: [
+      {
+        path: 'users/:id',
+        component: DirectmessagesChatComponent
+      },
+      {
+        path: 'channels/:id',
+        component: ChatComponent
+      }
+    ],
+   },
 	{ path: 'log-in', component: LogInComponent },
 	{ path: 'sign-in', component: RegistrationComponent },
 	{ path: 'choose-avatar', component: ChooseAvatarComponent },

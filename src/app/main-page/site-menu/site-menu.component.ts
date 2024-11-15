@@ -9,26 +9,30 @@ import { Member } from '../../../models/member.class';
 import { DirectMessage } from '../../../models/direct-message.class';
 import { Subscription } from 'rxjs';
 import { SiteMenuDropDownComponent } from '../../shared/components/site-menu-drop-down/site-menu-drop-down.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-site-menu',
   standalone: true,
   imports: [
     CommonModule,
-    SiteMenuDropDownComponent
+    RouterModule,
+    SiteMenuDropDownComponent,
   ],
   templateUrl: './site-menu.component.html',
   styleUrl: './site-menu.component.scss'
 })
 export class SiteMenuComponent {
 
-  @Output() mobileClickedChat = new EventEmitter();
-  @Output() mobileClickedDirectChat = new EventEmitter();
+  @Output()
+  public mobileClickedChat = new EventEmitter();
+  @Output()
+  public mobileClickedDirectChat = new EventEmitter();
 
-  name: string = '';
-  description: string = '';
-  members: [] = [];
-  filteredChats: Message[] = [];
+  public name: string = '';
+  public description: string = '';
+  public members: [] = [];
+  public filteredChats: Message[] = [];
 
   //Subscription
   channelSubscription: Subscription = new Subscription;

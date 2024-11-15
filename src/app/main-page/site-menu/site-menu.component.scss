@@ -23,7 +23,7 @@
   @include displayFlex($jc: flex-start);
   gap: 8px;
   margin-top: 8px;
-  padding: 8px 0;
+  padding: 8px 0 8px 8px;
 
   &:hover {
     padding-left: 8px;
@@ -51,7 +51,8 @@
 .team,
 .direct-message {
 
-  &:hover {
+  &:hover,
+  &.active {
     border-radius: 25px;
     background-color: #ECEEFE;
 
