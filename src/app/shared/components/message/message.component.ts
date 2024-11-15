@@ -16,14 +16,23 @@ import { ReactionMessageBarComponent } from '../reaction-message-bar/reaction-me
 })
 export class MessageComponent {
 
-  @Input() message!: Message;
-  @Input() threadMessage: boolean = false;
-  @Input() chatMessage: boolean = false;
-  @Output()currentMessage = new EventEmitter();
+  @Input()
+  public message!: Message;
 
-  constructor(public globalVariables: GlobalVariablesService) { }
+  @Input()
+  public threadMessage: boolean = false;
 
-  start_thread(message: Message) {
+  @Input()
+  public chatMessage: boolean = false;
+
+  @Output()
+  public currentMessage = new EventEmitter();
+
+  constructor(
+    public globalVariables: GlobalVariablesService
+  ) { }
+
+  public start_thread(message: Message) {
     this.globalVariables.showThreads = true;
     this.currentMessage.emit(message);
   }

@@ -26,6 +26,7 @@ export class SiteMenuComponent {
 
   @Output()
   public mobileClickedChat = new EventEmitter();
+
   @Output()
   public mobileClickedDirectChat = new EventEmitter();
 
@@ -35,13 +36,17 @@ export class SiteMenuComponent {
   public filteredChats: Message[] = [];
 
   //Subscription
-  channelSubscription: Subscription = new Subscription;
-  channels: Channel[] = [];
+  private channelSubscription: Subscription = new Subscription;
+  public channels: Channel[] = [];
 
-  directMessageSubscription: Subscription = new Subscription;
-  direct_messages: DirectMessage[] = [];
+  private directMessageSubscription: Subscription = new Subscription;
+  public direct_messages: DirectMessage[] = [];
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {
+  constructor(
+    public dialog: MatDialog,
+    public firestoreService: FirestoreService,
+    public globalVariables: GlobalVariablesService
+  ) {
     this.directMessageSubscription = this.firestoreService.directMessages$.subscribe(directMessage => {
       this.direct_messages = directMessage;
 
@@ -54,7 +59,7 @@ export class SiteMenuComponent {
     this.channelSubscription.unsubscribe();
   }
 
-  getList() {
+  public getList() {
     this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
       this.channels = channels.filter((channel: Channel) =>
         channel.members.some((user: Member) => user && user.member === this.globalVariables.signed_in_member.displayName)
@@ -64,7 +69,7 @@ export class SiteMenuComponent {
     return this.channels;
   }
 
-  openChat(channelName: string) {
+  public openChat(channelName: string) {
     this.globalVariables.showDirectChat = false;
     this.globalVariables.create_new_chat = false;
     this.globalVariables.showChat = true;
@@ -75,7 +80,7 @@ export class SiteMenuComponent {
     this.mobileClickedChat.emit();
   }
 
-  setActiveChannel(channelName: string) {
+  public setActiveChannel(channelName: string) {
     if (this.globalVariables.activeChannel) {
       this.firestoreService.channels$.subscribe(channels => {
         const foundChannel = channels.find((obj: Channel) => obj.name === channelName);
@@ -89,7 +94,7 @@ export class SiteMenuComponent {
     }
   }
 
-  filterChats() {
+  public filterChats() {
     this.globalVariables.messages = [];
     this.filteredChats = this.firestoreService.messages.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
     this.filteredChats.forEach(element => {
@@ -97,7 +102,7 @@ export class SiteMenuComponent {
     });
   }
 
-  showDirectMessages() {
+  public showDirectMessages() {
     this.direct_messages.forEach(message => {
       if (message.sender == this.globalVariables.signed_in_member.displayName) {
         this.show_all_directmessages_sender(message);
@@ -107,27 +112,27 @@ export class SiteMenuComponent {
     });
   }
 
-  show_all_directmessages_sender(message: DirectMessage) {
+  public show_all_directmessages_sender(message: DirectMessage) {
     let direct_message_receiver = this.firestoreService.members.find(member => message.receiver == member.member);
     if (direct_message_receiver && !this.globalVariables.personObjArray.some(person => person.member === direct_message_receiver!.member)) {
       this.globalVariables.personObjArray.push(direct_message_receiver);
     }
   }
 
-  show_all_directmessages_receiver(message: DirectMessage) {
+  public show_all_directmessages_receiver(message: DirectMessage) {
     let direct_message_sender = this.firestoreService.members.find(member => message.sender == member.member);
     if (direct_message_sender && !this.globalVariables.personObjArray.some(person => person.member === direct_message_sender!.member)) {
       this.globalVariables.personObjArray.push(direct_message_sender);
     }
   }
 
-  open_new_chat() {
+  public open_new_chat() {
     this.globalVariables.showDirectChat = false;
     this.globalVariables.create_new_chat = true;
     this.mobileClickedChat.emit();
   }
 
-  showDirectChat(receiver: string) {
+  public showDirectChat(receiver: string) {
     this.globalVariables.create_new_chat = false;
     this.globalVariables.showDirectChat = true;
     localStorage.setItem('active privatechat', JSON.stringify(receiver));
@@ -139,9 +144,5 @@ export class SiteMenuComponent {
     }
 
     this.mobileClickedDirectChat.emit();
-  }
-
-  trackByFn(index: number, item: any): number {
-    return index;
   }
 }

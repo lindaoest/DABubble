@@ -2,6 +2,9 @@
   <img src="./assets/img/message/add_reaction.svg" alt="">
   <img src="./assets/img/message/comment.svg" alt="">
   @if (messageEditable) {
-    <img src="./assets/img/message/more_vert.svg" alt="">
+  <img class="c-pointer" src="./assets/img/message/more_vert.svg" alt="" (click)="openEditMessage()">
+  @if(openedEditMessage) {
+  <app-edit-message-button />
+  }
   }
 </div>

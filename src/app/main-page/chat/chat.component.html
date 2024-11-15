@@ -1,12 +1,20 @@
 <div class="chat-container">
+
   @if (!globalVariables.create_new_chat) {
+
+  <!-- Chat overview -->
+  <!-- Header -->
   <app-top-bar-container>
     <app-top-bar class="flex space-between" />
   </app-top-bar-container>
+
+  <!-- Chat block -->
   <div class="chat-block flex flex-column">
     @for (group of (this.firestoreService.groupedMessages | keyvalue); track $index) {
       @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
         @for (dateGroup of (group.value | keyvalue); track $index) {
+
+          <!-- Messages -->
           <app-date-block-message
             [dateGroup]="dateGroup"
             (currentMessage)="start_thread($event)"
@@ -18,6 +26,8 @@
   </div>
   <app-writing-box [sendMessage]="'message'"></app-writing-box>
   } @else {
+
+  <!-- Create new chat -->
   <app-create-new-chat></app-create-new-chat>
   }
 </div>

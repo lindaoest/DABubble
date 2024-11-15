@@ -2,9 +2,9 @@
 
 .reaction-bar {
   @include displayFlex();
+  position: absolute;
   top: -16px;
   left: 40px;
-  position: absolute;
   gap: 16px;
   background-color: #FFFFFF;
   border-radius: 25px 25px 0 25px;

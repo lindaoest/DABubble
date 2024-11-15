@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { EditMessageButtonComponent } from './edit-message-button/edit-message-button.component';
 
 @Component({
   selector: 'app-reaction-message-bar',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    EditMessageButtonComponent
   ],
   templateUrl: './reaction-message-bar.component.html',
   styleUrl: './reaction-message-bar.component.scss'
@@ -13,6 +15,11 @@ import { Component, Input } from '@angular/core';
 export class ReactionMessageBarComponent {
 
   @Input()
-  messageEditable: boolean = false;
+  public messageEditable: boolean = false;
 
+  public openedEditMessage: boolean = false;
+
+  openEditMessage() {
+    this.openedEditMessage = !this.openedEditMessage;
+  }
 }

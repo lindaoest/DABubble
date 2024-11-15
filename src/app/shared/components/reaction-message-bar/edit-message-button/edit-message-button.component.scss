@@ -1,0 +1,25 @@
+@import '../../../mixin.scss';
+
+.edit-message-button {
+  @include displayFlex();
+  position: absolute;
+  top: 33px;
+  left: 69%;
+  gap: 16px;
+  box-shadow: 0px 6px 14px 0px #00000033;
+  background-color: #FFFFFF;
+  border-radius: 0 25px 25px 25px;
+  padding: 8px;
+
+  p {
+    padding: 8px;
+  }
+
+  &:hover {
+    p {
+      border-radius: 25px;
+      background-color: #ECEEFE;
+      color: #535AF1;
+}
+  }
+}

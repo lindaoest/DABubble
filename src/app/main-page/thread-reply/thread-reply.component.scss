@@ -9,12 +9,13 @@
 .chat-block {
 	flex-direction: column;
 	gap: 24px;
-  padding: 32px;
+  padding: 32px 0;
 
 	.answer-number-text {
 		@include displayFlex($jc: space-between);
 		gap: 16px;
 		color: #ADB0D9;
+    padding: 0 32px;
 
 		&::after {
 			content: "";
