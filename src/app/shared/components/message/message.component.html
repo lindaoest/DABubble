@@ -1,19 +1,21 @@
-<div class="message flex w-full"
-  [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
-  <img src="{{ message.avatar }}" alt="">
-  <div class="message-text">
-    <div class="top flex align-center gap-24">
-      <p class="font-weight-700">{{ message.sender }}</p>
-      <p class="font-small">{{ message.time }} Uhr</p>
-    </div>
-    <div class="text">
-      <p>{{ message.text }}</p>
-    </div>
-    @if (chatMessage) {
+<div class="message w-full">
+  <app-reaction-message-bar [messageEditable]="globalVariables.signed_in_member.displayName === message.sender"></app-reaction-message-bar>
+  <div class="message-container flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+    <img src="{{ message.avatar }}" alt="">
+    <div class="message-text">
+      <div class="top flex align-center gap-24">
+        <p class="font-weight-700">{{ message.sender }}</p>
+        <p class="font-small">{{ message.time }} Uhr</p>
+      </div>
+      <div class="text">
+        <p>{{ message.text }}</p>
+      </div>
+      @if (chatMessage) {
       <div class="bottom flex align-center gap-24">
         <p (click)="start_thread(message)" class="blue-font c-pointer">Antworten</p>
         <p class="font-small">Letzte Antwort vom {{ message.creationDate | date:'d.MM.YYYY' }}</p>
       </div>
-    }
+      }
+    </div>
   </div>
 </div>

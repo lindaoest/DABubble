@@ -2,11 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
 import { Message } from '../../../../models/message.class';
+import { ReactionMessageBarComponent } from '../reaction-message-bar/reaction-message-bar.component';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ReactionMessageBarComponent
+  ],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss'
 })

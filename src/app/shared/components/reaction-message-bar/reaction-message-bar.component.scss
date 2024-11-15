@@ -1,0 +1,18 @@
+@import '../../mixin.scss';
+
+.reaction-bar {
+  @include displayFlex();
+  top: -16px;
+  left: 40px;
+  position: absolute;
+  gap: 16px;
+  background-color: #FFFFFF;
+  border-radius: 25px 25px 0 25px;
+  border: 1px solid #ADB0D9;
+  padding: 8px 16px;
+
+  &.reversed-direction {
+    left: auto;
+    right: 40px;
+  }
+}
