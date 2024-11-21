@@ -1,29 +1,48 @@
 
 <div class="team-name c-pointer">
+
+  <!-- back arrow for mobile -->
   <img class="c-pointer mobile-arrow" src="./assets/img/back-arrow.svg" alt="" (click)="closeChatMobile()">
-  <img src="./assets/img/hashtag-black.svg" alt="">
-  @if (globalVariables.channelWithLoggedInUser) {
-  <h3 class="headline truncate">{{ activeChat ? activeChat : globalVariables.channelWithLoggedInUser.name }}</h3>
-  }
-  <img src="./assets/img/channels/arrow_drop_down.svg" alt="" (click)="openDialogChannel()">
+
+  <div class="open-channel" (click)="openDialogChannel()">
+    <img src="./assets/img/hashtag-black.svg" alt="">
+
+    <!-- Chat name -->
+    @if (globalVariables.channelWithLoggedInUser) {
+    <h3 class="headline truncate">{{ activeChat ? activeChat : globalVariables.channelWithLoggedInUser.name }}</h3>
+    }
+
+    <!-- open detail overlay -->
+    <img src="./assets/img/channels/arrow_drop_down.svg" alt="arrow_drop_down">
+  </div>
 </div>
 <div class="profile-container">
   <div class="members">
+
+    <!-- Members -->
     <div class="avatars">
       @if (getMembers().length == 0 && globalVariables.channelWithLoggedInUser) {
         @for (avatar of globalVariables.channelWithLoggedInUser.members; track avatar; let index = $index) {
-        <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 2 * -8}">
+         @if (index <= 2) {
+          <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 2 * -8}">
+         }
         }
       } @else {
-        @for (avatar of getMembers(); track $index) {
-          <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 2 * -8}">
+        @for (avatar of getMembers(); track avatar; let index = $index) {
+          @if (index <= 2) {
+            <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 2 * -8}">
+          }
         }
       }
     </div>
+
+    <!-- Number of members -->
     <div class="quantity">
       <p class="font-weight-700">{{ getMembers().length == 0 && globalVariables.channelWithLoggedInUser ? globalVariables.channelWithLoggedInUser.members.length : getMembers().length }}</p>
     </div>
   </div>
+
+  <!-- Add new members -->
   <div class="person-add-icon c-pointer" (click)="addMembers()">
     <img src="./assets/img/chat/person_add.svg" alt="">
   </div>

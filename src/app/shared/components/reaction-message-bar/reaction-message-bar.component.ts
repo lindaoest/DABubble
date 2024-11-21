@@ -19,7 +19,7 @@ export class ReactionMessageBarComponent {
 
   public openedEditMessage: boolean = false;
 
-  openEditMessage() {
+  public openEditMessage() {
     this.openedEditMessage = !this.openedEditMessage;
   }
 }

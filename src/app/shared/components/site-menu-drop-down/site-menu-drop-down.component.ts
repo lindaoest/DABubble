@@ -15,25 +15,40 @@ import { Member } from '../../../../models/member.class';
 })
 export class SiteMenuDropDownComponent {
 
-  @Input() description!: string;
-  @Input() icon!: string;
-  @Input() members!: Member[];
-  @Input() name!: string;
-  @Input() open_accordion: boolean = false;
-  @Input() openDialog: boolean = false;
-  @Input() rightIcon: boolean = false;
-  @Input() title!: string;
+  @Input()
+  public description!: string;
+
+  @Input()
+  public icon!: string;
+
+  @Input()
+  public members!: Member[];
+
+  @Input()
+  public name!: string;
+
+  @Input()
+  public open_accordion: boolean = false;
+
+  @Input()
+  public openDialog: boolean = false;
+
+  @Input()
+  public rightIcon: boolean = false;
+
+  @Input()
+  public title!: string;
 
   constructor(
     public dialog: MatDialog
   ) { }
 
 
-  open_accordeon_items() {
+  public open_accordeon_items() {
     this.open_accordion = !this.open_accordion;
   }
 
-  openDialogAddChannel(): void {
+  public openDialogAddChannel(): void {
     this.dialog.open(DialogAddChannelComponent, {
       data: { name: this.name, description: this.description, members: this.members },
     });

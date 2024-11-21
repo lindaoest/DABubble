@@ -16,27 +16,31 @@ import { Subscription } from 'rxjs';
 })
 export class WritingBoxComponent {
 
-  @Input() sendMessage: string = '';
-  @Input() messageToReplyTo: Message = {
-    channel: '',
-    text: '',
-    time: '',
-    sender: '',
-    avatar: '',
-    creationDate: 0,
-    timeStamp: 0
-  };
-  @Input() activeMember: any;
-  @Input() name: string = '';
-  @Input() is_createNewChat_open: boolean = false;
+  @Input()
+  public sendMessage!: string;
 
-  description: string = '';
+  @Input()
+  public messageToReplyTo!: Message;
+
+  @Input()
+  public activeMember: any;
+
+  @Input()
+  public name!: string;
+
+  @Input()
+  public is_createNewChat_open: boolean = false;
+
+  public description: string = '';
 
   //Subscription
   private activeChatSubscription: Subscription = new Subscription;
-  activeChat: string = '';
+  public activeChat: string = '';
 
-  constructor(public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService) { }
+  constructor(
+    public globalVariables: GlobalVariablesService,
+    public firestoreService: FirestoreService
+  ) { }
 
   ngOnInit() {
     this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
@@ -48,7 +52,7 @@ export class WritingBoxComponent {
     this.activeChatSubscription.unsubscribe();
   }
 
-  async addMessage() {
+  public async addMessage() {
     if (this.sendMessage == 'message') {
       const message: Message = new Message({
         channel: this.activeChat ? this.globalVariables.activeChannel.name : this.globalVariables.channelWithLoggedInUser.name,

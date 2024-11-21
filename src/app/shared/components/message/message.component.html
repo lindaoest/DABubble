@@ -1,18 +1,36 @@
 <div class="message w-full">
+
+  <!-- reaction bar for emoji or edit message -->
   <app-reaction-message-bar [messageEditable]="globalVariables.signed_in_member.displayName === message.sender"></app-reaction-message-bar>
   <div class="message-container flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
+
+    <!-- Avatar -->
     <img src="{{ message.avatar }}" alt="">
+
+    <!-- Message text -->
     <div class="message-text">
       <div class="top flex align-center gap-24">
+
+        <!-- Sender -->
         <p class="font-weight-700">{{ message.sender }}</p>
+
+        <!-- Time -->
         <p class="font-small">{{ message.time }} Uhr</p>
       </div>
+
+      <!-- Text -->
       <div class="text">
         <p>{{ message.text }}</p>
       </div>
+
+      <!-- If message is in channel -->
       @if (chatMessage) {
       <div class="bottom flex align-center gap-24">
-        <p (click)="start_thread(message)" class="blue-font c-pointer">Antworten</p>
+
+        <!-- Open thread -->
+        <p class="blue-font c-pointer" (click)="start_thread(message)">Antworten</p>
+
+        <!-- Last answer -->
         <p class="font-small">Letzte Antwort am {{ message.creationDate | date:'d.MM.YYYY' }}</p>
       </div>
       }

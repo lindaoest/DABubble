@@ -12,13 +12,22 @@ import { CommonModule } from '@angular/common';
 })
 export class DateBlockMessageComponent {
 
-  @Input() dateGroup!: any;
-  @Input() messageToReplyTo!: Message;
-  @Input() threadMessage: boolean = false;
-  @Input() chatMessage: boolean = false;
-  @Output() currentMessage = new EventEmitter();
+  @Input()
+  public dateGroup!: any;
 
-  currentMessage_for_thread(message: Message) {
+  @Input()
+  public messageToReplyTo!: Message;
+
+  @Input()
+  public threadMessage: boolean = false;
+
+  @Input()
+  public chatMessage: boolean = false;
+
+  @Output()
+  public currentMessage = new EventEmitter();
+
+  public currentMessage_for_thread(message: Message) {
     this.currentMessage.emit(message);
   }
 }

@@ -1,13 +1,21 @@
 <div class="writing-box w-full">
+
+  <!-- Message input field-->
   <input class="w-full" type="text" placeholder="Nachricht schreiben..." [(ngModel)]="description">
+
+  <!-- Bottom bar-->
   <div class="bottom-icons">
+
+    <!-- Reactions -->
     <div class="reactions">
       <img src="./assets/img/chat/add-reaction.svg" alt="">
       <img src="./assets/img/chat/add-emoji.svg" alt="">
       <img src="./assets/img/chat/tag-people.svg" alt="">
     </div>
+
+    <!-- Send message -->
     <div class="send-message c-pointer">
-      <img (click)="addMessage()" src="./assets/img/chat/send-message.svg" alt="">
+      <img src="./assets/img/chat/send-message.svg" alt="" (click)="addMessage()">
     </div>
   </div>
 </div>

@@ -2,8 +2,12 @@
 
 .team-name {
   @include displayFlex();
-  gap: 8px;
   padding-left: 8px;
+
+  .open-channel {
+    @include displayFlex();
+    gap: 8px;
+  }
 
   &:hover {
     border-radius: 25px;
@@ -32,6 +36,7 @@
 
   .avatars {
     @include displayFlex($jc: flex-end);
+    width: 98px;
 
     img {
       border-radius: 50%;
