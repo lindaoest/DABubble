@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EditMessageButtonComponent } from './edit-message-button/edit-message-button.component';
 
 @Component({
@@ -15,11 +15,20 @@ import { EditMessageButtonComponent } from './edit-message-button/edit-message-b
 export class ReactionMessageBarComponent {
 
   @Input()
-  public messageEditable: boolean = false;
+  public messageIsEditable: boolean = false;
 
-  public openedEditMessage: boolean = false;
+  @Output()
+  public editableMessage = new EventEmitter();
 
-  public openEditMessage() {
-    this.openedEditMessage = !this.openedEditMessage;
+  public boxEditMessageIsOpen: boolean = false;
+
+  public openBoxEditMessage() {
+    this.boxEditMessageIsOpen = !this.boxEditMessageIsOpen;
+  }
+
+  public editMessage() {
+    this.editableMessage.emit();
+
+    this.boxEditMessageIsOpen = false;
   }
 }

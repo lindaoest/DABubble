@@ -80,6 +80,10 @@ body {
   display: flex;
 }
 
+.none {
+  display: none;
+}
+
 .align-center {
   align-items: center;
 }
@@ -118,6 +122,11 @@ body {
 
 .font-weight-700 {
   font-weight: 700;
+}
+
+input {
+  font-family: 'Nunito';
+  font-size: 18px;
 }
 
 .p-t-24 {

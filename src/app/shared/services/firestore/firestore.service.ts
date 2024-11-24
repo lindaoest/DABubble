@@ -232,7 +232,7 @@ export class FirestoreService {
       avatar: obj.avatar,
       creationDate: obj.creationDate,
       timeStamp: obj.timeStamp,
-      message: obj.message
+      message: this.setObjectMessage(obj.message, obj.message.id)
     }
   }
 

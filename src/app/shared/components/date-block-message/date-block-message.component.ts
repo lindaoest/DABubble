@@ -19,10 +19,10 @@ export class DateBlockMessageComponent {
   public messageToReplyTo!: Message;
 
   @Input()
-  public threadMessage: boolean = false;
+  public isThreadMessage: boolean = false;
 
   @Input()
-  public chatMessage: boolean = false;
+  public IsChatMessage: boolean = false;
 
   @Output()
   public currentMessage = new EventEmitter();

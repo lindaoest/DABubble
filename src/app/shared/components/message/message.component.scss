@@ -1,3 +1,5 @@
+@import '../../mixin.scss';
+
 .message {
   position: relative;
   margin-top: 32px;
@@ -13,7 +15,11 @@
   }
 
   .text {
-    p {
+    @include displayFlex($jc: flex-start);
+
+    p,
+    input {
+      border: none;
       background-color: #ECEEFE;
       border-radius: 0 30px 30px 30px;
       padding: 15px;
@@ -30,7 +36,9 @@
     }
 
     .text {
-      p {
+
+      p,
+      input {
         background-color: #FFFFFF;
       }
     }
@@ -58,11 +66,44 @@ app-reaction-message-bar {
     }
 
     .text {
-      p {
+      @include displayFlex($jc: flex-end);
+
+      p,
+      input {
         border-radius: 30px 0 30px 30px;
         background-color: #797EF3;
         color: #FFFFFF;
       }
+    }
+  }
+}
+
+.editModus {
+  background-color: #ECEEFE;
+
+  &:hover {
+    app-reaction-message-bar {
+      display: none;
+    }
+  }
+
+  .edit-container {
+    border-radius: 20px !important;
+    border: 1px solid #ADB0D9;
+    background-color: #FFFFFF !important;
+
+    input {
+      background-color: #FFFFFF !important;
+      color: #686868 !important;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    .buttons {
+      gap: 32px;
+      padding: 0 15px 15px;
     }
   }
 }

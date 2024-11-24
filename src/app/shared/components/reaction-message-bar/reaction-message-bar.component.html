@@ -1,4 +1,4 @@
-<div class="reaction-bar" [ngClass]="{'reversed-direction': !messageEditable}">
+<div class="reaction-bar" [ngClass]="{'reversed-direction': !messageIsEditable}">
 
   <!-- Add reaction -->
    <div class="reaction-icon">
@@ -11,14 +11,14 @@
    </div>
 
   <!-- Edit message -->
-  @if (messageEditable) {
-    <div class="more-vert-icon c-pointer" (click)="openEditMessage()">
+  @if (messageIsEditable) {
+    <div class="more-vert-icon c-pointer" (click)="openBoxEditMessage()">
       <img src="./assets/img/message/more_vert.svg" alt="">
     </div>
 
     <!-- Overlay edit message -->
-    @if(openedEditMessage) {
-    <app-edit-message-button />
+    @if(boxEditMessageIsOpen) {
+    <app-edit-message-button (click)="editMessage()" />
     }
   }
 </div>

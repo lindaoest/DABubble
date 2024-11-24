@@ -1,5 +1,5 @@
 <div class="date-block w-full">
-  @if (!threadMessage) {
+  @if (!isThreadMessage) {
 
   <!-- Add date block -->
   <div class="date">
@@ -11,7 +11,7 @@
 
   <!-- Add messages -->
   @for (message of dateGroup.value; track $index) {
-  <app-message *ngIf="!threadMessage || (threadMessage && message.message.text === messageToReplyTo.text)"
-    [style]="{'width': '100%'}" [message]="message" [threadMessage]="threadMessage" [chatMessage]="chatMessage" (currentMessage)="currentMessage_for_thread($event)"></app-message>
+  <app-message *ngIf="!isThreadMessage || (isThreadMessage && message.message.text === messageToReplyTo.text)"
+    [style]="{'width': '100%'}" [message]="message" [isThreadMessage]="isThreadMessage" [IsChatMessage]="IsChatMessage" (currentMessage)="currentMessage_for_thread($event)"></app-message>
   }
 </div>

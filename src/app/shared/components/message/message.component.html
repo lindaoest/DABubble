@@ -1,7 +1,7 @@
-<div class="message w-full">
+<div class="message w-full" [ngClass]="{'editModus': messageIsEditable}">
 
   <!-- reaction bar for emoji or edit message -->
-  <app-reaction-message-bar [messageEditable]="globalVariables.signed_in_member.displayName === message.sender"></app-reaction-message-bar>
+  <app-reaction-message-bar [messageIsEditable]="globalVariables.signed_in_member.displayName === message.sender" (editableMessage)="editMessage()"></app-reaction-message-bar>
   <div class="message-container flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
 
     <!-- Avatar -->
@@ -9,7 +9,7 @@
 
     <!-- Message text -->
     <div class="message-text">
-      <div class="top flex align-center gap-24">
+      <div class="top flex align-center gap-24" [ngClass]="{'none': messageIsEditable}">
 
         <!-- Sender -->
         <p class="font-weight-700">{{ message.sender }}</p>
@@ -20,12 +20,22 @@
 
       <!-- Text -->
       <div class="text">
-        <p>{{ message.text }}</p>
+        @if (messageIsEditable) {
+          <div class="edit-container">
+            <input type="text" [(ngModel)]="message.text">
+            <div class="buttons flex">
+              <button type="submit" class="button2" (click)="closeEditbaseMessage()">Abbrechen</button>
+              <button type="button" class="button1" (click)="updateEditedMessage()">Speichern</button>
+            </div>
+          </div>
+        } @else {
+          <p>{{ message.text }}</p>
+        }
       </div>
 
       <!-- If message is in channel -->
-      @if (chatMessage) {
-      <div class="bottom flex align-center gap-24">
+      @if (IsChatMessage) {
+      <div class="bottom flex align-center gap-24" [ngClass]="{'none': messageIsEditable}">
 
         <!-- Open thread -->
         <p class="blue-font c-pointer" (click)="start_thread(message)">Antworten</p>
