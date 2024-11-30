@@ -1,34 +1,42 @@
 <header>
-	<img class="logo" [routerLink]="['/home']" src="./assets/img/dabubble-logo.svg" alt="">
-	@if (path == '/log-in') {
+  <!-- Logo -->
+	<img class="logo" src="./assets/img/dabubble-logo.svg" alt="">
+
+  <!-- Show on log-in -->
+  @if (path == '/log-in') {
 	<div class="registration">
 		<p>Neu bei DaBubble?</p>
-		<p class="blue-font c-pointer" [routerLink]="['/sign-in']">Konto erstellen</p>
+		<p class="sign-in blue-font c-pointer" [routerLink]="['/sign-in']">Konto erstellen</p>
 	</div>
 	}
-	@if (path == '/home') {
-	<div class="profile">
+
+  <!-- Show on main -->
+	@if (isHomePath) {
+	<div class="profile c-pointer" (click)="openLightbox()">
 		@if (globalVariables.signed_in_member) {
+
+    <!-- Profile name -->
 		<h1 class="profile-name truncate">{{ globalVariables.signed_in_member.displayName }}</h1>
-		}
-		<div class="profile-img">
-			@if (globalVariables.signed_in_member) {
-			  <img src="{{ globalVariables.signed_in_member.photoURL }}" width="70" height="70" alt="">
-        @for (member of firestoreService.members; track $index) {
-          @if (member.member === globalVariables.signed_in_member.displayName && member.isOnline) {
-            <div class="online"></div>
-          }
+
+    <!-- Profile img -->
+    <div class="profile-img">
+      <img src="{{ globalVariables.signed_in_member.photoURL }}" width="70" height="70" alt="">
+      @for (member of firestoreService.members; track $index) {
+        @if (member.member === globalVariables.signed_in_member.displayName && member.isOnline) {
+        <div class="online"></div>
         }
-			}
+      }
 		</div>
-		<img class="arrow-down c-pointer" (click)="openLightbox()" src="./assets/img/chat/arrow_down.svg" alt="">
+		}
+
+		<img class="arrow-down" src="./assets/img/chat/arrow_down.svg" alt="">
 	</div>
 	}
 </header>
 
-@if (openLightboxVar) {
+@if (lightboxIsOpen) {
 <div class="lightbox c-pointer">
-	<p (click)="openProfile()" class="font-weight-700">Profil</p>
-	<p (click)="logOut()" class="font-weight-700">Log out</p>
+	<p class="font-weight-700" (click)="openProfile()">Profil</p>
+	<p class="font-weight-700" (click)="logOut()">Log out</p>
 </div>
 }

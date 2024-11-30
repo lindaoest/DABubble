@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { filter } from 'rxjs/operators';
@@ -13,51 +13,55 @@ import { UserStatusService } from '../services/user-status/user-status.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
+  imports: [
+    RouterModule
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
 
-  path: string = '';
-  openLightboxVar: boolean = false;
+  public isHomePath: boolean = false;
+  public lightboxIsOpen: boolean = false;
+  public path!: string;
 
   constructor(
-    public dialog: MatDialog,
-    private router: Router,
     private location: Location,
-    public globalVariables: GlobalVariablesService,
+    private router: Router,
+    public dialog: MatDialog,
     public firestoreService: FirestoreService,
-    public userStatusService: UserStatusService
-  )
-    { }
+    public globalVariables: GlobalVariablesService,
+    public userStatusService: UserStatusService,
+  ) { }
 
   ngOnInit(): void {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.path = this.location.path();
+      this.isHomePath = this.router.url.startsWith('/home');
     });
   }
 
-  openLightbox() {
-    this.openLightboxVar = !this.openLightboxVar;
+  public openLightbox() {
+    this.lightboxIsOpen = !this.lightboxIsOpen;
   }
 
-  logOut() {
+  public logOut() {
     const auth = getAuth();
+
     signOut(auth).then(() => {
       this.router.navigate(['log-in']);
-      this.openLightboxVar = false;
+      this.lightboxIsOpen = false;
 
       // Observe online-/offline-status
       this.userStatusService.initialize(this.globalVariables.signed_in_member.uid);
     }).catch((error) => {
-      console.log('logOut', error);
+      console.error('logOut', error);
     });
   }
 
-  openProfile(): void {
+  public openProfile() {
     this.dialog.open(ProfileComponent, {
       data: {
         name: this.globalVariables.signed_in_member.displayName,
@@ -65,6 +69,6 @@ export class HeaderComponent {
         email: this.globalVariables.signed_in_member.email
       }
     });
-    this.openLightboxVar = false;
+    this.lightboxIsOpen = false;
   }
 }
