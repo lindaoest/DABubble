@@ -4,8 +4,4 @@ footer {
   @include displayFlex();
   gap: 32px;
   margin-bottom: 32px;
-
-  a {
-    text-decoration: none;
-  }
 }
