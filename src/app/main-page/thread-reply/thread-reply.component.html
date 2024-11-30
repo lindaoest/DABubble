@@ -1,20 +1,34 @@
 <div class="threads">
+
+  <!-- Header -->
   <app-top-bar-container>
     <app-top-bar-thread class="flex space-between" [messageToReplyTo]="messageToReplyTo" />
   </app-top-bar-container>
+
+  <!-- Chat block -->
   <div class="chat-block flex">
-    <app-message [style]="{'width': '100%'}" [isThreadMessage]="true" [message]="messageToReplyTo"></app-message>
+
+    <!-- Message to reply to -->
+    <app-message [style]="{'width': '100%'}" [isThreadMessage]="true" [message]="messageToReplyTo" />
+
+    <!-- Number of answers -->
     <div class="answers-number">
       <p class="answer-number-text">{{ answerLength }} {{ answerLength == 1 ? 'Antwort' : 'Anworten'}}</p>
     </div>
+
+    <!-- Threads -->
     @for (group of (this.firestoreService.groupedThreads | keyvalue); track $index) {
-    @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
-    @for (dateGroup of (group.value | keyvalue); track $index) {
-    <app-date-block-message [dateGroup]="dateGroup" [isThreadMessage]="true"
-      [messageToReplyTo]="messageToReplyTo"></app-date-block-message>
-    }
-    }
+      @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
+        @for (dateGroup of (group.value | keyvalue); track $index) {
+
+        <!-- Messages -->
+        <app-date-block-message
+          [dateGroup]="dateGroup"
+          [isThreadMessage]="true"
+          [messageToReplyTo]="messageToReplyTo" />
+        }
+      }
     }
   </div>
-  <app-writing-box [sendMessage]="'thread'" [messageToReplyTo]="messageToReplyTo"></app-writing-box>
+  <app-writing-box [sendMessage]="'thread'" [messageToReplyTo]="messageToReplyTo" />
 </div>

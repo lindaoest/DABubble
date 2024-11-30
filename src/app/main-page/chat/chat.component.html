@@ -18,16 +18,15 @@
           <app-date-block-message
             [dateGroup]="dateGroup"
             (currentMessage)="start_thread($event)"
-            [isChatMessage]="true">
-          </app-date-block-message>
+            [isChatMessage]="true" />
         }
       }
     }
   </div>
-  <app-writing-box [sendMessage]="'message'"></app-writing-box>
+  <app-writing-box [sendMessage]="'message'" />
   } @else {
 
   <!-- Create new chat -->
-  <app-create-new-chat></app-create-new-chat>
+  <app-create-new-chat />
   }
 </div>
