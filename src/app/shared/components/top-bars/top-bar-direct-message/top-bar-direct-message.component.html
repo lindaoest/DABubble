@@ -1,0 +1,9 @@
+<!-- back -->
+<img class="c-pointer mobile-arrow" (click)="closeDirectMessageMobile()" src="./assets/img/back-arrow.svg" alt="">
+
+<!-- profile -->
+<div (click)="openDialog()" class="name c-pointer">
+  <img class="avatar" src="{{ activeMember[0].avatar }}" alt="">
+  <h3>{{ activeMember[0].member }}</h3>
+  <img class="arrow" src="./assets/img/channels/arrow_drop_down.svg" alt="">
+</div>

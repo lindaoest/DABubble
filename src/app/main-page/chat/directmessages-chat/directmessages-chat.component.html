@@ -1,20 +1,23 @@
 <div class="chat">
-  <div class="info-top">
-    <img class="c-pointer mobile-arrow" (click)="closeDirectMessageMobile()" src="./assets/img/back-arrow.svg" alt="">
-    <div (click)="openDialog()" class="team-name c-pointer">
-      <img class="avatar" src="{{ activeMember[0].avatar }}" alt="">
-      <h3>{{ globalVariables.active_privatechat }}</h3>
-      <img src="./assets/img/channels/arrow_drop_down.svg" alt="">
-    </div>
-  </div>
+
+  <!-- Header -->
+  <app-top-bar-container>
+    <app-top-bar-direct-message class="flex" />
+  </app-top-bar-container>
+
+  <!-- Chat block -->
   <div class="chat-block flex flex-column">
-    <ng-container *ngFor="let group of (this.firestoreService.groupedDirectMessages | keyvalue); trackBy: trackByFn">
-      <ng-container *ngIf="isRelevantGroup(group.key)">
-        <ng-container *ngFor="let dateGroup of (group.value | keyvalue); trackBy: trackByFn">
-          <app-date-block-message [dateGroup]="dateGroup" [isDirectMessage]="true"></app-date-block-message>
-        </ng-container>
-      </ng-container>
-    </ng-container>
+    @for (group of (this.firestoreService.groupedDirectMessages | keyvalue); track $index) {
+      @if (isRelevantGroup(group.key)) {
+        @for (dateGroup of (group.value | keyvalue); track $index) {
+
+          <!-- Messages -->
+          <app-date-block-message
+            [dateGroup]="dateGroup"
+            [isDirectMessage]="true" />
+        }
+      }
+    }
   </div>
-  <app-writing-box [sendMessage]="'direct_message'" [activeMember]="activeMember"></app-writing-box>
+  <app-writing-box [sendMessage]="'direct_message'" [activeMember]="activeMember" />
 </div>
