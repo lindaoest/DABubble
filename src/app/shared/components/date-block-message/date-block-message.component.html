@@ -7,11 +7,16 @@
   </div>
   }
 
-  <!-- ng-content verwenden -->
+  <!-- TODO ng-content verwenden -->
 
   <!-- Add messages -->
   @for (message of dateGroup.value; track $index) {
   <app-message *ngIf="!isThreadMessage || (isThreadMessage && message.message.text === messageToReplyTo.text)"
-    [style]="{'width': '100%'}" [message]="message" [isThreadMessage]="isThreadMessage" [IsChatMessage]="IsChatMessage" (currentMessage)="currentMessage_for_thread($event)"></app-message>
+    [style]="{'width': '100%'}"
+    [message]="message"
+    [isThreadMessage]="isThreadMessage"
+    [isChatMessage]="isChatMessage"
+    [isDirectMessage]="isDirectMessage"
+    (currentMessage)="currentMessage_for_thread($event)" />
   }
 </div>

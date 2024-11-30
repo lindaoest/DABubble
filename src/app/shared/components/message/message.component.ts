@@ -6,6 +6,8 @@ import { ReactionMessageBarComponent } from '../reaction-message-bar/reaction-me
 import { FirestoreService } from '../../services/firestore/firestore.service';
 import { FormsModule } from '@angular/forms';
 import { Thread } from '../../../../models/thread.class';
+import { Subscription } from 'rxjs';
+import { DirectMessage } from '../../../../models/direct-message.class';
 
 @Component({
   selector: 'app-message',
@@ -21,23 +23,33 @@ import { Thread } from '../../../../models/thread.class';
 export class MessageComponent {
 
   @Input()
-  public message!: Message;
+  public message!: any;
 
   @Input()
   public isThreadMessage: boolean = false;
 
   @Input()
-  public IsChatMessage: boolean = false;
+  public isChatMessage: boolean = false;
+
+  @Input()
+  public isDirectMessage: boolean = false;
 
   @Output()
   public currentMessage = new EventEmitter();
 
-  messageIsEditable: boolean = false;
+  private directMessageSubscription: Subscription = new Subscription;
+  public direct_messages: DirectMessage[] = [];
+
+  public messageIsEditable: boolean = false;
 
   constructor(
     public firestoreService: FirestoreService,
     public globalVariables: GlobalVariablesService,
-  ) { }
+  ) {
+    this.directMessageSubscription = this.firestoreService.directMessages$.subscribe(directMessage => {
+      this.direct_messages = directMessage;
+    });
+  }
 
   public start_thread(message: Message) {
     this.globalVariables.showThreads = true;
@@ -53,13 +65,17 @@ export class MessageComponent {
   }
 
   public updateEditedMessage() {
-    this.updateMessage();
-    this.updateThread();
+    if(this.isChatMessage) this.updateMessage();
+    if(this.isChatMessage) this.updateReplyToMessageInThread();
+    if(this.isThreadMessage) this.updateThread();
+    if(this.isDirectMessage) this.updateDirectMessage();
 
     this.messageIsEditable = false;
   }
 
-  updateMessage() {
+  // TODO refactor update
+
+  public updateMessage() {
     const message: Message = {
       id: this.message.id,
       channel: this.message.channel,
@@ -73,7 +89,7 @@ export class MessageComponent {
     this.firestoreService.updateMessage('messages', message);
   }
 
-  updateThread() {
+  public updateReplyToMessageInThread() {
     const updateThread = this.firestoreService.threads.filter(thread => thread.message.timeStamp === this.message.timeStamp);
 
     updateThread.forEach(updateThread => {
@@ -90,5 +106,34 @@ export class MessageComponent {
       }
       this.firestoreService.updateThread('threads', thread)
     })
+  }
+
+  public updateThread() {
+    const thread: Thread = {
+      id: this.message.id,
+      channel: this.message.channel,
+      text: this.message.text,
+      time: this.message.time,
+      sender: this.message.sender,
+      avatar: this.message.avatar,
+      creationDate: this.message.creationDate,
+      timeStamp: this.message.timeStamp,
+      message: this.message.message
+    }
+    this.firestoreService.updateThread('threads', thread);
+  }
+
+  public updateDirectMessage() {
+    const directMessage: DirectMessage = {
+      id: this.message.id,
+      text: this.message.text,
+      time: this.message.time,
+      receiver: this.message.receiver,
+      sender: this.message.sender,
+      avatar: this.message.avatar,
+      creationDate: this.message.creationDate,
+      timeStamp: this.message.timeStamp
+    }
+    this.firestoreService.updateDirectMessage('direct-messages', directMessage);
   }
 }

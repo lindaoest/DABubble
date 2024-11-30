@@ -17,8 +17,6 @@
     </div>
 
     <!-- Overlay edit message -->
-    @if(boxEditMessageIsOpen) {
-    <app-edit-message-button (click)="editMessage()" />
-    }
+    <app-edit-message-button (click)="editMessage()" [boxEditMessageIsOpen]="boxEditMessageIsOpen" />
   }
 </div>

@@ -33,8 +33,10 @@
         }
       </div>
 
+      <!-- TODO create templateRef for isChatMessage -->
+
       <!-- If message is in channel -->
-      @if (IsChatMessage) {
+      @if (isChatMessage) {
       <div class="bottom flex align-center gap-24" [ngClass]="{'none': messageIsEditable}">
 
         <!-- Open thread -->

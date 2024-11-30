@@ -11,7 +11,7 @@
     <ng-container *ngFor="let group of (this.firestoreService.groupedDirectMessages | keyvalue); trackBy: trackByFn">
       <ng-container *ngIf="isRelevantGroup(group.key)">
         <ng-container *ngFor="let dateGroup of (group.value | keyvalue); trackBy: trackByFn">
-          <app-date-block-message [dateGroup]="dateGroup"></app-date-block-message>
+          <app-date-block-message [dateGroup]="dateGroup" [isDirectMessage]="true"></app-date-block-message>
         </ng-container>
       </ng-container>
     </ng-container>

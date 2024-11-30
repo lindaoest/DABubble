@@ -22,7 +22,10 @@ export class DateBlockMessageComponent {
   public isThreadMessage: boolean = false;
 
   @Input()
-  public IsChatMessage: boolean = false;
+  public isChatMessage: boolean = false;
+
+  @Input()
+  public isDirectMessage: boolean = false;
 
   @Output()
   public currentMessage = new EventEmitter();

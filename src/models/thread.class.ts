@@ -1,11 +1,10 @@
-import { MessageBase } from "./message-base.class";
 import { Message } from "./message.class";
 
-export class Thread extends MessageBase {
-  message: MessageBase;
+export class Thread extends Message {
+  message: Message;
 
   constructor(obj: any) {
     super(obj);
-    this.message = new MessageBase(obj.message);
+    this.message = new Message(obj.message);
   }
 }

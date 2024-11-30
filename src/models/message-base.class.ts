@@ -1,6 +1,5 @@
 export class MessageBase {
   id?: string;
-	channel: string;
 	text: string;
 	time: string;
 	sender: string;
@@ -10,7 +9,6 @@ export class MessageBase {
 
   constructor(obj: any) {
 		this.id = obj.id;
-		this.channel = obj.channel;
 		this.text = obj.text;
 		this.time = obj.time;
 		this.sender = obj.sender;

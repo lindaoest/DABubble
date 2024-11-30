@@ -1,21 +1,10 @@
-export class DirectMessage {
-  id?: string;
-	sender: string;
+import { MessageBase } from "./message-base.class";
+
+export class DirectMessage extends MessageBase {
 	receiver: string;
-	text: string;
-	time: string;
-	avatar: string;
-	creationDate: string;
-  timeStamp: number;
 
 	constructor(obj: any) {
-    this.id = obj.id;
-		this.sender = obj.sender;
+    super(obj);
 		this.receiver = obj.receiver;
-		this.text = obj.text;
-		this.time = obj.time;
-		this.avatar = obj.avatar;
-		this.creationDate = obj.creationDate;
-    this.timeStamp = obj.timeStamp;
 	}
 }
