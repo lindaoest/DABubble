@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { Thread } from '../../../../models/thread.class';
 import { Subscription } from 'rxjs';
+import { Channel } from '../../../../models/channel.class';
 
 @Component({
   selector: 'app-writing-box',
@@ -15,6 +16,9 @@ import { Subscription } from 'rxjs';
   styleUrl: './writing-box.component.scss'
 })
 export class WritingBoxComponent {
+
+  @Input()
+  public activeChannel!: Channel;
 
   @Input()
   public sendMessage!: string;
@@ -33,29 +37,15 @@ export class WritingBoxComponent {
 
   public description: string = '';
 
-  //Subscription
-  private activeChatSubscription: Subscription = new Subscription;
-  public activeChat: string = '';
-
   constructor(
     public globalVariables: GlobalVariablesService,
     public firestoreService: FirestoreService
   ) { }
 
-  ngOnInit() {
-    this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
-      this.activeChat = chat;
-    });
-  }
-
-  ngOnDestroy() {
-    this.activeChatSubscription.unsubscribe();
-  }
-
   public async addMessage() {
     if (this.sendMessage == 'message') {
       const message: Message = new Message({
-        channel: this.activeChat ? this.globalVariables.activeChannel.name : this.globalVariables.channelWithLoggedInUser.name,
+        channel: this.activeChannel.name,
         text: this.description,
         time: this.globalVariables.currentTime(),
         sender: this.globalVariables.signed_in_member.displayName,
@@ -79,7 +69,7 @@ export class WritingBoxComponent {
 
     } else if (this.sendMessage == 'thread') {
       const thread: Thread = new Thread({
-        channel: this.activeChat ? this.globalVariables.activeChannel.name : this.globalVariables.channelWithLoggedInUser.name,
+        channel: this.activeChannel.name,
         text: this.description,
         time: this.globalVariables.currentTime(),
         sender: this.globalVariables.signed_in_member.displayName,

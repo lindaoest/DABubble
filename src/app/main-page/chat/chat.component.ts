@@ -46,10 +46,6 @@ export class ChatComponent {
   private app = initializeApp(this.firebaseConfig);
   private auth = getAuth(this.app);
 
-  // Subscription activeChat
-  private activeChatSubscription: Subscription = new Subscription;
-  public activeChat: string = '';
-
   // Subscription channels
   channelSubscription: Subscription = new Subscription;
   channels: Channel[] = [];
@@ -61,10 +57,6 @@ export class ChatComponent {
   ) { }
 
   ngOnInit() {
-    this.activeChatSubscription = this.globalVariables.activeChat$.subscribe(chat => {
-      this.activeChat = chat;
-    });
-
     this.channelSubscription = this.firestoreService.channels$.pipe(
       tap((channels: Channel[]) => {
         this.channels = channels;
@@ -87,10 +79,12 @@ export class ChatComponent {
         this.globalVariables.signed_in_member = user;
       }
     });
+
+    console.log('loggedInUser', this.globalVariables.channelWithLoggedInUser);
+    console.log('activeChannel', this.globalVariables.activeChannel);
   }
 
   ngOnDestroy() {
-    this.activeChatSubscription.unsubscribe();
     this.channelSubscription.unsubscribe();
   }
 

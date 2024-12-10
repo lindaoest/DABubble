@@ -2,28 +2,39 @@
 
   @if (!globalVariables.create_new_chat) {
 
-  <!-- Chat overview -->
-  <!-- Header -->
-  <app-top-bar-container>
-    <app-top-bar class="flex space-between" />
-  </app-top-bar-container>
+    @if(globalVariables.activeChannel && globalVariables.activeChannel.name != '') {
 
-  <!-- Chat block -->
-  <div class="chat-block flex flex-column">
-    @for (group of (this.firestoreService.groupedMessages | keyvalue); track $index) {
-      @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
-        @for (dateGroup of (group.value | keyvalue); track $index) {
+      <!-- Chat overview -->
+      <!-- Header -->
+      <app-top-bar-container>
+        <app-top-bar class="flex space-between" [activeChannel]="globalVariables.activeChannel" />
+      </app-top-bar-container>
 
-          <!-- Messages -->
-          <app-date-block-message
-            [dateGroup]="dateGroup"
-            (currentMessage)="start_thread($event)"
-            [isChatMessage]="true" />
+      <!-- Chat block -->
+      <div class="chat-block flex flex-column">
+        @for (group of (this.firestoreService.groupedMessages | keyvalue); track $index) {
+          @if (group.key == (globalVariables.activeChannel ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
+            @for (dateGroup of (group.value | keyvalue); track $index) {
+
+              <!-- Messages -->
+              <app-date-block-message
+                [dateGroup]="dateGroup"
+                (currentMessage)="start_thread($event)"
+                [isChatMessage]="true" />
+            }
+          }
         }
-      }
+      </div>
+      <app-writing-box [sendMessage]="'message'" [activeChannel]="globalVariables.activeChannel" />
+    } @else {
+      <div class="no-active-channel">
+        <h3 class="blue-font">Willkommen bei DA-Bubble!</h3>
+        <p>
+          Du bist noch keinem Kanal beigetreten.
+          Erstelle einen neuen Kanal oder trete einem bestehenden bei, um mit anderen zu chatten!
+        </p>
+      </div>
     }
-  </div>
-  <app-writing-box [sendMessage]="'message'" />
   } @else {
 
   <!-- Create new chat -->

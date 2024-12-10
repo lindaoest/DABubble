@@ -8,9 +8,7 @@
     <img src="./assets/img/hashtag-black.svg" alt="">
 
     <!-- Chat name -->
-    @if (globalVariables.channelWithLoggedInUser) {
-    <h3 class="headline truncate">{{ activeChat ? activeChat : globalVariables.channelWithLoggedInUser.name }}</h3>
-    }
+    <h3 class="headline truncate">{{ activeChannel.name }}</h3>
 
     <!-- open detail overlay -->
     <img src="./assets/img/channels/arrow_drop_down.svg" alt="arrow_drop_down">

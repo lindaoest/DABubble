@@ -81,17 +81,15 @@ export class SiteMenuComponent {
   }
 
   public setActiveChannel(channelName: string) {
-    if (this.globalVariables.activeChannel) {
-      this.firestoreService.channels$.subscribe(channels => {
-        const foundChannel = channels.find((obj: Channel) => obj.name === channelName);
-        if (foundChannel) {
-          this.globalVariables.activeChannel = foundChannel;
-          this.filterChats();
-        } else {
-          console.error('Channel not found');
-        }
-      });
-    }
+    this.firestoreService.channels$.subscribe(channels => {
+      const foundChannel = channels.find((obj: Channel) => obj.name === channelName);
+      if (foundChannel) {
+        this.globalVariables.activeChannel = foundChannel;
+        this.filterChats();
+      } else {
+        console.error('Channel not found');
+      }
+    });
   }
 
   public filterChats() {

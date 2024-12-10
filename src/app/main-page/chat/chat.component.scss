@@ -11,6 +11,19 @@
   padding: 32px 0;
 }
 
+.no-active-channel {
+  @include displayFlex();
+  flex-direction: column;
+  height: 400px;
+  padding: 32px 24px 0;
+
+  p {
+    width: 60%;
+    text-align: center;
+    padding-top: 16px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .chat {
     padding: 0 0 16px 0;

@@ -6,6 +6,10 @@ import { GlobalVariablesService } from '../shared/services/global-variables/glob
 import { DirectmessagesChatComponent } from './chat/directmessages-chat/directmessages-chat.component';
 import { Message } from '../../models/message.class';
 import { CommonModule } from '@angular/common';
+import { filter, Subscription, tap } from 'rxjs';
+import { Channel } from '../../models/channel.class';
+import { FirestoreService } from '../shared/services/firestore/firestore.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -16,18 +20,63 @@ import { CommonModule } from '@angular/common';
 })
 export class MainPageComponent {
 
-  currentMessage: Message = {
-    channel: '',
-    text: '',
-    time: '',
-    sender: '',
-    avatar: '',
-    creationDate: 0,
-    timeStamp: 0
-  };
+  public currentMessage!: Message;
+  public paramId!: string | null;
+
+  // Subscription channels
+  private channelSubscription: Subscription = new Subscription;
+  public channels: Channel[] = [];
 
 
-  constructor(public globalVariables: GlobalVariablesService) {}
+  constructor(
+    public globalVariables: GlobalVariablesService,
+    public firestoreService: FirestoreService,
+    public route: ActivatedRoute
+  ) { }
+
+  ngOnInit() {
+    this.channelSubscription = this.firestoreService.channels$.pipe(
+      tap((channels: Channel[]) => {
+        this.channels = channels;
+
+        if (this.channels.length > 0) {
+          this.paramId = this.route.children[0]?.snapshot.params['id'];
+
+          if (this.paramId) {
+            const activeChannel = this.channels.find(channel => channel.name.toLowerCase() === this.paramId);
+            if (activeChannel) {
+              this.globalVariables.activeChannel = activeChannel;
+            }
+          } else {
+            let activeChannelFound = false;
+
+            for (const channel of this.channels) {
+              const isMemberInChannel = channel.members.some(member =>
+                member.member === this.globalVariables.signed_in_member.displayName
+              );
+
+              if (isMemberInChannel) {
+                this.globalVariables.activeChannel = channel;
+                activeChannelFound = true;
+                break; // Schleife abbrechen
+              }
+            }
+
+            // Setze einen leeren Channel, wenn kein aktiver gefunden wurde
+            if (!activeChannelFound) {
+              this.globalVariables.activeChannel = {
+                id: '',
+                name: '',
+                members: [],
+                description: '',
+                creator: ''
+              };
+            }
+          }
+        }
+      })
+    ).subscribe();
+  }
 
   message_for_thread(message: Message) {
     this.currentMessage = message;

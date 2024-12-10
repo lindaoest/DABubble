@@ -12,13 +12,7 @@ export class GlobalVariablesService {
 
   newMember!: Member;
   signed_in_member!: any;
-  activeChannel: Channel = {
-    id: '',
-    name: '',
-    members: [],
-    description: '',
-    creator: ''
-  };
+  activeChannel!: Channel;
   messages: Message[] = [];
   create_new_chat: boolean = false;
   verifyText: boolean = false;
