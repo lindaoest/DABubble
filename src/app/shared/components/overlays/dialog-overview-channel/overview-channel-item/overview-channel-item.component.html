@@ -1,0 +1,41 @@
+<div class="content flex p-t-24">
+  <div class="edit">
+    <p class="font-weight-700">{{ title }}</p>
+
+    <!-- Save or edit-->
+    <ng-container *ngIf="isEditable; else editText" [ngTemplateOutlet]="saveText"></ng-container>
+
+    <!-- Save -->
+    <ng-template #saveText>
+      <p (click)="saveChannel()" class="blue-font c-pointer">Speichern</p>
+    </ng-template>
+
+    <!-- Edit -->
+    <ng-template #editText>
+      <p (click)="editChannel()" class="blue-font c-pointer">Bearbeiten</p>
+    </ng-template>
+
+  </div>
+
+  <!-- Normal text or inputfield-->
+  <ng-container *ngIf="isEditable; else placeholderField" [ngTemplateOutlet]="inputField"></ng-container>
+
+  <!-- Inputfield -->
+  <ng-template #inputField>
+    <div class="channel-name-two-input">
+      <img src="./assets/img/chat/tag-black.svg" alt="">
+      <input type="text" placeholder="{{ text }}" [(ngModel)]="text" required>
+    </div>
+  </ng-template>
+
+  <!-- Normal text -->
+  <ng-template #placeholderField>
+    <div class="channel-name-two">
+      <img src="./assets/img/chat/tag-black.svg" alt="">
+      <p>{{ text ? text : globalVariables.activeChannel.name }}</p>
+    </div>
+  </ng-template>
+
+  <!-- CreatedBy template -->
+  <ng-container *ngIf="createdBy" [ngTemplateOutlet]="createdBy"/>
+</div>

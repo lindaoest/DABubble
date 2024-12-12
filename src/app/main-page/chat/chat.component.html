@@ -13,7 +13,7 @@
       <!-- Chat block -->
       <div class="chat-block flex flex-column">
         @for (group of (this.firestoreService.groupedMessages | keyvalue); track $index) {
-          @if (group.key == (globalVariables.activeChannel ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
+          @if (group.key == globalVariables.activeChannel.name) {
             @for (dateGroup of (group.value | keyvalue); track $index) {
 
               <!-- Messages -->

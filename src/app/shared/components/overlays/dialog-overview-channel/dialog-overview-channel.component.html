@@ -1,4 +1,6 @@
 <div class="dialog-add-channel">
+
+  <!-- Title -->
 	<div class="headline">
 		<div class="channel-name">
 			<img src="./assets/img/chat/tag-black.svg" alt="">
@@ -6,50 +8,31 @@
 		</div>
 		<img class="c-pointer" (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
 	</div>
-	<div class="content flex p-t-24">
-		<div class="edit">
-			<p class="font-weight-700">Channel Name</p>
-			@if (editModus) {
-				<p (click)="saveChanges()" class="blue-font c-pointer">Speichern</p>
-			} @else {
-				<p (click)="editChannel()" class="blue-font c-pointer">Bearbeiten</p>
-			}
-		</div>
-		@if (editModus) {
-			<div class="channel-name-two-input">
-				<img src="./assets/img/chat/tag-black.svg" alt="">
-				<input type="text" placeholder="{{ data.name }}" [(ngModel)]="data.name" required>
-			</div>
-		} @else {
-			<div class="channel-name-two">
-				<img src="./assets/img/chat/tag-black.svg" alt="">
-				<p>{{ data.name ? data.name : firestoreService.channels[0].name }}</p>
-			</div>
-		}
-	</div>
-	<div class="content flex p-t-24">
-		<div class="edit">
-			<p class="font-weight-700">Beschreibung</p>
-			@if (editModus) {
-				<p (click)="saveChanges()" class="blue-font c-pointer">Speichern</p>
-			} @else {
-				<p (click)="editChannel()" class="blue-font c-pointer">Bearbeiten</p>
-			}
-		</div>
-		@if (editModus) {
-			<input type="text" placeholder="{{ data.description }}" class="input-description" [(ngModel)]="data.description" required>
-		} @else {
-      @if (data.description == "") {
-        <p>Keine Description vorhanden</p>
-      } @else {
-        <p>{{ data.description ? data.description : firestoreService.channels[0].description }}</p>
-      }
-		}
-		<div class="created-by">
-			<p class="font-weight-700">Erstellt von</p>
-			<p class="name blue-font">{{ data.creator }}</p>
-		</div>
-	</div>
+
+  <!-- Name Block -->
+  <app-overview-channel-item
+    [data]="data"
+    [key]="'name'"
+    [text]="data.name"
+    [title]="'Name'" />
+
+  <!-- Description Block -->
+  <app-overview-channel-item
+    [data]="data"
+    [key]="'description'"
+    [text]="data.description"
+    [title]="'Beschreibung'">
+
+    <!-- Created By Block -->
+    <ng-template #createdBy>
+      <div class="created-by">
+        <p class="font-weight-700">Erstellt von</p>
+        <p class="name blue-font">{{ data.creator }}</p>
+      </div>
+    </ng-template>
+  </app-overview-channel-item>
+
+  <!-- Leave Channel -->
 	<div class="actions">
 		<button class="button1" (click)="onNoClick()">Channel verlassen</button>
 	</div>

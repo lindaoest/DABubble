@@ -18,7 +18,7 @@
 
     <!-- Threads -->
     @for (group of (this.firestoreService.groupedThreads | keyvalue); track $index) {
-      @if (group.key == (activeChat ? globalVariables.activeChannel.name : globalVariables.channelWithLoggedInUser.name)) {
+      @if (group.key == globalVariables.activeChannel.name) {
         @for (dateGroup of (group.value | keyvalue); track $index) {
 
         <!-- Messages -->

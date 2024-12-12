@@ -17,7 +17,6 @@ export class GlobalVariablesService {
   create_new_chat: boolean = false;
   verifyText: boolean = false;
   personObjArray: Member[] = [];
-  channelWithLoggedInUser!: Channel;
 
   showMenu: boolean = true;
   showChat: boolean = false;

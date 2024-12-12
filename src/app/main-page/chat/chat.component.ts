@@ -60,17 +60,6 @@ export class ChatComponent {
     this.channelSubscription = this.firestoreService.channels$.pipe(
       tap((channels: Channel[]) => {
         this.channels = channels;
-
-        this.channels.some(channel => {
-          const member = channel.members.find((findMember: any) => findMember.member === this.globalVariables.signed_in_member.displayName);
-
-          if (member) {
-            this.globalVariables.channelWithLoggedInUser = channel;
-            return true;
-          }
-
-          return false;
-        });
       })
     ).subscribe()
 
@@ -79,9 +68,6 @@ export class ChatComponent {
         this.globalVariables.signed_in_member = user;
       }
     });
-
-    console.log('loggedInUser', this.globalVariables.channelWithLoggedInUser);
-    console.log('activeChannel', this.globalVariables.activeChannel);
   }
 
   ngOnDestroy() {

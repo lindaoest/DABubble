@@ -19,24 +19,16 @@
 
     <!-- Members -->
     <div class="avatars">
-      @if (getMembers().length == 0 && globalVariables.channelWithLoggedInUser) {
-        @for (avatar of globalVariables.channelWithLoggedInUser.members; track avatar; let index = $index) {
-         @if (index <= 2) {
-          <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 2 * -8}">
-         }
-        }
-      } @else {
         @for (avatar of getMembers(); track avatar; let index = $index) {
           @if (index <= 2) {
             <img [src]="avatar['avatar']" alt="" [ngStyle]="{'margin-left.px': 2 * -8}">
           }
         }
-      }
     </div>
 
     <!-- Number of members -->
     <div class="quantity">
-      <p class="font-weight-700">{{ getMembers().length == 0 && globalVariables.channelWithLoggedInUser ? globalVariables.channelWithLoggedInUser.members.length : getMembers().length }}</p>
+      <p class="font-weight-700">{{ getMembers().length }}</p>
     </div>
   </div>
 
