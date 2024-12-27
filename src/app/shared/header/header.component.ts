@@ -39,7 +39,7 @@ export class HeaderComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.path = this.location.path();
-      this.isHomePath = this.router.url.startsWith('/home');
+      this.isHomePath = this.router.url.startsWith('');
     });
   }
 

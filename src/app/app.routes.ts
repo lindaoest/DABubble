@@ -9,17 +9,22 @@ import { ImprintComponent } from './shared/footer/imprint/imprint.component';
 import { PrivacyComponent } from './shared/footer/privacy/privacy.component';
 import { DirectmessagesChatComponent } from './main-page/chat/directmessages-chat/directmessages-chat.component';
 import { ChatComponent } from './main-page/chat/chat.component';
+import { AuthGuard } from './shared/guards/authenticated-guard.guard';
 
 export const routes: Routes = [
-	{ path: 'home', component: MainPageComponent,
+	{ path: '',
+    component: MainPageComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'users/:id',
-        component: DirectmessagesChatComponent
+        component: DirectmessagesChatComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'channels/:id',
-        component: ChatComponent
+        component: ChatComponent,
+        canActivate: [AuthGuard],
       }
     ],
    },
@@ -30,6 +35,5 @@ export const routes: Routes = [
 	{ path: 'new-password', component: NewPasswordComponent },
 	{ path: 'imprint', component: ImprintComponent },
 	{ path: 'privacy', component: PrivacyComponent },
-  { path: '', redirectTo: '/log-in', pathMatch: 'full' },  // Redirect to log-in for standard
   { path: '**', redirectTo: '/log-in' }
 ];
