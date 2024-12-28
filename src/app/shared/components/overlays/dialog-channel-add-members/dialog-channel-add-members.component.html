@@ -1,34 +1,26 @@
 <div class="dialog-add-channel flex flex-column">
+
+  <!-- Headline -->
 	<div class="headline">
 		<h3>Leute hinzufügen</h3>
-		<img (click)="onNoClick()" src="./assets/img/thread/close.svg" alt="">
+    <div class="c-pointer close-icon">
+      <img src="./assets/img/thread/close.svg" alt="close-overlay" (click)="onNoClick()">
+    </div>
 	</div>
-	<div class="content flex p-t-24">
-		<input type="checkbox" (click)="checkAllMembers()" [checked]="allMembers">
-		<p>Alle Mitglieder von Office Team hinzufügen</p>
-	</div>
-	<div class="content flex p-t-24">
-		<input type="checkbox" (click)="checkCertainMembers()" [checked]="certainMembers">
-		<p>Bestimmte Leute hinzufügen</p>
-	</div>
-	@if (certainMembers) {
-	<div class="certain-members-container">
-		<div class="input-box">
-			<div class="added-members" [ngStyle]="{'width': selectedMember.length > 0 ? '260px' : ''}">
-				@for (item of selectedMember; track item; let index = $index) {
-				<div class="member">
-					<img src="{{ item.avatar }}" alt="">
-					<p>{{ item.member }}</p>
-					<img (click)="deleteMember(index)" class="cursorPointer" src="./assets/img/thread/close.svg" alt="">
-				</div>
-				}
-			</div>
-			<input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input">
-		</div>
-		<app-members-box [notIncludedMembers]="notIncludedMembers" (checkMemberLength)="checkMemberArray($event)"></app-members-box>
-	</div>
-	}
+
+  <mat-radio-group class="flex flex-column p-t-24" aria-label="Select an option" (change)="checkMembers($event.value)">
+    <!-- Add all team members -->
+    <mat-radio-button value="allMembers">Alle Mitglieder von Office Team hinzufügen</mat-radio-button>
+
+    <!-- Add certain members -->
+    <mat-radio-button value="certainMembers">Bestimmte Leute hinzufügen</mat-radio-button>
+  </mat-radio-group>
+
+  <!-- Choose members to add -->
+  <app-input-select-members *ngIf="isCertainMembers" (membersEvent)="checkMemberLength($event)" />
+
+  <!-- Add members button -->
 	<div class="actions">
-		<button class="button1" [disabled]="newMemberTrue" [mat-dialog-close]="data">Erstellen</button>
+		<button class="button1" (click)="addMembers()" [disabled]="disabledButton" [mat-dialog-close]="data">Erstellen</button>
 	</div>
 </div>

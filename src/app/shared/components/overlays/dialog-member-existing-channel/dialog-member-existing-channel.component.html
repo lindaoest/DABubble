@@ -1,7 +1,9 @@
 <div class="dialog-member-existing-channel">
 	<div class="headline">
 		<h3>Leute hinzufügen</h3>
-		<img (click)="onNoClick()" class="c-pointer" src="./assets/img/thread/close.svg" alt="">
+    <div class="close-icon">
+      <img class="c-pointer" src="./assets/img/thread/close.svg" alt="close-icon" (click)="onNoClick()">
+    </div>
 	</div>
 	<div class="channel-name">
 		<img src="./assets/img/channels/tag.svg" alt="">
@@ -15,14 +17,14 @@
 				<div class="member">
 					<img src="{{ item.avatar }}" alt="">
 					<p>{{ item.member }}</p>
-					<img (click)="deleteMember(index)" class="cursorPointer" src="./assets/img/thread/close.svg" alt="">
+					<img (click)="deleteMember(index)" class="c-pointer" src="./assets/img/thread/close.svg" alt="">
 				</div>
 				}
 			</div>
 			<input (click)="showMemberBox()" type="text" placeholder="Name eingeben">
 		</div>
     @if (notIncludedMembers.length > 0) {
-      <app-members-box [notIncludedMembers]="notIncludedMembers" (checkMemberLength)="checkMemberArray($event)"></app-members-box>
+      <app-members-box [selectedMembers]="notIncludedMembers" (checkMemberLength)="checkMemberArray($event)"></app-members-box>
     }
 	</div>
 	<div class="actions">

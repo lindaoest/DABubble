@@ -40,7 +40,7 @@ export class GlobalVariablesService {
     this.active_privatechatSubject.next(value);
   }
 
-  set certainMember_Array(value: any[]) {
+  set certainMember_Array(value: Member[]) {
     this.certainMember_Array_Subject.next(value);
   }
 

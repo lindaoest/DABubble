@@ -1,17 +1,13 @@
 <div class="members-box">
-  @if (notIncludedMembers.length > 0) {
-  @for (member of notIncludedMembers; track member; let index = $index) {
-  <div (click)="addMember(member)" class="member c-pointer" [ngClass]="{'gray-filter-on': isClicked}">
+
+  <!-- Go through members -->
+  @for (member of selectMemberList(); track member; let index = $index) {
+  <div class="member c-pointer" (click)="addMember(member)">
+    <!-- Avatar -->
     <img src="{{ member.avatar }}" alt="">
+
+    <!-- Name -->
     <p>{{ member.member }}</p>
   </div>
-  }
-  } @else {
-  @for (member of firestoreService.members; track member; let index = $index) {
-  <div (click)="addMember(member)" class="member c-pointer" [ngClass]="{'gray-filter-on': isClicked}">
-    <img src="{{ member.avatar }}" alt="">
-    <p>{{ member.member }}</p>
-  </div>
-  }
   }
 </div>

@@ -7,38 +7,58 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-members-box',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './members-box.component.html',
   styleUrl: './members-box.component.scss'
 })
 export class MembersBoxComponent {
 
-  @Output() checkMemberLength = new EventEmitter();
-  @Input() notIncludedMembers: Member[] = [];
+  // TODO kann weg
+  @Output()
+  public checkMemberLength = new EventEmitter();
 
-  isClicked: boolean = false;
-  memberArray: Member[] = [];
-  newMemberTrue: boolean = false;
+  @Input()
+  public selectedMembers: Member[] = [];
 
-  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) { }
+  @Output()
+  public newMember = new EventEmitter;
 
-  addMember(m: Member) {
-    const foundName = this.firestoreService.members.find(obj => obj.member === m.member);
+  // memberArray: Member[] = [];
+  // newMemberTrue: boolean = false;
 
-    if(foundName) {
-      this.memberArray.push(foundName);
+  constructor(
+    public firestoreService: FirestoreService,
+    public globalVariables: GlobalVariablesService
+  ) { }
+
+  public selectMemberList() {
+    if(this.selectedMembers.length > 0) {
+      return this.selectedMembers;
+    } else {
+      return this.firestoreService.members;
     }
-    this.isClicked = true;
-    this.setCertainMemberArray();
-    this.checkMemberArray();
   }
 
-  setCertainMemberArray() {
-    this.globalVariables.certainMember_Array = this.memberArray;
+  public addMember(m: Member) {
+    const currentMember = this.firestoreService.members.find(member => member.member === m.member);
+
+    if(currentMember) {
+      this.newMember.emit(currentMember);
+
+      // TODO Check ob es das noch braucht
+      // this.memberArray.push(currentMember);
+    }
+    // this.setCertainMemberArray();
   }
 
-  checkMemberArray() {
-    this.memberArray.length > 0 ? this.newMemberTrue = false : this.newMemberTrue = true;
-    this.checkMemberLength.emit(this.newMemberTrue);
-  }
+  // setCertainMemberArray() {
+  //   this.globalVariables.certainMember_Array = this.memberArray;
+  // }
+
+  // checkMemberArray() {
+  //   this.memberArray.length > 0 ? this.newMemberTrue = false : this.newMemberTrue = true;
+  //   this.checkMemberLength.emit(this.newMemberTrue);
+  // }
 }

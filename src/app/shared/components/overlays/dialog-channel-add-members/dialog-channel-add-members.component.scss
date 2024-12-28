@@ -1,68 +1,21 @@
 @import '../../../mixin.scss';
 
 .dialog-add-channel {
-	border-radius: 30px !important;
-	padding: 40px !important;
+  border-radius: 30px !important;
+  padding: 40px !important;
 }
 
 .headline {
-	@include displayFlex($jc: space-between);
-}
-
-.content {
-
-	input {
-		border-radius: 50% !important;
-		margin-right: 16px;
-	}
-}
-
-.input-box {
-	@include displayFlex($jc: flex-start);
-  border: 1px solid #ADB0D9;
-	border-radius: 30px;
-  width: auto;
-  gap: 8px;
-	padding: 16px 24px;
-	margin-top: 24px;
-
-	.added-members {
-		@include displayFlex($jc: flex-start);
-		overflow-x: scroll;
-
-		.member {
-			@include displayFlex();
-      background-color: #ECEEFE;
-			border-radius: 30px;
-			gap: 16px;
-			padding: 5px 8px;
-
-			img {
-        border-radius: 50%;
-				width: 34px;
-				height: 34px;
-			}
-
-		}
-	}
-}
-
-input:focus-visible {
-	outline: 0;
-}
-
-
-.certain-members-input {
-	border: none;
+  @include displayFlex($jc: space-between);
 }
 
 .actions {
-	@include displayFlex($jc: flex-end);
-	margin-top: 24px;
+  @include displayFlex($jc: flex-end);
+  margin-top: 24px;
 }
 
 @media screen and (max-width: 630px) {
   .dialog-add-channel {
-    padding: 16px!important;
-}
+    padding: 16px !important;
+  }
 }

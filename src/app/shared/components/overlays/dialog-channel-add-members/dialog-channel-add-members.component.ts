@@ -4,13 +4,14 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogClose } from '@angular/material
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
-import { MembersBoxComponent } from "../../members-box/members-box.component";
-import { Subscription } from 'rxjs';
 import { Member } from '../../../../../models/member.class';
+import { MatRadioModule } from '@angular/material/radio';
+import { InputSelectMembersComponent } from '../../input-select-members/input-select-members.component';
 
 export interface DialogData {
   name: string;
   description: string;
+  members: Member[];
 }
 
 @Component({
@@ -20,67 +21,51 @@ export interface DialogData {
     FormsModule,
     MatDialogClose,
     CommonModule,
-    MembersBoxComponent
+    MatRadioModule,
+    InputSelectMembersComponent
   ],
   templateUrl: './dialog-channel-add-members.component.html',
   styleUrl: './dialog-channel-add-members.component.scss'
 })
 export class DialogChannelAddMembersComponent {
 
-  allMembers: boolean = false;
-  certainMembers: boolean = false;
-  memberisChecked: boolean = false;
-  isClicked: boolean = false;
-  newMemberTrue: boolean = true;
-  members: Member[] = [];
-  notIncludedMembers: Member[] = [];
+  public members: Member[] = [];
+  public isCertainMembers: boolean = false;
+  public disabledButton: boolean = true;
 
-  //Subscription
-  certainMember_Array_Subsription: Subscription = new Subscription;
-  selectedMember: Member[] = [];
-
-  constructor( public dialogRefMember: MatDialogRef<DialogChannelAddMembersComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {
-    this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
-      this.selectedMember = member;
-    });
-  }
-
-  ngOnInit() {
-    const creatorMember = this.firestoreService.members.filter((obj: any) => obj.member !== this.globalVariables.signed_in_member.displayName);
-    this.notIncludedMembers.push(...creatorMember);
-  }
-
-  ngOnDestroy() {
-    this.certainMember_Array_Subsription.unsubscribe();
-  }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialogRefMember: MatDialogRef<DialogChannelAddMembersComponent>,
+    public firestoreService: FirestoreService,
+    public globalVariables: GlobalVariablesService
+  ) { }
 
   onNoClick(): void {
     this.dialogRefMember.close();
   }
 
-  checkAllMembers() {
-    this.allMembers = !this.allMembers;
-    this.globalVariables.certainMember_Array = [];
-    this.globalVariables.certainMember_Array = this.firestoreService.members;
-    this.certainMembers = false;
-    this.checkMemberArray(false);
-  }
-
-  checkCertainMembers() {
-    this.certainMembers = !this.certainMembers;
-    this.globalVariables.certainMember_Array = [];
-    this.allMembers = false;
-    this.checkMemberArray(true);
-  }
-
-  checkMemberArray(memberLength: boolean) {
-    this.newMemberTrue = memberLength;
-  }
-
-  deleteMember(i: number) {
-    this.selectedMember.splice(i, 1);
-    if(this.selectedMember.length == 0) {
-      this.checkMemberArray(true);
+  public checkMembers(value: string) {
+    if (value == "allMembers") {
+      this.disabledButton = false;
+      this.members = this.firestoreService.members;
+      this.isCertainMembers = false;
+    } else {
+      this.disabledButton = true;
+      this.isCertainMembers = true;
     }
+  }
+
+  public checkMemberLength(m: Member[]) {
+    this.members = m;
+
+    if (m.length > 0) {
+      this.disabledButton = false;
+    } else {
+      this.disabledButton = true;
+    }
+  }
+
+  public addMembers() {
+    this.data.members = this.members;
   }
 }

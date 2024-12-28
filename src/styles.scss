@@ -120,6 +120,10 @@ body {
   font-size: 0.777rem;
 }
 
+.font-weight-400 {
+  font-weight: 400;
+}
+
 .font-weight-700 {
   font-weight: 700;
 }
@@ -145,6 +149,10 @@ h3 {
   font-size: 1.333rem;
 }
 
+.secondary-color {
+  color: #686868;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -167,6 +175,10 @@ button {
   color: #FFFFFF;
   font-weight: 700;
   font-size: 1rem;
+
+  &:hover:enabled {
+    opacity: 0.6;
+  }
 }
 
 .button2,
@@ -232,10 +244,6 @@ button:disabled {
   background: lightgray;
 }
 
-.cursorPointer {
-  cursor: pointer;
-}
-
 .mat-mdc-dialog-container {
   width: auto;
 }
@@ -265,6 +273,19 @@ app-writing-box {
 
 .mobile-arrow {
   display: none;
+}
+
+.close-icon {
+  height: 40px;
+
+  &:hover {
+    border-radius: 50%;
+    background-color: #ECEEFE;
+
+    img {
+      filter: invert(30%) sepia(77%) saturate(3654%) hue-rotate(231deg) brightness(99%) contrast(90%);
+    }
+  }
 }
 
 @media screen and (max-width: 800px) {
