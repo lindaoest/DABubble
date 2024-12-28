@@ -15,18 +15,11 @@ import { CommonModule } from '@angular/common';
 })
 export class MembersBoxComponent {
 
-  // TODO kann weg
-  @Output()
-  public checkMemberLength = new EventEmitter();
-
   @Input()
   public selectedMembers: Member[] = [];
 
   @Output()
   public newMember = new EventEmitter;
-
-  // memberArray: Member[] = [];
-  // newMemberTrue: boolean = false;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -46,19 +39,6 @@ export class MembersBoxComponent {
 
     if(currentMember) {
       this.newMember.emit(currentMember);
-
-      // TODO Check ob es das noch braucht
-      // this.memberArray.push(currentMember);
     }
-    // this.setCertainMemberArray();
   }
-
-  // setCertainMemberArray() {
-  //   this.globalVariables.certainMember_Array = this.memberArray;
-  // }
-
-  // checkMemberArray() {
-  //   this.memberArray.length > 0 ? this.newMemberTrue = false : this.newMemberTrue = true;
-  //   this.checkMemberLength.emit(this.newMemberTrue);
-  // }
 }

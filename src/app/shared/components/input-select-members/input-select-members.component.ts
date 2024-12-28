@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MembersBoxComponent } from '../members-box/members-box.component';
 import { Member } from '../../../../models/member.class';
 import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
@@ -17,6 +17,9 @@ import { FirestoreService } from '../../services/firestore/firestore.service';
 })
 export class InputSelectMembersComponent {
 
+  @Input()
+  public alreadyExistingMembers: Member[] = [];
+
   public members!: Member[];
   public selectedMembers: Member[] = [];
 
@@ -31,6 +34,9 @@ export class InputSelectMembersComponent {
   ngOnInit() {
     const allMembersWithoutCurrentMember = this.firestoreService.members.filter((member: Member) => member.member !== this.globalVariables.signed_in_member.displayName);
     this.members = allMembersWithoutCurrentMember;
+
+    console.log('alreadyExistingMembers', this.alreadyExistingMembers);
+
   }
 
   public addNewMember(m: Member) {

@@ -29,19 +29,12 @@ export class GlobalVariablesService {
   private activeChatSubject = new Subject<string>();
   activeChat$: Observable<string> = this.activeChatSubject.asObservable();
 
-  private certainMember_Array_Subject = new BehaviorSubject<Member[]>([]);
-  certainMember_Array$ = this.certainMember_Array_Subject.asObservable();
-
   set activeChat(value: string) {
     this.activeChatSubject.next(value);
   }
 
   set active_privatechat(value: string) {
     this.active_privatechatSubject.next(value);
-  }
-
-  set certainMember_Array(value: Member[]) {
-    this.certainMember_Array_Subject.next(value);
   }
 
   constructor() {

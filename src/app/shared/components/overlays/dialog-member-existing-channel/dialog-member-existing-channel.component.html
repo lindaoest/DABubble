@@ -1,33 +1,25 @@
 <div class="dialog-member-existing-channel">
+
+  <!-- Headline -->
 	<div class="headline">
 		<h3>Leute hinzufügen</h3>
     <div class="close-icon">
       <img class="c-pointer" src="./assets/img/thread/close.svg" alt="close-icon" (click)="onNoClick()">
     </div>
 	</div>
+
+  <!-- Input field -->
 	<div class="channel-name">
 		<img src="./assets/img/channels/tag.svg" alt="">
 		<p class="channel blue-font">{{ this.globalVariables.activeChannel.name}}</p>
 	</div>
-	<div class="certain-members-container">
-		<div class="input-box">
-			<div class="added-members"
-				[ngStyle]="{'width': add_new_members_array.length > 0 ? '260px' : ''}">
-				@for (item of selectedMember; track item; let index = $index) {
-				<div class="member">
-					<img src="{{ item.avatar }}" alt="">
-					<p>{{ item.member }}</p>
-					<img (click)="deleteMember(index)" class="c-pointer" src="./assets/img/thread/close.svg" alt="">
-				</div>
-				}
-			</div>
-			<input (click)="showMemberBox()" type="text" placeholder="Name eingeben">
-		</div>
-    @if (notIncludedMembers.length > 0) {
-      <app-members-box [selectedMembers]="notIncludedMembers" (checkMemberLength)="checkMemberArray($event)"></app-members-box>
-    }
-	</div>
+
+  <app-input-select-members
+    [alreadyExistingMembers]="alreadyAddedMembers"
+    (membersEvent)="checkMemberLength($event)" />
+
+  <!-- Add button -->
 	<div class="actions">
-		<button (click)="addToChannel()" class="button1" [disabled]="newMemberTrue">Hinzufügen</button>
+		<button class="button1" [disabled]="disabledButton">Hinzufügen</button>
 	</div>
 </div>

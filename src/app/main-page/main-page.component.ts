@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
 import { ChatComponent } from './chat/chat.component';
 import { ThreadReplyComponent } from './thread-reply/thread-reply.component';
@@ -6,15 +6,21 @@ import { GlobalVariablesService } from '../shared/services/global-variables/glob
 import { DirectmessagesChatComponent } from './chat/directmessages-chat/directmessages-chat.component';
 import { Message } from '../../models/message.class';
 import { CommonModule } from '@angular/common';
-import { filter, Subscription, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { Channel } from '../../models/channel.class';
 import { FirestoreService } from '../shared/services/firestore/firestore.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [CommonModule, SiteMenuComponent, ChatComponent, ThreadReplyComponent, DirectmessagesChatComponent],
+  imports: [
+    ChatComponent,
+    CommonModule,
+    DirectmessagesChatComponent,
+    SiteMenuComponent,
+    ThreadReplyComponent,
+  ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
@@ -78,32 +84,32 @@ export class MainPageComponent {
     ).subscribe();
   }
 
-  message_for_thread(message: Message) {
+  public message_for_thread(message: Message) {
     this.currentMessage = message;
   }
 
-  openChat() {
+  public openChat() {
     this.globalVariables.showMenu = false;
     this.globalVariables.showChat = true;
     this.globalVariables.showDirectChat = false;
     this.globalVariables.showThreads = false;
   }
 
-  openDirectChat() {
+  public openDirectChat() {
     this.globalVariables.showMenu = false;
     this.globalVariables.showChat = false;
     this.globalVariables.showDirectChat = true;
     this.globalVariables.showThreads = false;
   }
 
-  openThread() {
+  public openThread() {
     this.globalVariables.showMenu = false;
     this.globalVariables.showChat = false;
     this.globalVariables.showDirectChat = false;
     this.globalVariables.showThreads = true;
   }
 
-  goBack() {
+  public goBack() {
     this.globalVariables.showMenu = true;
     this.globalVariables.showChat = false;
     this.globalVariables.showDirectChat = false;

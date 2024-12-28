@@ -1,13 +1,20 @@
 <div class="create-new-chat">
-  <div class="info-top">
+
+  <!-- Header -->
+  <app-top-bar-container>
     <h3>Neue Nachricht</h3>
-    <input (keyup)="observe_input()" type="text" [placeholder]="placeholder_value" [(ngModel)]="name">
-    @if (open_member_box) {
-    <app-members-box></app-members-box>
-    }
-  </div>
+    <input type="text" [placeholder]="placeholder_value" [(ngModel)]="name" (keyup)="observe_input()">
+    <app-members-box *ngIf="openMemberBox" (newMember)="addMemberToInput($event)" />
+  </app-top-bar-container>
+
+  <!-- Mainpage -->
   <div class="chat-block flex align-end">
     <p>Starte einen neuen Chat!</p>
   </div>
-  <app-writing-box [sendMessage]="'create_new_message'" [name]="name" [is_createNewChat_open]="true"></app-writing-box>
+
+  <!-- Writing box -->
+  <app-writing-box
+    [sendMessage]="'create_new_message'"
+    [name]="name"
+    [is_createNewChat_open]="true" />
 </div>

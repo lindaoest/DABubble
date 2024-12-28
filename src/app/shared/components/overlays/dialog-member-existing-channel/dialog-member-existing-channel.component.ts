@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogClose } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Channel } from '../../../../../models/channel.class';
@@ -8,94 +8,67 @@ import { FirestoreService } from '../../../services/firestore/firestore.service'
 import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
 import { Member } from '../../../../../models/member.class';
 import { Subscription } from 'rxjs';
-import { MembersBoxComponent } from '../../members-box/members-box.component';
-
-export interface DialogData {
-  name: string;
-  description: string;
-}
+import { InputSelectMembersComponent } from '../../input-select-members/input-select-members.component';
 
 @Component({
   selector: 'app-dialog-member-existing-channel',
   standalone: true,
   imports: [
     FormsModule,
-    MatDialogClose,
     CommonModule,
-    MembersBoxComponent
+    InputSelectMembersComponent
   ],
   templateUrl: './dialog-member-existing-channel.component.html',
   styleUrl: './dialog-member-existing-channel.component.scss'
 })
 export class DialogMemberExistingChannelComponent {
 
-  add_new_members_array: Member[] = [];
-  newMember!: Member;
-  newMemberTrue: boolean = true;
-  notIncludedMembers: Member[] = [];
-  already_added_members: Member[] = [];
+  public alreadyAddedMembers: Member[] = [];
+  public disabledButton: boolean = true;
+  public members!: Member[];
 
-  //Subscription
-  channelSubscription: Subscription = new Subscription;
-  channels: Channel[] = [];
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<DialogMemberExistingChannelComponent>,
+    public firestoreService: FirestoreService,
+    public globalVariables: GlobalVariablesService,
+  ) { }
 
-  certainMember_Array_Subsription: Subscription = new Subscription;
-  selectedMember: Member[] = [];
-
-  constructor( public dialogRef: MatDialogRef<DialogMemberExistingChannelComponent>, public dialog: MatDialog, public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService, @Inject(MAT_DIALOG_DATA) public data: DialogData ) {
-    this.certainMember_Array_Subsription = this.globalVariables.certainMember_Array$.subscribe(member => {
-      this.selectedMember = member;
-    });
-
-    this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
-      this.channels = channels;
-    });
+  ngOnInit() {
+    this.showMemberBox();
   }
 
-  ngOnDestroy() {
-    this.certainMember_Array_Subsription.unsubscribe();
-  }
-
-  showMemberBox() {
+  public showMemberBox() {
     this.firestoreService.channels$.subscribe(channels => {
-      const foundChannel: any = channels.find((obj: Channel) => obj.name === this.globalVariables.activeChannel.name);
-      if (foundChannel) {
-        channels.forEach((element: Channel) => {
-          if (foundChannel.name === element.name) {
-            element.members.forEach((member: Member) => {
-              this.already_added_members.push(member);
-            })
-          }
+      const foundChannel = channels.find((channel: Channel) => channel.name === this.globalVariables.activeChannel.name);
+
+      if(foundChannel) {
+        foundChannel.members.forEach((member: Member) => {
+          this.alreadyAddedMembers.push(member);
         })
       }
     });
-
-    this.notIncludedMembers = this.firestoreService.members.filter(member =>
-      !this.already_added_members.some(added_member => added_member.member === member.member)
-    );
   }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
-    this.globalVariables.certainMember_Array = [];
   }
 
-  deleteMember(i: number) {
-    this.selectedMember.splice(i, 1);
-    if(this.selectedMember.length == 0) {
-      this.checkMemberArray(true);
+  // addToChannel() {
+  //   this.selectedMember.forEach(element => {
+  //     this.firestoreService.updateArray('channels', this.globalVariables.activeChannel.id, element)
+  //   })
+  //   this.dialogRef.close();
+  // }
+
+  public checkMemberLength(m: Member[]) {
+    this.members = m;
+
+    if (m.length > 0) {
+      this.disabledButton = false;
+    } else {
+      this.disabledButton = true;
     }
-  }
-
-  checkMemberArray(memberLength: boolean) {
-    this.newMemberTrue = memberLength;
-  }
-
-  addToChannel() {
-    this.selectedMember.forEach(element => {
-      this.firestoreService.updateArray('channels', this.globalVariables.activeChannel.id, element)
-    })
-    this.globalVariables.certainMember_Array = [];
-    this.dialogRef.close();
   }
 }

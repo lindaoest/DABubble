@@ -91,7 +91,6 @@ export class WritingBoxComponent {
       })
 
       await this.firestoreService.addDirectMessage(create_new_message);
-      this.globalVariables.certainMember_Array = [];
     }
 
     this.description = '';
