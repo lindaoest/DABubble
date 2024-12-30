@@ -1,7 +1,7 @@
 <div class="members-box">
 
   <!-- Go through members -->
-  @for (member of selectMemberList(); track member; let index = $index) {
+  @for (member of selectedMembers; track member; let index = $index) {
   <div class="member c-pointer" (click)="addMember(member)">
     <!-- Avatar -->
     <img src="{{ member.avatar }}" alt="">
@@ -9,5 +9,7 @@
     <!-- Name -->
     <p>{{ member.member }}</p>
   </div>
+  } @empty {
+    <p>Kein Treffer</p>
   }
 </div>

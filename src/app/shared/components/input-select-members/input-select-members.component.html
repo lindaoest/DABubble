@@ -1,19 +1,30 @@
-<div class="input-box">
+<ng-container *ngIf="showMembersBox; else infoText" [ngTemplateOutlet]="inputFieldForMembers"></ng-container>
 
-  <!-- new members -->
-  <div class="added-members" [ngStyle]="{'width': selectedMembers.length > 0 ? '260px' : ''}">
-    @for (item of selectedMembers; track item; let index = $index) {
-    <div class="member">
-      <img class="avatar" src="{{ item.avatar }}" alt="">
-      <p>{{ item.member }}</p>
-      <img (click)="deleteMember(index)" class=" close c-pointer" src="./assets/img/thread/close.svg" alt="">
+<!-- Show member box -->
+<ng-template #inputFieldForMembers>
+  <div class="input-box">
+
+    <!-- added members -->
+    <div class="added-members" [ngStyle]="{'width': selectedMembers.length > 0 ? '260px' : ''}">
+      @for (item of selectedMembers; track item; let index = $index) {
+      <div class="member">
+        <img class="avatar" src="{{ item.avatar }}" alt="">
+        <p>{{ item.member }}</p>
+        <img (click)="deleteMember(index)" class=" close c-pointer" src="./assets/img/thread/close.svg" alt="">
+      </div>
+      }
     </div>
-    }
+
+    <input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input" (keyup)="searchMember($event)">
   </div>
-  <input type="text" placeholder="Gib hier den Namen ein" class="certain-members-input">
-</div>
+</ng-template>
+
+<!-- Show infotext -->
+<ng-template #infoText>
+  <p class="p-t-24">Alle Teilnehmer sind bereits in diesem Kanal.</p>
+</ng-template>
 
 <!-- Members box -->
-<app-members-box
+<app-members-box *ngIf="showMembersBox"
   [selectedMembers]="members"
   (newMember)="addNewMember($event)" />

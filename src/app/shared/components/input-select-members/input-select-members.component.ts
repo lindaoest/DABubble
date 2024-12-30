@@ -20,11 +20,13 @@ export class InputSelectMembersComponent {
   @Input()
   public alreadyExistingMembers: Member[] = [];
 
-  public members!: Member[];
-  public selectedMembers: Member[] = [];
-
   @Output()
   public membersEvent = new EventEmitter;
+
+  public allMembers: Member[] = [];
+  public members!: Member[];
+  public selectedMembers: Member[] = [];
+  public showMembersBox: boolean = true;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -34,9 +36,18 @@ export class InputSelectMembersComponent {
   ngOnInit() {
     const allMembersWithoutCurrentMember = this.firestoreService.members.filter((member: Member) => member.member !== this.globalVariables.signed_in_member.displayName);
     this.members = allMembersWithoutCurrentMember;
+    this.allMembers = this.members;
 
-    console.log('alreadyExistingMembers', this.alreadyExistingMembers);
-
+    if (this.alreadyExistingMembers.length > 0) {
+      if((this.alreadyExistingMembers.length - 1) != this.members.length) {
+        this.members = this.members.filter(member =>
+          !this.alreadyExistingMembers.some(existingMember => existingMember.email === member.email)
+        );
+        this.allMembers = this.members;
+      } else {
+        this.showMembersBox = false;
+      }
+    }
   }
 
   public addNewMember(m: Member) {
@@ -53,5 +64,21 @@ export class InputSelectMembersComponent {
 
   public emitMembers() {
     this.membersEvent.emit(this.selectedMembers);
+  }
+
+  public searchMember(val: any) {
+    const inputValue = val.target.value;
+    let searchMembers = [];
+
+    for(let searchMember of this.allMembers) {
+      const memberToLowerCase = searchMember.member.toLowerCase();
+
+      if(memberToLowerCase.includes(inputValue)) {
+        searchMembers.push(searchMember);
+      }
+    }
+
+    this.members = searchMembers;
+    searchMembers = [];
   }
 }

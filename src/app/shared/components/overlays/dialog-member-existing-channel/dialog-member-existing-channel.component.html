@@ -8,18 +8,19 @@
     </div>
 	</div>
 
-  <!-- Input field -->
+  <!-- Channel name -->
 	<div class="channel-name">
 		<img src="./assets/img/channels/tag.svg" alt="">
 		<p class="channel blue-font">{{ this.globalVariables.activeChannel.name}}</p>
 	</div>
 
+  <!-- Add members -->
   <app-input-select-members
     [alreadyExistingMembers]="alreadyAddedMembers"
     (membersEvent)="checkMemberLength($event)" />
 
   <!-- Add button -->
 	<div class="actions">
-		<button class="button1" [disabled]="disabledButton">Hinzufügen</button>
+		<button class="button1" [disabled]="disabledButton" (click)="addToChannel()">Hinzufügen</button>
 	</div>
 </div>

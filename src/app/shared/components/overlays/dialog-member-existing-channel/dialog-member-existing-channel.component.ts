@@ -7,7 +7,6 @@ import { Channel } from '../../../../../models/channel.class';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
 import { Member } from '../../../../../models/member.class';
-import { Subscription } from 'rxjs';
 import { InputSelectMembersComponent } from '../../input-select-members/input-select-members.component';
 
 @Component({
@@ -55,13 +54,6 @@ export class DialogMemberExistingChannelComponent {
     this.dialogRef.close();
   }
 
-  // addToChannel() {
-  //   this.selectedMember.forEach(element => {
-  //     this.firestoreService.updateArray('channels', this.globalVariables.activeChannel.id, element)
-  //   })
-  //   this.dialogRef.close();
-  // }
-
   public checkMemberLength(m: Member[]) {
     this.members = m;
 
@@ -70,5 +62,12 @@ export class DialogMemberExistingChannelComponent {
     } else {
       this.disabledButton = true;
     }
+  }
+
+  public addToChannel() {
+    this.members.forEach(member => {
+      this.firestoreService.updateArray('channels', this.globalVariables.activeChannel.id, member)
+    })
+    this.dialogRef.close();
   }
 }

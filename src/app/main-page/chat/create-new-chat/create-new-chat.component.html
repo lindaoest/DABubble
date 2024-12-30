@@ -3,8 +3,8 @@
   <!-- Header -->
   <app-top-bar-container>
     <h3>Neue Nachricht</h3>
-    <input type="text" [placeholder]="placeholder_value" [(ngModel)]="name" (keyup)="observe_input()">
-    <app-members-box *ngIf="openMemberBox" (newMember)="addMemberToInput($event)" />
+    <input type="text" [placeholder]="placeholder_value" [(ngModel)]="name" (keyup)="observe_input(); searchMember($event)">
+    <app-members-box *ngIf="openMemberBox" [selectedMembers]="members" (newMember)="addMemberToInput($event)" />
   </app-top-bar-container>
 
   <!-- Mainpage -->

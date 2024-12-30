@@ -26,14 +26,6 @@ export class MembersBoxComponent {
     public globalVariables: GlobalVariablesService
   ) { }
 
-  public selectMemberList() {
-    if(this.selectedMembers.length > 0) {
-      return this.selectedMembers;
-    } else {
-      return this.firestoreService.members;
-    }
-  }
-
   public addMember(m: Member) {
     const currentMember = this.firestoreService.members.find(member => member.member === m.member);
 
