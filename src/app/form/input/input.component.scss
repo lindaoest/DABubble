@@ -1,6 +1,6 @@
 @import '../../shared/mixin.scss';
 
-.input-element {
+.element {
   @include displayFlex($jc:flex-start);
   background-color: #ECEEFE;
 	border-radius: 30px;
@@ -21,4 +21,12 @@
 	p {
 		padding-left: 24px;
 	}
+}
+
+@media screen and (max-width: 500px) {
+  .element {
+    input {
+      padding-left: 16px;
+    }
+  }
 }

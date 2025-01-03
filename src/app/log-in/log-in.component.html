@@ -1,6 +1,7 @@
 <app-auth-container
-  [title]="'Anmeldung'"
-  [text]="'Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.'">
+  class="w-full"
+  title="Anmeldung"
+  text="Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.">
 
   <form class="w-full" [formGroup]="form">
 
@@ -8,7 +9,7 @@
     <app-input
       type="email"
       icon="./assets/img/log-in/mail.svg"
-      placeholder="beispielname@email.com"
+      placeholder="name@email.com"
       [control]="form.get('email')" />
 
     <!-- Error message -->

@@ -1,79 +1,20 @@
 @import './../shared/mixin.scss';
 
-.registration {
-  @include displayFlex($jc: flex-start, $ai: flex-start);
-  flex-direction: column;
-  width: auto;
-  background-color: #FFFFFF;
-  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
-  border-radius: 30px;
-  padding: 50px 60px;
-}
-
-.headline {
-  @include displayFlex($ai: flex-start);
-  position: relative;
-
-  img {
-    position: absolute;
-    top: 5px;
-    left: 0;
-  }
-}
-
-.input-element {
-  @include displayFlex($jc: flex-start);
-  background-color: #ECEEFE;
-  border-radius: 30px;
-  width: calc(100% - 64px);
-  margin-top: 40px;
-  padding: 12px 32px;
-
-  input {
-    border: none;
-    background-color: transparent;
-    padding-left: 32px;
-
-    &:focus-visible {
-      border: none;
-      outline: none;
-    }
-  }
-
-  p {
-    padding-left: 24px;
-  }
-}
-
 .checkbox-privacy {
   margin-top: 32px;
   gap: 8px;
 }
 
-.buttons {
+.privacy-text {
+  font-size: 1rem;
+}
+
+.continue-button {
   @include displayFlex($jc: flex-end);
 }
 
 @media screen and (max-width: 630px) {
-  .headline {
-    img {
-      position: relative;
-    }
-  }
-
-  .buttons {
+  .continue-button {
     margin-top: 32px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .registration {
-    padding: 50px 16px;
-  }
-
-  .input-element {
-    input {
-      padding-left: 8px;
-    }
   }
 }

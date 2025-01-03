@@ -1,4 +1,4 @@
-<div class="input-element">
+<div class="element">
   <img src="{{ icon }}" alt="">
-  <input [type]="type" [name]="type" [placeholder]="placeholder" [formControl]="control">
+  <input [type]="type" [minlength]="minLength > 0 ? minLength : null"  [placeholder]="placeholder" [formControl]="control">
 </div>

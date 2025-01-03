@@ -1,40 +1,64 @@
-<form [formGroup]="registration_form" (ngSubmit)="onSubmit()" class="registration">
-	<div class="headline w-full">
-		<img class="c-pointer" [routerLink]="['/log-in']" src="./assets/img/back-arrow.svg" alt="">
-		<h1 class="blue-font">Konto erstellen</h1>
-	</div>
-	<p class="tac p-t-32">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
-	<div class="input-element input-email">
-		<img src="./assets/img/log-in/person.svg" alt="">
-		<input type="text" placeholder="Name & Nachname" name="member" formControlName="member">
-	</div>
-	@if(this.registration_form.get('member')?.invalid && this.registration_form.get('member')?.touched) {
-		<span class="error-message">Gib deinen Namen ein</span>
-	}
-	<div class="input-element input-email">
-		<img src="./assets/img/log-in/mail.svg" alt="">
-		<input type="email" placeholder="beispielname@email.com" name="email" formControlName="email" email="true">
-	</div>
-	@if(this.registration_form.get('email')?.invalid && this.registration_form.get('email')?.touched) {
-		<span class="error-message">Gib eine gültige Email ein</span>
-	}
-	<div class="input-element input-password">
-		<img src="./assets/img/log-in/lock.svg" alt="">
-		<input type="password" minlength="8" placeholder="Passwort" name="password" formControlName="password">
-	</div>
-	@if(this.registration_form.get('password')?.invalid && this.registration_form.get('password')?.touched) {
-		<span class="error-message">Gib dein Passwort ein</span>
-	}
-	<div class="checkbox-privacy flex w-full">
-		<input type="checkbox" name="checkbox" formControlName="privacyChecked" (click)="onPrivacyChange()" required>
-		<div class="privacy-text">
-			<p class="font-small">Ich stimme der <a class="blue-font">Datenschutzerklärung</a> zu.</p>
-		</div>
-	</div>
-	@if (this.registration_form.get('privacyChecked')?.invalid && this.registration_form.get('privacyChecked')?.touched) {
-		<span class="error-message">Bestätige unseren Datenschutz</span>
-	}
-	<div class="buttons w-full">
-		<button type="submit" class="button1" [disabled]="!registration_form.valid">Weiter</button>
-	</div>
-</form>
+<app-auth-container
+  class="w-full"
+  title="Konto erstellen"
+  text="Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto."
+  [isBackLink]="true">
+
+  <form class="w-full" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Input field name -->
+    <app-input
+      type="text"
+      icon="./assets/img/log-in/person.svg"
+      placeholder="Name & Nachname"
+      [control]="form.get('member')" />
+
+    <!-- Error message -->
+    @if(this.form.get('member')?.invalid && this.form.get('member')?.touched) {
+      <span class="error-message">Gib deinen Namen ein</span>
+    }
+
+    <!-- Input field email -->
+    <app-input
+      type="email"
+      icon="./assets/img/log-in/mail.svg"
+      placeholder="name@email.com"
+      [control]="form.get('email')" />
+
+    <!-- Error message -->
+    @if(this.form.get('email')?.invalid && this.form.get('email')?.touched) {
+      <span class="error-message">Gib eine gültige Email ein</span>
+    }
+
+    <!-- Input field password -->
+    <app-input
+      type="password"
+      icon="./assets/img/log-in/lock.svg"
+      placeholder="Passwort"
+      [control]="form.get('password')"
+      minlength="8" />
+
+    <!-- Error message -->
+    @if(this.form.get('password')?.invalid && this.form.get('password')?.touched) {
+      <span class="error-message">Gib dein Passwort ein</span>
+    }
+
+    <!-- Privacy -->
+    <div class="checkbox-privacy flex w-full">
+      <input type="checkbox" name="checkbox" formControlName="privacyChecked" (click)="onPrivacyChange()" required>
+      <div class="privacy-text">
+        <p class="font-small">Ich stimme der <a class="privacy-text blue-font c-pointer">Datenschutzerklärung</a> zu.</p>
+      </div>
+    </div>
+
+    <!-- Error message -->
+    @if (this.form.get('privacyChecked')?.invalid && this.form.get('privacyChecked')?.touched) {
+      <span class="error-message">Bestätige unseren Datenschutz</span>
+    }
+
+    <!-- Actions -->
+    <div class="continue-button w-full">
+      <button type="submit" class="button1" [disabled]="!form.valid">Weiter</button>
+    </div>
+  </form>
+</app-auth-container>

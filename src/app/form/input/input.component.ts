@@ -23,4 +23,7 @@ export class InputComponent {
 
   @Input()
   public control!: any;
+
+  @Input()
+  public minLength: number = 0;
 }
