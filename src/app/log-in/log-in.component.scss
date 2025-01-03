@@ -1,38 +1,5 @@
 @import './../shared/mixin.scss';
 
-.log-in {
-  @include displayFlex($jc:flex-start);
-	flex-direction: column;
-  background-color: #FFFFFF;
-	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
-	border-radius: 30px;
-	width: auto;
-	padding: 50px 60px;
-}
-
-.input-element {
-  @include displayFlex($jc:flex-start);
-  background-color: #ECEEFE;
-	border-radius: 30px;
-	margin-top: 40px;
-	padding: 12px 32px;
-
-	input {
-		border: none;
-		background-color: transparent;
-		padding-left: 32px;
-
-		&:focus-visible {
-			border: none;
-			outline: none;
-		}
-	}
-
-	p {
-		padding-left: 24px;
-	}
-}
-
 .or-container {
   @include displayFlex();
 	position: relative;
@@ -52,16 +19,21 @@
 }
 
 .google-login {
-	justify-content: center;
+  @include displayFlex();
+  border-radius: 30px;
+  gap: 16px;
+  background-color: #ECEEFE;
+	margin-top: 40px;
+	padding: 12px 32px;
+
+	&:hover {
+    font-weight: 700;
+  }
 }
 
 .buttons {
 	gap: 32px;
 	margin-top: 40px;
-
-	button {
-		margin: 0;
-	}
 }
 
 .registration {
