@@ -18,15 +18,20 @@ export interface DialogData {
 })
 export class ProfileComponent {
 
-  constructor( public dialogRef: MatDialogRef<ProfileComponent>, public dialog: MatDialog, public globalVariables: GlobalVariablesService, @Inject(MAT_DIALOG_DATA) public data: DialogData ) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<ProfileComponent>,
+    public globalVariables: GlobalVariablesService,
+  ) { }
 
-  editProfile() {
+  public editProfile() {
     this.dialogRef.close();
     const dialogRefMember = this.dialog.open(EditProfileComponent, {});
     dialogRefMember.afterClosed().subscribe();
   }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

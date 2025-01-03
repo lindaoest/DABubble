@@ -1,23 +1,35 @@
 <div class="profile-container">
-	<div class="profile flex flex-column">
-		<div class="header">
-			<h3 class="font-weight-700">Profile</h3>
-			<img class="close c-pointer" (click)="onNoClick()" src="../assets/img/thread/close.svg" alt="">
-		</div>
-		<img class="avatar" src="{{ data.avatar }}" alt="">
-		<div class="edit c-pointer">
-			<h2>{{ data.name }}</h2>
-			@if (data.name == globalVariables.signed_in_member.displayName) {
-				<p (click)="editProfile()" class="edit blue-font">Bearbeiten</p>
-			}
-		</div>
-		<div class="active">
-			<p>Aktiv</p>
-		</div>
-		<div class="email">
-			<img src="../assets/img/log-in/mail.svg" alt="">
-			<p class="font-weight-700">E-Mail-Adresse</p>
-		</div>
-		<p class="email-address blue-font">{{ data.email }}</p>
-	</div>
+	<div class="flex flex-column">
+
+    <!-- Header -->
+    <div class="header">
+      <h3 class="font-weight-700">Profil</h3>
+      <div class="close-icon c-pointer">
+        <img src="../assets/img/thread/close.svg" alt="close-icon" (click)="onNoClick()">
+      </div>
+    </div>
+
+    <!-- Avatar img -->
+    <img class="avatar" src="{{ data.avatar }}" alt="avatar">
+
+    <!-- Name & editing -->
+    <div class="edit c-pointer">
+      <h2>{{ data.name }}</h2>
+      @if (data.name == globalVariables.signed_in_member.displayName) {
+      <p class="edit-text blue-font" (click)="editProfile()">Bearbeiten</p>
+      }
+    </div>
+
+    <!-- Online -->
+    <div class="active">
+      <p>Aktiv</p>
+    </div>
+
+    <!-- Email -->
+    <div class="email">
+      <img src="../assets/img/log-in/mail.svg" alt="">
+      <p class="font-weight-700">E-Mail-Adresse</p>
+    </div>
+    <p class="email-address blue-font">{{ data.email }}</p>
+  </div>
 </div>

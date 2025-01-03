@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { GlobalVariablesService } from '../services/global-variables/global-variables.service';
 import { getAuth, signOut } from "firebase/auth";
-import { ProfileComponent } from '../components/overlays/profile/profile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../services/firestore/firestore.service';
 import { UserStatusService } from '../services/user-status/user-status.service';
+import { ProfileComponent } from '../components/overlays/profile/profile.component';
 
 @Component({
   selector: 'app-header',
@@ -39,7 +39,7 @@ export class HeaderComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.path = this.location.path();
-      this.isHomePath = this.router.url.startsWith('');
+      this.isHomePath = this.router.url == '/';
     });
   }
 

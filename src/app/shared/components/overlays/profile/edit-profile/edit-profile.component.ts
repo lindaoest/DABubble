@@ -17,32 +17,39 @@ import { Thread } from '../../../../../../models/thread.class';
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+  ],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss'
 })
 export class EditProfileComponent {
 
-  edit_profile_form: FormGroup = new FormGroup({});
+  public form: FormGroup = new FormGroup({});
 
-  memberName = this.globalVariables.signed_in_member.displayName;
-  memberEmail = this.globalVariables.signed_in_member.email;
+  public memberName = this.globalVariables.signed_in_member.displayName;
+  public memberEmail = this.globalVariables.signed_in_member.email;
 
-  firebaseConfig = privateConfig;
-  app = initializeApp(this.firebaseConfig);
-  auth = getAuth(this.app);
+  private firebaseConfig = privateConfig;
+  private app = initializeApp(this.firebaseConfig);
+  private auth = getAuth(this.app);
 
   //Subscription
-  channelSubscription: Subscription = new Subscription;
-  channels: Channel[] = [];
+  private channelSubscription: Subscription = new Subscription;
+  public channels: Channel[] = [];
 
-  directMessageSubscription: Subscription = new Subscription;
-  direct_messages: DirectMessage[] = [];
+  private directMessageSubscription: Subscription = new Subscription;
+  public direct_messages: DirectMessage[] = [];
 
-  constructor(public dialogRef: MatDialogRef<EditProfileComponent>, public globalVariables: GlobalVariablesService, public firestoreService: FirestoreService, private router: Router) { }
+  constructor(
+    private router: Router,
+    public dialogRef: MatDialogRef<EditProfileComponent>,
+    public firestoreService: FirestoreService,
+    public globalVariables: GlobalVariablesService,
+  ) { }
 
   ngOnInit() {
-    this.edit_profile_form = new FormGroup({
+    this.form = new FormGroup({
       member: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
     });
@@ -61,7 +68,7 @@ export class EditProfileComponent {
     this.directMessageSubscription.unsubscribe();
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.updateMemberFunction();
     this.updateMessageFunction();
     this.updateDirectMessageFunction();
@@ -72,13 +79,14 @@ export class EditProfileComponent {
     this.dialogRef.close();
   }
 
-  updateMemberFunction() {
+  //TODO Vielleicht das Speichern in Firebase verbessern?
+  public updateMemberFunction() {
     const updateMember = this.firestoreService.members.find(obj => obj.email === this.memberEmail && obj.member === this.memberName);
     if(updateMember) {
       const member: Member = {
         id: updateMember.id,
-        member: this.edit_profile_form.value.member,
-        email: this.edit_profile_form.value.email,
+        member: this.form.value.member,
+        email: this.form.value.email,
         password: updateMember.password,
         avatar: updateMember.avatar,
         isOnline: updateMember.isOnline
@@ -87,7 +95,7 @@ export class EditProfileComponent {
     }
   }
 
-  updateMessageFunction() {
+  public updateMessageFunction() {
     const updateMessages = this.firestoreService.messages.filter(message => message.sender === this.memberName);
 
     updateMessages.forEach(updateMessage => {
@@ -96,7 +104,7 @@ export class EditProfileComponent {
         channel: updateMessage.channel,
         text: updateMessage.text,
         time: updateMessage.time,
-        sender: this.edit_profile_form.value.member,
+        sender: this.form.value.member,
         avatar: updateMessage.avatar,
         creationDate: updateMessage.creationDate,
         timeStamp: updateMessage.timeStamp
@@ -105,38 +113,38 @@ export class EditProfileComponent {
     })
   }
 
-  updateDirectMessageFunction() {
+  public updateDirectMessageFunction() {
     this.direct_messages
       .filter(directMessage => directMessage.sender === this.memberName || directMessage.receiver === this.memberName)
       .forEach(directMessage => {
         const directMessageUpdate: DirectMessage = {
           ...directMessage, // copy all fields from the origin
-          sender: directMessage.sender === this.memberName ? this.edit_profile_form.value.member : directMessage.sender,
-          receiver: directMessage.receiver === this.memberName ? this.edit_profile_form.value.member : directMessage.receiver
+          sender: directMessage.sender === this.memberName ? this.form.value.member : directMessage.sender,
+          receiver: directMessage.receiver === this.memberName ? this.form.value.member : directMessage.receiver
         };
         this.firestoreService.updateDirectMessage('direct-messages', directMessageUpdate);
       });
   }
 
-  updateChannelFunction() {
+  public updateChannelFunction() {
     this.channels.forEach(updateChannel => {
       let membersArray: Member[] = updateChannel.members.map(updateMember => ({
         ...updateMember,
-        member: updateMember.member === this.memberName ? this.edit_profile_form.value.member : updateMember.member,
-        email: updateMember.member === this.memberName ? this.edit_profile_form.value.email : updateMember.email
+        member: updateMember.member === this.memberName ? this.form.value.member : updateMember.member,
+        email: updateMember.member === this.memberName ? this.form.value.email : updateMember.email
       }));
 
       const channel: Channel = {
         ...updateChannel,
         members: membersArray,
-        creator: updateChannel.creator === this.memberName ? this.edit_profile_form.value.member : updateChannel.creator
+        creator: updateChannel.creator === this.memberName ? this.form.value.member : updateChannel.creator
       };
       this.firestoreService.updateChannel('channels', channel);
     });
   }
 
 
-  updateThreadFunction() {
+  public updateThreadFunction() {
     const updateThread = this.firestoreService.threads.filter(thread => thread.sender === this.globalVariables.signed_in_member.displayName);
 
     updateThread.forEach(updateThread => {
@@ -145,7 +153,7 @@ export class EditProfileComponent {
         channel: updateThread.channel,
         text: updateThread.text,
         time: updateThread.time,
-        sender: this.edit_profile_form.value.member,
+        sender: this.form.value.member,
         avatar: updateThread.avatar,
         creationDate: updateThread.creationDate,
         timeStamp: updateThread.timeStamp,
@@ -155,10 +163,10 @@ export class EditProfileComponent {
     })
   }
 
-  updateAuthentification() {
+  private updateAuthentification() {
     const user = this.auth.currentUser;
-    const newEmail = this.edit_profile_form.value.email;
-    const newUsername = this.edit_profile_form.value.member;
+    const newEmail = this.form.value.email;
+    const newUsername = this.form.value.member;
 
     this.globalVariables.verifyText = true;
 
@@ -173,7 +181,7 @@ export class EditProfileComponent {
     }
   }
 
-  firebaseEmailReset(user: User, email: string) {
+  private firebaseEmailReset(user: User, email: string) {
     const auth = getAuth();
     try {
       verifyBeforeUpdateEmail(user, email);
@@ -190,7 +198,7 @@ export class EditProfileComponent {
     }
   }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

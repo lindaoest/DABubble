@@ -5,8 +5,7 @@
   padding: 40px;
 }
 
-.header,
-.edit {
+.header, .edit {
   @include displayFlex($jc: space-between);
 }
 
@@ -17,11 +16,20 @@
   margin: 40px auto;
 }
 
+.edit-text {
+  &:hover {
+    font-weight: 700;
+  }
+}
+
 .active {
   @include displayFlex($jc: flex-start);
-  color: #92C83E;
   gap: 16px;
   margin-top: 16px;
+
+  p {
+    color: #686868;
+  }
 
   &::before {
     content: '';

@@ -1,29 +1,24 @@
 @import '../../../../mixin.scss';
 
 .profile-container {
-	width: 420px;
-	padding: 40px;
+  width: 420px;
+  padding: 40px;
 }
 
-.header,
-.edit {
-	@include displayFlex($jc: space-between);
+.header, .edit {
+  @include displayFlex($jc: space-between);
 }
 
 .avatar {
   border-radius: 50%;
-	margin: 40px auto;
-	width: 200px;
-	height: 200px;
+  width: 200px;
+  height: 200px;
+  margin: 24px auto;
 }
 
-.input-element {
+.name, .email {
 	@include displayFlex($jc: flex-start);
 	gap: 16px;
-}
-
-.input-email {
-	margin-top: 16px;
 }
 
 input {
@@ -41,7 +36,6 @@ input {
 .buttons {
   @include displayFlex();
   gap: 32px;
-	margin-top: 40px;
 }
 
 @media screen and (max-width: 630px) {
