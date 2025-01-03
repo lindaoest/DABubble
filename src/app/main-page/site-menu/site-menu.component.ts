@@ -30,10 +30,11 @@ export class SiteMenuComponent {
   @Output()
   public mobileClickedDirectChat = new EventEmitter();
 
-  public name: string = '';
   public description: string = '';
-  public members: [] = [];
   public filteredChats: Message[] = [];
+  public members: [] = [];
+  public name: string = '';
+  public personObjArray: Member[] = [];
 
   //Subscription
   private channelSubscription: Subscription = new Subscription;
@@ -82,21 +83,12 @@ export class SiteMenuComponent {
 
   public setActiveChannel(channelName: string) {
     this.firestoreService.channels$.subscribe(channels => {
-      const foundChannel = channels.find((obj: Channel) => obj.name === channelName);
-      if (foundChannel) {
-        this.globalVariables.activeChannel = foundChannel;
-        this.filterChats();
+      const foundChannelName = channels.find((obj: Channel) => obj.name === channelName);
+      if (foundChannelName) {
+        this.globalVariables.activeChannel = foundChannelName;
       } else {
         console.error('Channel not found');
       }
-    });
-  }
-
-  public filterChats() {
-    this.globalVariables.messages = [];
-    this.filteredChats = this.firestoreService.messages.filter(chat => chat.channel === this.globalVariables.activeChannel.name);
-    this.filteredChats.forEach(element => {
-      this.globalVariables.messages.push(this.firestoreService.setObjectMessage(element, ''));
     });
   }
 
@@ -112,15 +104,15 @@ export class SiteMenuComponent {
 
   public show_all_directmessages_sender(message: DirectMessage) {
     let direct_message_receiver = this.firestoreService.members.find(member => message.receiver == member.member);
-    if (direct_message_receiver && !this.globalVariables.personObjArray.some(person => person.member === direct_message_receiver!.member)) {
-      this.globalVariables.personObjArray.push(direct_message_receiver);
+    if (direct_message_receiver && !this.personObjArray.some(person => person.member === direct_message_receiver!.member)) {
+      this.personObjArray.push(direct_message_receiver);
     }
   }
 
   public show_all_directmessages_receiver(message: DirectMessage) {
     let direct_message_sender = this.firestoreService.members.find(member => message.sender == member.member);
-    if (direct_message_sender && !this.globalVariables.personObjArray.some(person => person.member === direct_message_sender!.member)) {
-      this.globalVariables.personObjArray.push(direct_message_sender);
+    if (direct_message_sender && !this.personObjArray.some(person => person.member === direct_message_sender!.member)) {
+      this.personObjArray.push(direct_message_sender);
     }
   }
 

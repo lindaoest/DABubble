@@ -39,7 +39,7 @@ export class HeaderComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.path = this.location.path();
-      this.isHomePath = this.router.url == '/';
+      this.isHomePath = this.router.url == '/' || this.router.url.startsWith('/channels') || this.router.url.startsWith('/users');
     });
   }
 

@@ -10,24 +10,21 @@ import { Message } from '../../../../models/message.class';
 })
 export class GlobalVariablesService {
 
-  newMember!: Member;
-  signed_in_member!: any;
-  activeChannel!: Channel;
-  messages: Message[] = [];
-  create_new_chat: boolean = false;
-  verifyText: boolean = false;
-  personObjArray: Member[] = [];
+  public activeChannel!: Channel;
+  public create_new_chat: boolean = false;
+  public signed_in_member!: any;
+  public verifyText: boolean = false;
 
-  showMenu: boolean = true;
-  showChat: boolean = false;
-  showDirectChat: boolean = false;
-  showThreads: boolean = false;
+  public showMenu: boolean = true;
+  public showChat: boolean = false;
+  public showDirectChat: boolean = false;
+  public showThreads: boolean = false;
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');
-  active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();
+  public active_privatechat$: Observable<string> = this.active_privatechatSubject.asObservable();
 
   private activeChatSubject = new Subject<string>();
-  activeChat$: Observable<string> = this.activeChatSubject.asObservable();
+  public activeChat$: Observable<string> = this.activeChatSubject.asObservable();
 
   set activeChat(value: string) {
     this.activeChatSubject.next(value);
@@ -37,14 +34,7 @@ export class GlobalVariablesService {
     this.active_privatechatSubject.next(value);
   }
 
-  constructor() {
-    const newMemberData = sessionStorage.getItem('new Member');
-    if (newMemberData) {
-      this.newMember = JSON.parse(newMemberData);
-    }
-  }
-
-  currentTime() {
+  public currentTime() {
     let date = new Date();
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }

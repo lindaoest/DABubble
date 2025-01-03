@@ -4,6 +4,7 @@ import { GlobalVariablesService } from '../../../../services/global-variables/gl
 import { Channel } from '../../../../../../models/channel.class';
 import { FormsModule } from '@angular/forms';
 import { FirestoreService } from '../../../../services/firestore/firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview-channel-item',
@@ -37,7 +38,8 @@ export class OverviewChannelItemComponent {
 
   constructor(
     public globalVariables: GlobalVariablesService,
-    public firestoreService: FirestoreService
+    public firestoreService: FirestoreService,
+    public router: Router
   ) { }
 
   public editChannel() {

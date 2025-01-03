@@ -1,35 +1,47 @@
-<form class="choose-avatar">
-	<div class="headline w-full">
-		<img class="c-pointer" [routerLink]="['/sign-in']" src="./assets/img/back-arrow.svg" alt="">
-		<h1 class="blue-font">Wähle deinen Avatar</h1>
-	</div>
-	<img class="profile" [src]="profilePicture" alt="">
-	<h2 class="font-weight-700">{{ globalVariables.newMember ? globalVariables.newMember.member : '' }}</h2>
-	<p class="subtitle w-full">Aus der Liste wählen</p>
-	<div class="avatar-images w-full">
-		@for (item of [1,2,3,4,5,6]; track $index) {
-		<img (click)="addImage(item)" class="avatar-img" src="./assets/img/avatar/avatar-{{item}}.svg" alt="">
-		}
-	</div>
-	<div class="upload-image">
-		<p>eigenes Bild verwenden</p>
-		<label class="button button2">
-			<input type="file" (change)="handleFileInput($event)" />
-			<p>Datei hochladen</p>
-		</label>
-	</div>
-	@if (user_already_exists) {
-		<p class="error-message">Dieser User existiert bereits</p>
-	}
-	<div class="buttons flex w-full p-t-24">
-		<button class="button1" (click)="addMember()" [disabled]="chooseImage">Weiter</button>
-	</div>
-</form>
+<app-auth-container
+  title="Wähle deinen Avatar"
+  [isBackLink]="true"
+  backLink="/sign-in">
 
-@if (successSignIn) {
-<div class="overlay w-full h-full">
-	<div class="overlay-button">
-		<p>Konto erfolgreich erstellt!</p>
-	</div>
+  <!-- Profile picture -->
+  <img class="profile" [src]="profilePicture" alt="">
+
+  <!-- Name -->
+  <h2 class="font-weight-700">{{ newMember ? newMember.member : '' }}</h2>
+
+  <!-- Choose avatar from list -->
+  <p class="subtitle w-full">Aus der Liste wählen</p>
+  <div class="avatar-images w-full">
+    @for (item of [1,2,3,4,5,6]; track $index) {
+    <img class="avatar-img c-pointer" src="./assets/img/avatar/avatar-{{item}}.svg" alt="" (click)="addImage(item)">
+    }
+  </div>
+
+  <!-- Upload own image -->
+  <div class="upload-image">
+    <p>Eigenes Bild verwenden</p>
+    <label class="button button2 c-pointer">
+      <input type="file" (change)="addOwnFile($event)" />
+      <p>Datei hochladen</p>
+    </label>
+  </div>
+
+  <!-- Error message -->
+  @if (userAlreadyExists) {
+    <p class="error-message">Dieser User existiert bereits</p>
+  }
+
+  <!-- Action -->
+  <div class="continue-button flex w-full p-t-24">
+    <button class="button1" [disabled]="imageIsSelected" (click)="addMember()">Weiter</button>
+  </div>
+</app-auth-container>
+
+<!-- Success overlay -->
+@if (showSuccessOverlay) {
+<div class="overlay">
+  <div class="overlay-button">
+    <p>Konto erfolgreich erstellt!</p>
+  </div>
 </div>
 }

@@ -26,7 +26,7 @@
     @for (channel of getList(); track $index) {
 
       <!-- Channel -->
-      <div class="team" [routerLink]="['./channels', channel.name.toLocaleLowerCase()]" routerLinkActive="active" (click)="openChat(channel.name)">
+      <div class="team" [routerLink]="['./channels', channel.name.toLowerCase()]" routerLinkActive="active" (click)="openChat(channel.name)">
       <img src="./assets/img/channels/tag.svg" alt="">
       <p>{{ channel.name }}</p>
     </div>
@@ -38,10 +38,10 @@
   [open_accordion]="false"
   [title]="'direktnachrichten'"
   [icon]="'account_circle'">
-    @for (item of globalVariables.personObjArray; track $index) {
+    @for (item of personObjArray; track $index) {
 
     <!-- Directmessage -->
-    <div class="direct-message c-pointer" [routerLink]="['./users', item.member.toLocaleLowerCase()]" routerLinkActive="active" (click)="showDirectChat(item.member)">
+    <div class="direct-message c-pointer" [routerLink]="['./users', item.member.toLowerCase()]" routerLinkActive="active" (click)="showDirectChat(item.member)">
       <div class="avatar">
         <img src="{{ item.avatar }}" alt="">
         @if (item.isOnline) {
