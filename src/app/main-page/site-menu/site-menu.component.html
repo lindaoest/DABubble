@@ -23,10 +23,10 @@
     [members]="members"
     [icon]="'workspaces'"
     [openDialog]="true">
-    @for (channel of getList(); track $index) {
+    @for (channel of getList(); track channel.name) {
 
       <!-- Channel -->
-      <div class="team" [routerLink]="['./channels', channel.name.toLowerCase()]" routerLinkActive="active" (click)="openChat(channel.name)">
+      <div class="team" [routerLink]="['/channels', channel.name.toLowerCase()]" routerLinkActive="active" (click)="openChat(channel.name)">
       <img src="./assets/img/channels/tag.svg" alt="">
       <p>{{ channel.name }}</p>
     </div>
