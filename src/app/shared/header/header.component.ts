@@ -53,9 +53,6 @@ export class HeaderComponent {
     signOut(auth).then(() => {
       this.router.navigate(['log-in']);
       this.lightboxIsOpen = false;
-
-      // Observe online-/offline-status
-      this.userStatusService.initialize(this.globalVariables.signed_in_member.uid);
     }).catch((error) => {
       console.error('logOut', error);
     });

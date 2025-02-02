@@ -6,47 +6,45 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { FirestoreService } from '../firestore/firestore.service';
 import { GlobalVariablesService } from '../global-variables/global-variables.service';
 import { Member } from '../../../../models/member.class';
-import { Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserStatusService {
 
-  firebaseConfig = privateConfig;
-  app = initializeApp(this.firebaseConfig);
-  auth = getAuth(this.app);
+  private firebaseConfig = privateConfig;
+  private app = initializeApp(this.firebaseConfig);
+  private auth = getAuth(this.app);
 
-  private afs!: Firestore;
+  private db = getDatabase(this.app);
+  private userId: string | null = null; // Diese ID sollte beim Login gesetzt werden
 
-  db = getDatabase(this.app);
-  userId: string | null = null; // Diese ID sollte beim Login gesetzt werden
-
-  constructor(public firestoreService: FirestoreService, public globalVariables: GlobalVariablesService) {
+  constructor(
+    public firestoreService: FirestoreService,
+    public globalVariables: GlobalVariablesService
+  ) {
     this.checkUserStatus();
   }
 
-  initialize(userId: string) {
+  public initialize(userId: string) {
     this.userId = userId;
-    console.log(`Initializing status listener for user: ${userId}`);
     this.setUpStatusListener();
   }
 
-  checkUserStatus() {
+  private checkUserStatus() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.userId = user.uid;
-        console.log(`Benutzer ist eingeloggt mit ID: ${this.userId}`);
         this.setUpStatusListener();
       } else {
-        console.log('Kein Benutzer eingeloggt.');
         this.userId = null;
+        this.updateFirestoreStatus(false);
       }
     });
   }
 
 
-  async setUpStatusListener() {
+  private async setUpStatusListener() {
     if (!this.userId) return;
 
     const myConnectionsRef = ref(this.db, `users/${this.userId}/connections`);
@@ -77,12 +75,13 @@ export class UserStatusService {
 
   // Helper method to update Firestore status
   private async updateFirestoreStatus(isOnline: boolean) {
-    const updateMember = this.firestoreService.members.find(
-      (obj) => obj.member === this.globalVariables.signed_in_member.displayName
-    );
+    let updateMember;
 
-    console.log('isOnline', isOnline);
-
+    if(this.globalVariables.signed_in_member) {
+      updateMember = this.firestoreService.members.find(
+        (obj) => obj.member === this.globalVariables.signed_in_member.displayName
+      );
+    }
 
     if (updateMember) {
       const member: Member = {
@@ -91,7 +90,6 @@ export class UserStatusService {
       };
 
       await this.firestoreService.updateMember('members', member);
-      console.log(`Updated Firestore isOnline status to ${isOnline} for user ${this.userId}`);
     }
   }
 }
