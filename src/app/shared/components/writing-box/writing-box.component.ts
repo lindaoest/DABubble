@@ -1,21 +1,30 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
 import { Message } from '../../../../models/message.class';
 import { FirestoreService } from '../../services/firestore/firestore.service';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { Thread } from '../../../../models/thread.class';
-import { Subscription } from 'rxjs';
 import { Channel } from '../../../../models/channel.class';
+import { CommonModule } from '@angular/common';
+import { MembersBoxComponent } from '../members-box/members-box.component';
+import { Member } from '../../../../models/member.class';
 
 @Component({
   selector: 'app-writing-box',
   standalone: true,
-  imports: [FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MembersBoxComponent
+  ],
   templateUrl: './writing-box.component.html',
   styleUrl: './writing-box.component.scss'
 })
 export class WritingBoxComponent {
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('textField') textField!: ElementRef;
 
   @Input()
   public activeChannel!: Channel;
@@ -36,11 +45,18 @@ export class WritingBoxComponent {
   public is_createNewChat_open: boolean = false;
 
   public description: string = '';
+  public members: Member[] = [];
+  public openMembersBox: boolean = false;
 
   constructor(
     public globalVariables: GlobalVariablesService,
     public firestoreService: FirestoreService
   ) { }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside() {
+    this.openMembersBox = false;
+  }
 
   public async addMessage() {
     if (this.sendMessage == 'message') {
@@ -106,5 +122,38 @@ export class WritingBoxComponent {
         this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
       }
     }
+  }
+
+  public triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+
+  public onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      console.log('Ausgewählte Datei:', file);
+    }
+  }
+
+  public tagMember(e: Event) {
+    e.stopPropagation();
+
+    this.members = [];
+
+    for(let member of this.firestoreService.members) {
+      this.members.push(member);
+    }
+
+    this.openMembersBox = true;
+  }
+
+  public addNewMember(m: Member) {
+    this.description += `@${m.member}`;
+    this.openMembersBox = false;
+  }
+
+  public closeMembersBox() {
+    this.openMembersBox = false;
   }
 }

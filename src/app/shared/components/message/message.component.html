@@ -1,7 +1,10 @@
 <div class="message w-full" [ngClass]="{'editModus': messageIsEditable}">
 
   <!-- reaction bar for emoji or edit message -->
-  <app-reaction-message-bar [messageIsEditable]="globalVariables.signed_in_member.displayName === message.sender" (editableMessage)="editMessage()"></app-reaction-message-bar>
+  <app-reaction-message-bar
+    [messageIsEditable]="globalVariables.signed_in_member.displayName === message.sender"
+    (editableMessage)="editMessage()"
+    (openThread)="start_thread(message)" />
   <div class="message-container flex" [ngClass]="{'reversed-message': globalVariables.signed_in_member.displayName === message.sender}">
 
     <!-- Avatar -->

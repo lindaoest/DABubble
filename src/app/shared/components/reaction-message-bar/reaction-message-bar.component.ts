@@ -20,6 +20,9 @@ export class ReactionMessageBarComponent {
   @Output()
   public editableMessage = new EventEmitter();
 
+  @Output()
+  public openThread = new EventEmitter();
+
   public boxEditMessageIsOpen: boolean = false;
 
   public openBoxEditMessage() {
@@ -30,5 +33,9 @@ export class ReactionMessageBarComponent {
     this.editableMessage.emit();
 
     this.boxEditMessageIsOpen = false;
+  }
+
+  public openThreadMessages() {
+    this.openThread.emit();
   }
 }

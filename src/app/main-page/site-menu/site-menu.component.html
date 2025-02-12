@@ -41,7 +41,7 @@
     @for (item of personObjArray; track $index) {
 
     <!-- Directmessage -->
-    <div class="direct-message c-pointer" [routerLink]="['./users', item.member.toLowerCase()]" routerLinkActive="active" (click)="showDirectChat(item.member)">
+    <div class="direct-message c-pointer" [routerLink]="['/users', item.member.toLowerCase()]" routerLinkActive="active" (click)="showDirectChat(item.member)">
       <div class="avatar">
         <img src="{{ item.avatar }}" alt="">
         @if (item.isOnline) {
