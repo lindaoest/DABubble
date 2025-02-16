@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { GlobalVariablesService } from '../services/global-variables/global-variables.service';
 import { getAuth, signOut } from "firebase/auth";
@@ -9,11 +9,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from '../services/firestore/firestore.service';
 import { UserStatusService } from '../services/user-status/user-status.service';
 import { ProfileComponent } from '../components/overlays/profile/profile.component';
+import { Subscription } from 'rxjs';
+import { Channel } from '../../../models/channel.class';
+import { Member } from '../../../models/member.class';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule
   ],
   templateUrl: './header.component.html',
@@ -21,9 +25,14 @@ import { ProfileComponent } from '../components/overlays/profile/profile.compone
 })
 export class HeaderComponent {
 
+  //Subscription
+  private channelSubscription: Subscription = new Subscription;
+  public channels: Channel[] = [];
+
   public isHomePath: boolean = false;
   public lightboxIsOpen: boolean = false;
   public path!: string;
+  public searchItems: any = [];
 
   constructor(
     private location: Location,
@@ -40,6 +49,10 @@ export class HeaderComponent {
     ).subscribe(() => {
       this.path = this.location.path();
       this.isHomePath = this.router.url == '/' || this.router.url.startsWith('/channels') || this.router.url.startsWith('/users');
+    });
+
+    this.channelSubscription = this.firestoreService.channels$.subscribe(channels => {
+      this.channels = channels;
     });
   }
 
@@ -67,5 +80,37 @@ export class HeaderComponent {
       }
     });
     this.lightboxIsOpen = false;
+  }
+
+  public searchDevspace(val: any) {
+    const inputValue = val.target.value;
+
+    this.searchItems = [];
+    let searchChannels: Channel[] = [];
+    let searchMembers: Member[] = [];
+
+    if (inputValue != '') {
+      for(let channel of this.channels) {
+        const channelToLowerCase = channel.name.toLowerCase();
+
+        if(channelToLowerCase.includes(inputValue.toLowerCase())) {
+          searchChannels.push(channel);
+        }
+      }
+
+      for(let member of this.firestoreService.members) {
+        const memberToLowerCase = member.member.toLowerCase();
+
+        if(memberToLowerCase.includes(inputValue.toLowerCase())) {
+          searchMembers.push(member);
+        }
+      }
+
+      if (searchChannels.length > 0) this.searchItems.push({'channels': searchChannels});
+      if (searchMembers.length > 0) this.searchItems.push({'members': searchMembers});
+
+      searchChannels = [];
+      searchMembers = [];
+    }
   }
 }

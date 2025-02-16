@@ -49,7 +49,7 @@ export class CreateNewChatComponent {
     for(let searchMember of this.firestoreService.members) {
       const memberToLowerCase = searchMember.member.toLowerCase();
 
-      if(memberToLowerCase.includes(cleanInputValue)) {
+      if(memberToLowerCase.includes(cleanInputValue.toLowerCase())) {
         searchMembers.push(searchMember);
       }
     }

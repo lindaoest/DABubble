@@ -73,7 +73,7 @@ export class InputSelectMembersComponent {
     for(let searchMember of this.allMembers) {
       const memberToLowerCase = searchMember.member.toLowerCase();
 
-      if(memberToLowerCase.includes(inputValue)) {
+      if(memberToLowerCase.includes(inputValue.toLowerCase())) {
         searchMembers.push(searchMember);
       }
     }
