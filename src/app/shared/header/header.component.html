@@ -2,9 +2,37 @@
   <!-- Logo -->
 	<img class="logo" src="./assets/img/dabubble-logo.svg" alt="">
 
-  <div class="search-devspace">
-    <input type="text" placeholder="Devspace durchsuchen" class="search-input" (keyup)="searchDevspace($event)">
-    <img class="search-icon" src="./assets/img/search.svg" alt="Search">
+  <!-- Search bar -->
+  <div class="searchbar-container">
+    <div class="search-devspace">
+      <input type="text" placeholder="Devspace durchsuchen" class="search-input" (keyup)="searchDevspace($event)">
+      <img class="search-icon" src="./assets/img/search.svg" alt="Search">
+    </div>
+    <div *ngIf="inputValue" class="search-box">
+      <div class="inner-box">
+        @for (item of searchItems; track $index) {
+          @if (item.channels?.length > 0) {
+            <div class="font-weight-700">Channels</div>
+            @for (channel of item.channels; track $index) {
+              <div class="c-pointer element" (click)="openChat(channel.name)">
+                {{ channel.name }}
+              </div>
+            }
+          }
+
+          @if (item.members?.length > 0) {
+            <div class="font-weight-700">Members</div>
+            @for (member of item.members; track $index) {
+              <div class="c-pointer element" (click)="showDirectChat(member.member)">
+                {{ member.member }}
+              </div>
+            }
+          }
+        } @empty {
+          <p>Kein Treffer</p>
+        }
+      </div>
+    </div>
   </div>
 
   <!-- Show on log-in -->
@@ -38,28 +66,6 @@
 	</div>
 	}
 </header>
-
-<div *ngIf="searchItems.length > 0" class="search-box">
-  <div class="inner-box">
-    @if (searchItems?.length) {
-      @for (item of searchItems; track $index) {
-        @if (item.channels?.length) {
-          <div class="font-weight-700">Channels</div>
-          @for (channel of item.channels; track $index) {
-            <div class="c-pointer element">{{ channel.name }}</div>
-          }
-        }
-
-        @if (item.members?.length) {
-          <div class="font-weight-700">Members</div>
-          @for (member of item.members; track $index) {
-            <div class="c-pointer element">{{ member.member }}</div>
-          }
-        }
-      }
-    }
-  </div>
-</div>
 
 @if (lightboxIsOpen) {
 <div class="lightbox c-pointer">

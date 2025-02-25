@@ -33,6 +33,7 @@ export class HeaderComponent {
   public lightboxIsOpen: boolean = false;
   public path!: string;
   public searchItems: any = [];
+  public inputValue: any;
 
   constructor(
     private location: Location,
@@ -83,17 +84,17 @@ export class HeaderComponent {
   }
 
   public searchDevspace(val: any) {
-    const inputValue = val.target.value;
+    this.inputValue = val.target.value;
 
     this.searchItems = [];
     let searchChannels: Channel[] = [];
     let searchMembers: Member[] = [];
 
-    if (inputValue != '') {
+    if (this.inputValue != '') {
       for(let channel of this.channels) {
         const channelToLowerCase = channel.name.toLowerCase();
 
-        if(channelToLowerCase.includes(inputValue.toLowerCase())) {
+        if(channelToLowerCase.includes(this.inputValue.toLowerCase())) {
           searchChannels.push(channel);
         }
       }
@@ -101,7 +102,7 @@ export class HeaderComponent {
       for(let member of this.firestoreService.members) {
         const memberToLowerCase = member.member.toLowerCase();
 
-        if(memberToLowerCase.includes(inputValue.toLowerCase())) {
+        if(memberToLowerCase.includes(this.inputValue.toLowerCase())) {
           searchMembers.push(member);
         }
       }
@@ -112,5 +113,45 @@ export class HeaderComponent {
       searchChannels = [];
       searchMembers = [];
     }
+  }
+
+  public openChat(channelName: string) {
+    this.globalVariables.showDirectChat = false;
+    this.globalVariables.create_new_chat = false;
+    this.globalVariables.showChat = true;
+    this.globalVariables.activeChat = channelName;
+
+    this.setActiveChannel(channelName);
+
+    this.inputValue = '';
+
+    // this.mobileClickedChat.emit();
+  }
+
+  public setActiveChannel(channelName: string) {
+    this.firestoreService.channels$.subscribe(channels => {
+      const foundChannelName = channels.find((obj: Channel) => obj.name === channelName);
+      if (foundChannelName) {
+        this.globalVariables.activeChannel = foundChannelName;
+      } else {
+        console.error('Channel not found');
+      }
+    });
+  }
+
+  public showDirectChat(receiver: string) {
+    this.globalVariables.create_new_chat = false;
+    this.globalVariables.showDirectChat = true;
+    localStorage.setItem('active privatechat', JSON.stringify(receiver));
+
+    let get_active_chat = localStorage.getItem('active privatechat');
+
+    if (get_active_chat) {
+      this.globalVariables.active_privatechat = JSON.parse(get_active_chat);
+    }
+
+    this.inputValue = '';
+
+    // this.mobileClickedDirectChat.emit();
   }
 }

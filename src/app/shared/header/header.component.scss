@@ -75,21 +75,25 @@ header {
   border: 2px solid #FFFFFF;
 }
 
-.search-devspace {
-  @include displayFlex($jc: right);
+.searchbar-container {
   position: relative;
   width: 49.41%;
 
-  .search-input {
-    border-radius: 40px;
-    border: 0px;
-    padding: 16px 40px;
-    width: 100%;
-  }
+  .search-devspace {
+    @include displayFlex($jc: right);
+    position: relative;
 
-  img {
-    position: absolute;
-    right: 16px;
+    .search-input {
+      border-radius: 40px;
+      border: 0px;
+      padding: 16px 40px;
+      width: 100%;
+    }
+
+    img {
+      position: absolute;
+      right: 16px;
+    }
   }
 }
 
@@ -97,14 +101,14 @@ header {
   @include displayFlex();
   position: absolute;
   z-index: 99;
-  top: 7%;
+  top: 49px;
   width: 100%;
 
   .inner-box {
     border: 1px solid #ADB0D9;
     border-radius: 30px;
     background-color: #FFFFFF;
-    width: 45%;
+    width: 100%;
     padding: 16px;
 
     .element {
@@ -123,11 +127,20 @@ input:focus-visible {
   outline: 0;
 }
 
+@media screen and (max-width: 1200px) {
+  .searchbar-container {
+    width: 39%;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .profile {
     .profile-name {
       max-width: 170px;
     }
+  }
+  .searchbar-container {
+    display: none;
   }
 }
 
