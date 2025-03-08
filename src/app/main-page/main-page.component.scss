@@ -60,6 +60,11 @@ app-thread-reply {
   .hide-on-small {
     display: none;
   }
+
+  .full-width-threads-mobile {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 800px) {

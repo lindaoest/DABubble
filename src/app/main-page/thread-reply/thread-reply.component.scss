@@ -30,9 +30,14 @@
 @media screen and (max-width: 800px) {
   .threads {
     padding: 0 0 16px 0;
+  }
+}
 
-    >* {
-      padding: 16px;
+@media screen and (max-width: 400px) {
+  .chat-block {
+    .answer-number-text {
+      font-size: 0.8em;
+      padding: 0;
     }
   }
 }

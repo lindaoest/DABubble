@@ -127,6 +127,8 @@ app-reaction-message-bar {
 
 @media screen and (max-width: 450px) {
   .bottom {
+    justify-content: flex-end;
+
     p+p {
       display: none;
     }

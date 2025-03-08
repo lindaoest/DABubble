@@ -23,9 +23,6 @@ import { Member } from '../../../../models/member.class';
 })
 export class WritingBoxComponent {
 
-  @ViewChild('fileInput') fileInput!: ElementRef;
-  @ViewChild('textField') textField!: ElementRef;
-
   @Input()
   public activeChannel!: Channel;
 
@@ -47,6 +44,7 @@ export class WritingBoxComponent {
   public description: string = '';
   public members: Member[] = [];
   public openMembersBox: boolean = false;
+  public tagMemberInTextarea: boolean = false;
 
   constructor(
     public globalVariables: GlobalVariablesService,
@@ -124,21 +122,8 @@ export class WritingBoxComponent {
     }
   }
 
-  public triggerFileInput() {
-    this.fileInput.nativeElement.click();
-  }
-
-  public onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      console.log('Ausgewählte Datei:', file);
-    }
-  }
-
   public tagMember(e: Event) {
     e.stopPropagation();
-
     this.members = [];
 
     for(let member of this.firestoreService.members) {
@@ -149,11 +134,24 @@ export class WritingBoxComponent {
   }
 
   public addNewMember(m: Member) {
-    this.description += `@${m.member}`;
+    if(this.tagMemberInTextarea) {
+      this.description += `${m.member}`;
+      this.tagMemberInTextarea = false;
+    } else {
+      this.description += `@${m.member}`;
+    }
+
     this.openMembersBox = false;
   }
 
   public closeMembersBox() {
     this.openMembersBox = false;
+  }
+
+  public checkTagMember(e: any) {
+    if(e.keyCode == 18) {
+      this.tagMemberInTextarea = true;
+      this.tagMember(e);
+    }
   }
 }

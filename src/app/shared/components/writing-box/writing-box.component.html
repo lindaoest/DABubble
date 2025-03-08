@@ -1,17 +1,13 @@
 <div class="writing-box w-full">
 
   <!-- Message input field-->
-  <input class="w-full" #textField type="textarea" placeholder="Nachricht schreiben..." [(ngModel)]="description">
+  <input class="w-full" #textField type="textarea" placeholder="Nachricht schreiben..." [(ngModel)]="description" (keyup)="checkTagMember($event)">
 
   <!-- Bottom bar-->
   <div class="bottom-icons">
 
     <!-- Reactions -->
     <div class="reactions flex">
-      <div class="file-upload icon">
-        <img src="./assets/img/chat/add-reaction.svg" alt="Bild hochladen" (click)="triggerFileInput()">
-        <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
-      </div>
 
       <div class="icon">
         <img src="./assets/img/chat/add-emoji.svg" alt="">

@@ -1,18 +1,19 @@
 @import '../../../mixin.scss';
 
 .team-name {
-  @include displayFlex();
-  padding-left: 8px;
+  @include displayFlex($jc:flex-start);
+  // width: 60%;
+  padding: 4px 8px;
 
   .open-channel {
     @include displayFlex();
+    // width: 100%;
     gap: 8px;
   }
 
   &:hover {
     border-radius: 25px;
     background-color: #ECEEFE;
-    padding: 4px 8px;
     color: #535AF1;
 
     img {
@@ -24,6 +25,7 @@
 .profile-container {
   @include displayFlex();
   gap: 8px;
+  margin: 0  0 0 auto;
 }
 
 .members {
@@ -69,9 +71,12 @@
   }
 }
 
-@media screen and (max-width: 500px) {
-  .members {
+.mobile-arrow {
+  padding-right: 16px;
+}
 
+@media screen and (max-width: 650px) {
+  .members {
     .quantity,
     .avatars {
       display: none;
