@@ -22,3 +22,15 @@
     }
   }
 }
+
+.mobile-arrow {
+  padding-right: 16px;
+}
+
+@media screen and (max-width: 400px) {
+  .name {
+    h3 {
+      width: 90px;
+    }
+  }
+}

@@ -4,3 +4,11 @@
   @include displayFlex();
   gap: 8px;
 }
+
+@media screen and (max-width: 400px) {
+  .thread-name {
+    p {
+      width: 90px;
+    }
+  }
+}
