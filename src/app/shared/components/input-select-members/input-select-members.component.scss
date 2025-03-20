@@ -11,7 +11,7 @@
   margin-top: 24px;
 
   .added-members {
-    @include displayFlex($jc: flex-start);
+    align-items: center;
     overflow-x: scroll;
 
     .member {
@@ -20,6 +20,10 @@
       border-radius: 30px;
       gap: 16px;
       padding: 5px 8px;
+
+      p {
+        white-space: nowrap;
+      }
 
       .avatar {
         border-radius: 50%;

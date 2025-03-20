@@ -1,11 +1,11 @@
-<ng-container *ngIf="showMembersBox; else infoText" [ngTemplateOutlet]="inputFieldForMembers"></ng-container>
+<ng-container *ngIf="(this.alreadyExistingMembers.length - 1) != numberOfParticipants; else allParticipantsIncluded" [ngTemplateOutlet]="inputFieldForMembers"></ng-container>
 
 <!-- Show member box -->
 <ng-template #inputFieldForMembers>
   <div class="input-box">
 
     <!-- added members -->
-    <div class="added-members" [ngStyle]="{'width': selectedMembers.length > 0 ? '260px' : ''}">
+    <div class="added-members" [ngClass]="{'flex': selectedMembers.length > 0, 'd-none': selectedMembers.length == 0}" [ngStyle]="{'width': selectedMembers.length > 0 ? '260px' : ''}">
       @for (item of selectedMembers; track item; let index = $index) {
       <div class="member">
         <img class="avatar" src="{{ item.avatar }}" alt="">
@@ -19,12 +19,12 @@
   </div>
 </ng-template>
 
-<!-- Show infotext -->
-<ng-template #infoText>
+<!-- Show allParticipantsIncluded -->
+<ng-template #allParticipantsIncluded>
   <p class="p-t-24">Alle Teilnehmer sind bereits in diesem Kanal.</p>
 </ng-template>
 
 <!-- Members box -->
 <app-members-box *ngIf="showMembersBox"
-  [selectedMembers]="members"
+  [selectedMembers]="allMembersForMembersBox"
   (newMember)="addNewMember($event)" />

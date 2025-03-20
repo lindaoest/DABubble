@@ -23,10 +23,11 @@ export class InputSelectMembersComponent {
   @Output()
   public membersEvent = new EventEmitter;
 
-  public allMembers: Member[] = [];
-  public members!: Member[];
+  public members: Member[] = [];
+  public allMembersForMembersBox: Member[] = [];
+  public numberOfParticipants!: number;
   public selectedMembers: Member[] = [];
-  public showMembersBox: boolean = true;
+  public showMembersBox: boolean = false;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -34,31 +35,25 @@ export class InputSelectMembersComponent {
   ) { }
 
   ngOnInit() {
-    const allMembersWithoutCurrentMember = this.firestoreService.members.filter((member: Member) => member.member !== this.globalVariables.signed_in_member.displayName);
-    this.members = allMembersWithoutCurrentMember;
-    this.allMembers = this.members;
+    this.members = this.firestoreService.members.filter((member: Member) => member.member !== this.globalVariables.signed_in_member.displayName);
+    this.numberOfParticipants = this.members.length
+    this.allMembersForMembersBox = this.members;
 
     if (this.alreadyExistingMembers.length > 0) {
-      if((this.alreadyExistingMembers.length - 1) != this.members.length) {
-        this.members = this.members.filter(member =>
-          !this.alreadyExistingMembers.some(existingMember => existingMember.email === member.email)
-        );
-        this.allMembers = this.members;
-      } else {
-        this.showMembersBox = false;
-      }
+      this.allMembersForMembersBox = this.allMembersForMembersBox.filter(member =>
+        !this.alreadyExistingMembers.some(existingMember => existingMember.email === member.email)
+      );
+      this.members = this.allMembersForMembersBox;
     }
   }
 
   public addNewMember(m: Member) {
     this.selectedMembers.push(m);
-
     this.emitMembers();
   }
 
   public deleteMember(i: number) {
     this.selectedMembers.splice(i, 1);
-
     this.emitMembers();
   }
 
@@ -70,7 +65,11 @@ export class InputSelectMembersComponent {
     const inputValue = val.target.value;
     let searchMembers = [];
 
-    for(let searchMember of this.allMembers) {
+    if(inputValue.length == 1) {
+      this.showMembersBox = true;
+    }
+
+    for(let searchMember of this.members) {
       const memberToLowerCase = searchMember.member.toLowerCase();
 
       if(memberToLowerCase.includes(inputValue.toLowerCase())) {
@@ -78,7 +77,7 @@ export class InputSelectMembersComponent {
       }
     }
 
-    this.members = searchMembers;
+    this.allMembersForMembersBox = searchMembers;
     searchMembers = [];
   }
 }
