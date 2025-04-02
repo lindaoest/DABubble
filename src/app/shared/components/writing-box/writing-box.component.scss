@@ -38,8 +38,15 @@
 
 .members-box {
   position: absolute;
-  left: 27%;
+  left: 90px;
   bottom: 16px;
+}
+
+.emoji-picker {
+  position: absolute;
+  bottom: 16px;
+  left: 70px;
+  height: 300px;
 }
 
 @media screen and (max-width: 800px) {

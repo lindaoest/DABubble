@@ -9,6 +9,8 @@ import { Channel } from '../../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { MembersBoxComponent } from '../members-box/members-box.component';
 import { Member } from '../../../../models/member.class';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import 'emoji-picker-element';
 
 @Component({
   selector: 'app-writing-box',
@@ -17,6 +19,9 @@ import { Member } from '../../../../models/member.class';
     CommonModule,
     FormsModule,
     MembersBoxComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   templateUrl: './writing-box.component.html',
   styleUrl: './writing-box.component.scss'
@@ -45,6 +50,7 @@ export class WritingBoxComponent {
   public members: Member[] = [];
   public openMembersBox: boolean = false;
   public tagMemberInTextarea: boolean = false;
+  public emojiPickerIsOpen: boolean = false;
 
   constructor(
     public globalVariables: GlobalVariablesService,
@@ -54,6 +60,9 @@ export class WritingBoxComponent {
   @HostListener('document:click', ['$event'])
   onClickOutside() {
     this.openMembersBox = false;
+    this.emojiPickerIsOpen = false;
+    console.log('test');
+
   }
 
   public async addMessage() {
@@ -153,5 +162,16 @@ export class WritingBoxComponent {
       this.tagMemberInTextarea = true;
       this.tagMember(e);
     }
+  }
+
+  public openEmojiPicker(e: Event) {
+    e.stopPropagation();
+    this.emojiPickerIsOpen = true;
+  }
+
+  public addEmoji(emoji: any) {
+    this.description += emoji;
+
+    console.log('emoji', this.description);
   }
 }

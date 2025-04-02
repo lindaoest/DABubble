@@ -10,7 +10,7 @@
     <div class="reactions flex">
 
       <div class="icon">
-        <img src="./assets/img/chat/add-emoji.svg" alt="">
+        <img src="./assets/img/chat/add-emoji.svg" alt="" (click)="openEmojiPicker($event)">
       </div>
 
       <div class="icon">
@@ -29,4 +29,6 @@
     class="members-box"
     [selectedMembers]="members"
     (newMember)="addNewMember($event)" />
+
+  <emoji-picker *ngIf="emojiPickerIsOpen" class="emoji-picker" (emoji-click)="addEmoji($event.detail.unicode)"></emoji-picker>
 </div>
