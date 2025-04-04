@@ -46,23 +46,23 @@ export class WritingBoxComponent {
   @Input()
   public is_createNewChat_open: boolean = false;
 
+  @ViewChild('input')
+  public input!: ElementRef;
+
   public description: string = '';
-  public members: Member[] = [];
+  public emojiPickerIsOpen: boolean = false;
   public openMembersBox: boolean = false;
   public tagMemberInTextarea: boolean = false;
-  public emojiPickerIsOpen: boolean = false;
 
   constructor(
+    public firestoreService: FirestoreService,
     public globalVariables: GlobalVariablesService,
-    public firestoreService: FirestoreService
   ) { }
 
   @HostListener('document:click', ['$event'])
   onClickOutside() {
     this.openMembersBox = false;
     this.emojiPickerIsOpen = false;
-    console.log('test');
-
   }
 
   public async addMessage() {
@@ -131,23 +131,17 @@ export class WritingBoxComponent {
     }
   }
 
-  public tagMember(e: Event) {
+  public getTaggableMembers(e: Event) {
     e.stopPropagation();
-    this.members = [];
-
-    for(let member of this.firestoreService.members) {
-      this.members.push(member);
-    }
-
     this.openMembersBox = true;
   }
 
   public addNewMember(m: Member) {
     if(this.tagMemberInTextarea) {
-      this.description += `${m.member}`;
+      this.description = this.addDescription(m.member);
       this.tagMemberInTextarea = false;
     } else {
-      this.description += `@${m.member}`;
+      this.description = this.addDescription(`@${m.member}`);
     }
 
     this.openMembersBox = false;
@@ -157,10 +151,10 @@ export class WritingBoxComponent {
     this.openMembersBox = false;
   }
 
-  public checkTagMember(e: any) {
+  public checkForTag(e: any) {
     if(e.keyCode == 18) {
       this.tagMemberInTextarea = true;
-      this.tagMember(e);
+      this.getTaggableMembers(e);
     }
   }
 
@@ -170,8 +164,14 @@ export class WritingBoxComponent {
   }
 
   public addEmoji(emoji: any) {
-    this.description += emoji;
+    this.description = this.addDescription(emoji);
+    this.emojiPickerIsOpen = false;
+  }
 
-    console.log('emoji', this.description);
+  public addDescription(text: any) {
+    const selectionStart = this.input.nativeElement.selectionStart;
+    const selectionEnd = this.input.nativeElement.selectionEnd;
+
+    return this.description.slice(0, selectionStart) + text + this.description.slice(selectionEnd);
   }
 }

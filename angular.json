@@ -35,9 +35,7 @@
               "src/styles/scrollbar.scss",
               "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/emoji-picker-element/index.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

@@ -1,7 +1,7 @@
 <div class="writing-box w-full">
 
   <!-- Message input field-->
-  <input class="w-full" #textField type="textarea" placeholder="Nachricht schreiben..." [(ngModel)]="description" (keyup)="checkTagMember($event)">
+  <input #input class="w-full" #textField type="textarea" placeholder="Nachricht schreiben..." [(ngModel)]="description" (keyup)="checkForTag($event)">
 
   <!-- Bottom bar-->
   <div class="bottom-icons">
@@ -14,7 +14,7 @@
       </div>
 
       <div class="icon">
-        <img class="c-pointer" src="./assets/img/chat/tag-people.svg" alt="" (click)="tagMember($event)">
+        <img class="c-pointer" src="./assets/img/chat/tag-people.svg" alt="" (click)="getTaggableMembers($event)">
       </div>
     </div>
 
@@ -27,7 +27,7 @@
   <app-members-box
     *ngIf="openMembersBox"
     class="members-box"
-    [selectedMembers]="members"
+    [selectedMembers]="this.firestoreService.members"
     (newMember)="addNewMember($event)" />
 
   <emoji-picker *ngIf="emojiPickerIsOpen" class="emoji-picker" (emoji-click)="addEmoji($event.detail.unicode)"></emoji-picker>
