@@ -1,22 +1,33 @@
-<div class="reaction-bar" [ngClass]="{'reversed-direction': !messageIsEditable}">
+<div>
 
-  <!-- Add reaction -->
-   <div class="reaction-icon">
-    <img class="c-pointer" src="./assets/img/message/add_reaction.svg" alt="">
-   </div>
-
-  <!-- Add comment -->
-   <div class="comment-icon">
-    <img class="c-pointer" src="./assets/img/message/comment.svg" alt="" (click)="openThreadMessages()">
-   </div>
-
-  <!-- Edit message -->
-  @if (messageIsEditable) {
-    <div class="more-vert-icon c-pointer" (click)="openBoxEditMessage()">
-      <img src="./assets/img/message/more_vert.svg" alt="">
+  <div class="reaction-bar" [ngClass]="{'reversed-direction': !messageIsEditable}" (mouseleave)="onUnhover()">
+    <!-- Add reaction -->
+    <div class="emoji-shortcuts">
+      @for (customEmoji of customEmojis; track $index) {
+        <div class="c-pointer">{{ customEmoji }}</div>
+      }
     </div>
 
-    <!-- Overlay edit message -->
-    <app-edit-message-button (click)="editMessage()" [boxEditMessageIsOpen]="boxEditMessageIsOpen" />
-  }
+    <!-- Add reaction -->
+    <div class="reaction-icon" (click)="openEmojiPicker()">
+      <img class="c-pointer" src="./assets/img/message/add_reaction.svg" alt="">
+    </div>
+
+    <!-- Add comment -->
+    <div class="comment-icon">
+      <img class="c-pointer" src="./assets/img/message/comment.svg" alt="" (click)="openThreadMessages()">
+    </div>
+
+    <!-- Edit message -->
+    @if (messageIsEditable) {
+      <div class="more-vert-icon c-pointer" (click)="openBoxEditMessage()">
+        <img src="./assets/img/message/more_vert.svg" alt="">
+      </div>
+
+      <!-- Overlay edit message -->
+      <app-edit-message-button (click)="editMessage()" [boxEditMessageIsOpen]="boxEditMessageIsOpen" />
+    }
+
+    <emoji-picker *ngIf="emojiPickerIsOpen" class="emoji-picker" (emoji-click)="addEmojiToShortcuts($event.detail.unicode)"></emoji-picker>
+  </div>
 </div>
