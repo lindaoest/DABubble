@@ -9,6 +9,11 @@ import { DirectMessage } from '../../../../models/direct-message.class';
 import { FirestoreHelperService } from '../firestoreHelper/firestore-helper.service';
 import { Thread } from '../../../../models/thread.class';
 
+interface Emoji {
+  id: string;
+  emoji: any; // Replace `any` with a more specific type if possible
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +21,7 @@ export class FirestoreService {
 
   members: Member[] = [];
   messages: Message[] = [];
+  emojis: Emoji[] = [];
   // direct_messages: DirectMessage[] = [];
   threads: Thread[] = [];
   groupedMessages: { [channel: string]: { [date: string]: any[] } } = {};
@@ -28,6 +34,7 @@ export class FirestoreService {
   unsubMessage: any;
   unsubDirectMessage: any;
   unsubThread: any;
+  unsubEmoji: any;
 
   //Subscription
   private channelSubject = new BehaviorSubject<Channel[]>([]);
@@ -44,7 +51,10 @@ export class FirestoreService {
     this.directMessageSubject.next(value);
   }
 
-  constructor(public firestoreHelper: FirestoreHelperService, public firestore: Firestore) {
+  constructor(
+    public firestoreHelper: FirestoreHelperService,
+    public firestore: Firestore
+  ) {
 
     this.unsubChannel = onSnapshot(this.getDocRef('channels'), (doc) => {
       const tempChannels: Channel[] = [];
@@ -87,6 +97,13 @@ export class FirestoreService {
       });
       this.groupedThreads = this.firestoreHelper.groupByDateAndChannel(this.threads);
     });
+
+    this.unsubEmoji = onSnapshot(this.getDocRef('emojis'), (doc) => {
+      this.emojis = [];
+      doc.forEach(element => {
+        this.emojis.push(this.setEmojis(element.data(), element.id));
+      });
+    });
   }
 
   ngOnDestroy(): void {
@@ -95,6 +112,7 @@ export class FirestoreService {
     this.unsubMessage();
     this.unsubDirectMessage();
     this.unsubThread();
+    this.unsubEmoji();
   }
 
   //Add Data
@@ -116,6 +134,10 @@ export class FirestoreService {
 
   async addThread(data: Thread) {
     await addDoc(this.getDocRef('threads'), this.setObjectThread(data, ''));
+  }
+
+  async addEmojiShortcuts(data: string) {
+    await addDoc(this.getDocRef('emojis'), {emoji: data});
   }
 
   //Update data
@@ -233,6 +255,13 @@ export class FirestoreService {
       creationDate: obj.creationDate,
       timeStamp: obj.timeStamp,
       message: this.setObjectMessage(obj.message, obj.message.id)
+    }
+  }
+
+  setEmojis(obj: Emoji | DocumentData, id: string): Emoji {
+    return {
+      id: id || '',
+      emoji : obj.emoji
     }
   }
 
