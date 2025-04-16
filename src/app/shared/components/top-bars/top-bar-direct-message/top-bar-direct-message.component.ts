@@ -40,7 +40,7 @@ export class TopBarDirectMessageComponent {
 
   public closeDirectMessageMobile() {
     this.globalVariables.showMenu = true;
-    this.globalVariables.showDirectChat = false;
+    this.globalVariables.showDirectMessagesChat = false;
   }
 
   public openDialog() {

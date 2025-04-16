@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
 import { ChatComponent } from './chat/chat.component';
 import { ThreadReplyComponent } from './thread-reply/thread-reply.component';
@@ -27,6 +27,8 @@ import { ActivatedRoute } from '@angular/router';
 export class MainPageComponent {
 
   public currentMessage!: Message;
+  public isMobile: boolean = false;
+  public isTabletSize: boolean = false;
   public paramId!: string | null;
 
   // Subscription channels
@@ -40,7 +42,18 @@ export class MainPageComponent {
     public route: ActivatedRoute
   ) { }
 
+  @HostListener('window:resize', [])
+  onResize() {
+    this.checkIfMobile();
+    this.checkIfTabletSize();
+  }
+
   ngOnInit() {
+
+    // Check window width
+    this.checkIfMobile();
+    this.checkIfTabletSize();
+
     this.channelSubscription = this.firestoreService.channels$.pipe(
       tap((channels: Channel[]) => {
         this.channels = channels;
@@ -84,35 +97,36 @@ export class MainPageComponent {
     ).subscribe();
   }
 
-  public message_for_thread(message: Message) {
+  public messageForThread(message: Message) {
     this.currentMessage = message;
   }
 
-  public openChat() {
+  public checkIfMobile() {
+    this.isMobile = window.innerWidth <= 800;
+  }
+
+  public checkIfTabletSize() {
+    this.isTabletSize = window.innerWidth <= 1500 && window.innerWidth > 800;
+  }
+
+  public openChannel() {
     this.globalVariables.showMenu = false;
     this.globalVariables.showChat = true;
-    this.globalVariables.showDirectChat = false;
+    this.globalVariables.showDirectMessagesChat = false;
     this.globalVariables.showThreads = false;
   }
 
-  public openDirectChat() {
+  public openDirectMessagesChat() {
     this.globalVariables.showMenu = false;
     this.globalVariables.showChat = false;
-    this.globalVariables.showDirectChat = true;
+    this.globalVariables.showDirectMessagesChat = true;
     this.globalVariables.showThreads = false;
   }
 
   public openThread() {
     this.globalVariables.showMenu = false;
     this.globalVariables.showChat = false;
-    this.globalVariables.showDirectChat = false;
+    this.globalVariables.showDirectMessagesChat = false;
     this.globalVariables.showThreads = true;
-  }
-
-  public goBack() {
-    this.globalVariables.showMenu = true;
-    this.globalVariables.showChat = false;
-    this.globalVariables.showDirectChat = false;
-    this.globalVariables.showThreads = false;
   }
 }

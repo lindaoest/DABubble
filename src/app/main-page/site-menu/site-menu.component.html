@@ -7,7 +7,7 @@
       <h3>Devspace</h3>
     </div>
 
-    <!-- Write new message -->
+    <!-- Open new Chat -->
     <div class="write-icon icon-hover c-pointer" (click)="open_new_chat()">
       <img src="./assets/img/channels/edit_square.svg" alt="edit-square">
     </div>
@@ -26,7 +26,7 @@
     @for (channel of getList(); track channel.name) {
 
       <!-- Channel -->
-      <div class="team" [routerLink]="['/channels', channel.name.toLowerCase()]" routerLinkActive="active" (click)="openChat(channel.name)">
+      <div class="team" [routerLink]="['/channels', channel.name.toLowerCase()]" routerLinkActive="active" (click)="openChannel(channel.name)">
       <img src="./assets/img/channels/tag.svg" alt="">
       <p>{{ channel.name }}</p>
     </div>
@@ -41,7 +41,7 @@
     @for (item of personObjArray; track $index) {
 
     <!-- Directmessage -->
-    <div class="direct-message c-pointer" [routerLink]="['/users', item.member.toLowerCase()]" routerLinkActive="active" (click)="showDirectChat(item.member)">
+    <div class="direct-message c-pointer" [routerLink]="['/users', item.member.toLowerCase()]" routerLinkActive="active" (click)="showDirectMessagesChat(item.member)">
       <div class="avatar">
         <img src="{{ item.avatar }}" alt="">
         @if (item.isOnline) {

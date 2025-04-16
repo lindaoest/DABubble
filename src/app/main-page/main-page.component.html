@@ -2,31 +2,35 @@
   <div class="container flex w-full">
 
     <!-- Sitemenu -->
-    <app-site-menu
-      [ngClass]="{'showContainer': globalVariables.showMenu}"
-      (mobileClickedChat)="openChat()"
-      (mobileClickedDirectChat)="openDirectChat()" />
+    <app-site-menu class="site-menu"
+      [class.fullscreen]="isMobile && globalVariables.showMenu"
+      [class.hidden]="isMobile && (globalVariables.showChat || globalVariables.showDirectMessagesChat || globalVariables.showThreads)"
+      (mobileClickedChat)="openChannel()"
+      (mobileClickedDirectChat)="openDirectMessagesChat()" />
 
-    <!-- Chat -->
-    <ng-container *ngIf="!globalVariables.showDirectChat; else directmessageChat"
-      [ngTemplateOutlet]="channel" />
+    <!-- Show channel or directmessage -->
+    <ng-container *ngIf="!globalVariables.showDirectMessagesChat; else directmessageChat" [ngTemplateOutlet]="channel" />
 
     <!-- Channel -->
     <ng-template #channel>
-      <app-chat
-        [ngClass]="{'showContainer': globalVariables.showChat, 'full-width': !globalVariables.showThreads, 'hide-on-small': globalVariables.showThreads}"
+      <app-chat class="channel"
+        [class.fullscreen]="isMobile && globalVariables.showChat"
+        [class.hidden]="(isMobile && (globalVariables.showMenu || globalVariables.showThreads)) || isTabletSize && globalVariables.showThreads"
         (mobileClickedThread)="openThread()"
-        (currentMessage)="message_for_thread($event)" />
+        (currentMessage)="messageForThread($event)" />
     </ng-template>
 
     <!-- Directmessage -->
     <ng-template #directmessageChat>
-      <app-directmessages-chat
-        [ngClass]="{'showContainer': globalVariables.showDirectChat, 'full-width': !globalVariables.showThreads, 'hide-on-small': globalVariables.showThreads}" />
+      <app-directmessages-chat class="direct-messages-chat"
+        [class.fullscreen]="isMobile && globalVariables.showDirectMessagesChat"
+        [class.hidden]="isMobile && globalVariables.showMenu" />
     </ng-template>
 
-    <app-thread-reply *ngIf="globalVariables.showThreads"
-      [ngClass]="{'showContainer': globalVariables.showThreads, 'full-width-threads-mobile': globalVariables.showThreads}"
+    <!-- Thread -->
+    <app-thread-reply *ngIf="globalVariables.showThreads" class="thread"
+      [class.fullscreen]="isMobile && globalVariables.showThreads"
+      [class.hidden]="isMobile && globalVariables.showMenu"
       [messageToReplyTo]="currentMessage" />
   </div>
 

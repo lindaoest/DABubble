@@ -120,7 +120,7 @@ export class WritingBoxComponent {
 
     if (this.is_createNewChat_open) {
       this.globalVariables.create_new_chat = false;
-      this.globalVariables.showDirectChat = true;
+      this.globalVariables.showDirectMessagesChat = true;
       localStorage.setItem('active privatechat', JSON.stringify(this.name.substring(1)));
 
       let get_active_chat = localStorage.getItem('active privatechat');

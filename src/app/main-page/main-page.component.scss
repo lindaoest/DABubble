@@ -32,62 +32,39 @@ main {
   }
 }
 
-app-site-menu {
-  max-width: 366px;
-  width: 25.062%;
+.site-menu {
+  width: 25%;
   min-width: 300px;
 }
 
-app-chat,
-app-directmessages-chat {
-  width: 51.562%;
-  max-width: 990px;
+.channel,
+.direct-messages-chat {
+  width: 75%;
   min-width: 470px;
 }
 
-.full-width {
-  width: 100%;
-  max-width: 100%;
-}
-
-app-thread-reply {
+.thread {
   width: 25.26%;
-  max-width: 485px;
   min-width: 360px;
 }
 
-@media (max-width: 1200px) {
-  .hide-on-small {
-    display: none;
-  }
-
-  .full-width-threads-mobile {
-    width: 100%;
-    max-width: 100%;
-  }
+.hidden {
+  display: none;
 }
 
-@media (max-width: 800px) {
+.fullscreen {
+  min-width: 100%;
+  width: 100%;
+}
 
-  app-chat,
-  app-thread-reply,
-  app-directmessages-chat,
-  app-site-menu {
-    display: none;
+@media (max-width: 1500px) {
+  .site-menu {
+    width: 25%;
   }
 
-  app-directmessages-chat {
-    min-width: 100%;
-  }
-
-  .mobile-flex {
-    display: flex;
-  }
-
-  .showContainer {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
+  .channel,
+  .direct-messages-chat,
+  .thread {
+    width: 75%;
   }
 }

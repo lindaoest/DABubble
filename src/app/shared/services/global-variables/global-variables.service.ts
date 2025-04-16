@@ -17,7 +17,7 @@ export class GlobalVariablesService {
 
   public showMenu: boolean = true;
   public showChat: boolean = false;
-  public showDirectChat: boolean = false;
+  public showDirectMessagesChat: boolean = false;
   public showThreads: boolean = false;
 
   private active_privatechatSubject = new BehaviorSubject<string>('null');

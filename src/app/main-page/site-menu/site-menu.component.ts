@@ -70,8 +70,8 @@ export class SiteMenuComponent {
     return this.channels;
   }
 
-  public openChat(channelName: string) {
-    this.globalVariables.showDirectChat = false;
+  public openChannel(channelName: string) {
+    this.globalVariables.showDirectMessagesChat = false;
     this.globalVariables.create_new_chat = false;
     this.globalVariables.showChat = true;
     this.globalVariables.activeChat = channelName;
@@ -117,14 +117,14 @@ export class SiteMenuComponent {
   }
 
   public open_new_chat() {
-    this.globalVariables.showDirectChat = false;
+    this.globalVariables.showDirectMessagesChat = false;
     this.globalVariables.create_new_chat = true;
     this.mobileClickedChat.emit();
   }
 
-  public showDirectChat(receiver: string) {
+  public showDirectMessagesChat(receiver: string) {
     this.globalVariables.create_new_chat = false;
-    this.globalVariables.showDirectChat = true;
+    this.globalVariables.showDirectMessagesChat = true;
     localStorage.setItem('active privatechat', JSON.stringify(receiver));
 
     let get_active_chat = localStorage.getItem('active privatechat');
