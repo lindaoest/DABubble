@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { GlobalVariablesService } from '../../../../services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../../../core/services/global-variables/global-variables.service';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { FirestoreService } from '../../../../services/firestore/firestore.service';
+import { FirestoreService } from '../../../../../core/services/firestore/firestore.service';
 import { Member } from '../../../../../../models/member.class';
 import { getAuth, signOut, updateProfile, User, verifyBeforeUpdateEmail } from "firebase/auth";
 import { initializeApp } from "firebase/app";

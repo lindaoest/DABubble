@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { EditMessageButtonComponent } from './edit-message-button/edit-message-button.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import 'emoji-picker-element';
-import { FirestoreService } from '../../services/firestore/firestore.service';
+import { FirestoreService } from '../../../core/services/firestore/firestore.service';
 import { Emoji } from 'emoji-picker-element/shared';
 
 @Component({
@@ -33,20 +33,24 @@ export class ReactionMessageBarComponent {
   public boxEditMessageIsOpen: boolean = false;
   public emojiPickerIsOpen: boolean = false;
   public customEmojis: any[] = [];
+  public defaultEmojis: string[] = ['👍', '✅', '🙏'];
 
   constructor(
     public firestoreService: FirestoreService
   ) {}
 
   ngOnInit() {
+    console.log('test', this.firestoreService.emojis);
+
+    if (this.firestoreService.emojis.length === 0) {
+      this.defaultEmojis.forEach(defaultEmoji => {
+        this.firestoreService.addEmojiShortcuts(defaultEmoji);
+      })
+    }
+
     this.firestoreService.emojis.forEach(emoji => {
       this.customEmojis.push(emoji.emoji);
     })
-
-    console.log("members", this.firestoreService.members);
-
-
-    console.log('testt', this.firestoreService.emojis);
   }
 
   public openEmojiPicker() {
@@ -54,12 +58,9 @@ export class ReactionMessageBarComponent {
   }
 
   public addEmojiToShortcuts(emoji: any) {
-    console.log(emoji);
-
-    this.customEmojis.unshift(emoji);
-    this.customEmojis.pop();
-
     this.emojiPickerIsOpen = false;
+
+    this.firestoreService.deleteEmoji('emojis', this.customEmojis[2]);
 
     this.firestoreService.addEmojiShortcuts(emoji);
   }

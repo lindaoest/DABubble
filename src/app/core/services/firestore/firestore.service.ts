@@ -56,6 +56,13 @@ export class FirestoreService {
     public firestore: Firestore
   ) {
 
+    this.unsubEmoji = onSnapshot(this.getDocRef('emojis'), (doc) => {
+      this.emojis = [];
+      doc.forEach(element => {
+        this.emojis.push(this.setEmojis(element.data(), element.id));
+      });
+    });
+
     this.unsubChannel = onSnapshot(this.getDocRef('channels'), (doc) => {
       const tempChannels: Channel[] = [];
 
@@ -96,13 +103,6 @@ export class FirestoreService {
         this.threads.push(this.setObjectThread(element.data(), element.id))
       });
       this.groupedThreads = this.firestoreHelper.groupByDateAndChannel(this.threads);
-    });
-
-    this.unsubEmoji = onSnapshot(this.getDocRef('emojis'), (doc) => {
-      this.emojis = [];
-      doc.forEach(element => {
-        this.emojis.push(this.setEmojis(element.data(), element.id));
-      });
     });
   }
 
@@ -186,6 +186,13 @@ export class FirestoreService {
   //     });
   //   }
   // }
+
+  // Delete data
+  async deleteEmoji(colId: string, data: Emoji) {
+    if (data.id) {
+      await deleteDoc(this.getSingleDocRef(colId, data.id));
+    }
+  }
 
   //Set object
   setObjectChannel(obj: Channel | DocumentData, id: string): Channel {

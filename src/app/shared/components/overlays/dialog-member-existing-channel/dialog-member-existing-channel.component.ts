@@ -4,8 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Channel } from '../../../../../models/channel.class';
-import { FirestoreService } from '../../../services/firestore/firestore.service';
-import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
+import { FirestoreService } from '../../../../core/services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../../../core/services/global-variables/global-variables.service';
 import { Member } from '../../../../../models/member.class';
 import { InputSelectMembersComponent } from '../../input-select-members/input-select-members.component';
 

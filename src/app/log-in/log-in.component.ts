@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FirestoreService } from '../shared/services/firestore/firestore.service';
+import { FirestoreService } from '../core/services/firestore/firestore.service';
 import { Router, RouterModule } from '@angular/router';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../core/services/global-variables/global-variables.service';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { privateConfig } from '../app.config-private';
 import { Member } from '../../models/member.class';
-import { UserStatusService } from '../shared/services/user-status/user-status.service';
+import { UserStatusService } from '../core/services/user-status/user-status.service';
 import { AuthContainerComponent } from '../auth-container/auth-container.component';
 import { InputComponent } from '../form/input/input.component';
 

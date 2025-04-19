@@ -2,13 +2,13 @@ import { Component, HostListener } from '@angular/core';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
 import { ChatComponent } from './chat/chat.component';
 import { ThreadReplyComponent } from './thread-reply/thread-reply.component';
-import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../core/services/global-variables/global-variables.service';
 import { DirectmessagesChatComponent } from './chat/directmessages-chat/directmessages-chat.component';
 import { Message } from '../../models/message.class';
 import { CommonModule } from '@angular/common';
 import { Subscription, tap } from 'rxjs';
 import { Channel } from '../../models/channel.class';
-import { FirestoreService } from '../shared/services/firestore/firestore.service';
+import { FirestoreService } from '../core/services/firestore/firestore.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

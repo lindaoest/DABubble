@@ -3,9 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Channel } from '../../../../../models/channel.class';
-import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { FirestoreService } from '../../../../core/services/firestore/firestore.service';
 import { DialogChannelAddMembersComponent } from '../dialog-channel-add-members/dialog-channel-add-members.component';
-import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../../core/services/global-variables/global-variables.service';
 import { Member } from '../../../../../models/member.class';
 
 export interface DialogData {

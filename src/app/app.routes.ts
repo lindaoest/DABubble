@@ -9,7 +9,7 @@ import { ImprintComponent } from './shared/footer/imprint/imprint.component';
 import { PrivacyComponent } from './shared/footer/privacy/privacy.component';
 import { DirectmessagesChatComponent } from './main-page/chat/directmessages-chat/directmessages-chat.component';
 import { ChatComponent } from './main-page/chat/chat.component';
-import { AuthGuard } from './shared/guards/authenticated-guard.guard';
+import { AuthGuard } from './core/guards/authenticated-guard.guard';
 
 export const routes: Routes = [
 	{ path: '',

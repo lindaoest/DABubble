@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
-import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../core/services/global-variables/global-variables.service';
 import { Message } from '../../../../models/message.class';
-import { FirestoreService } from '../../services/firestore/firestore.service';
+import { FirestoreService } from '../../../core/services/firestore/firestore.service';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { Thread } from '../../../../models/thread.class';

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MembersBoxComponent } from '../members-box/members-box.component';
 import { Member } from '../../../../models/member.class';
-import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
-import { FirestoreService } from '../../services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../../core/services/global-variables/global-variables.service';
+import { FirestoreService } from '../../../core/services/firestore/firestore.service';
 
 @Component({
   selector: 'app-input-select-members',

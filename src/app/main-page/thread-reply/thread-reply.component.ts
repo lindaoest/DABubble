@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Message } from '../../../models/message.class';
 import { FormsModule } from '@angular/forms';
-import { FirestoreService } from '../../shared/services/firestore/firestore.service';
-import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
+import { FirestoreService } from '../../core/services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../core/services/global-variables/global-variables.service';
 import { CommonModule } from '@angular/common';
 import { WritingBoxComponent } from "../../shared/components/writing-box/writing-box.component";
 import { DateBlockMessageComponent } from '../../shared/components/date-block-message/date-block-message.component';

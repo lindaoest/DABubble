@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../../core/services/global-variables/global-variables.service';
 import { Message } from '../../../../../models/message.class';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
-import { GlobalVariablesService } from '../../../shared/services/global-variables/global-variables.service';
+import { FirestoreService } from '../../../core/services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../../core/services/global-variables/global-variables.service';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';

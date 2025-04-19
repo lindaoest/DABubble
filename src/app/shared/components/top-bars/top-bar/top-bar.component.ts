@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../../core/services/global-variables/global-variables.service';
 import { DialogMemberExistingChannelComponent } from '../../overlays/dialog-member-existing-channel/dialog-member-existing-channel.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { FirestoreService } from '../../../../core/services/firestore/firestore.service';
 import { DialogOverviewChannelComponent } from '../../overlays/dialog-overview-channel/dialog-overview-channel.component';
 import { Subscription } from 'rxjs';
 import { Channel } from '../../../../../models/channel.class';

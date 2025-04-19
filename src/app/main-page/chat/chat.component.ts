@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { FirestoreService } from '../../shared/services/firestore/firestore.service';
-import { GlobalVariablesService } from '../../shared/services/global-variables/global-variables.service';
+import { FirestoreService } from '../../core/services/firestore/firestore.service';
+import { GlobalVariablesService } from '../../core/services/global-variables/global-variables.service';
 import { Subscription, tap } from 'rxjs';
 import { Channel } from '../../../models/channel.class';
 import { getAuth, onAuthStateChanged } from "firebase/auth";

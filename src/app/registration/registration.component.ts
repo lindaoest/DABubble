@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Member } from '../../models/member.class';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { GlobalVariablesService } from '../shared/services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../core/services/global-variables/global-variables.service';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { AuthContainerComponent } from '../auth-container/auth-container.component';
 import { InputComponent } from '../form/input/input.component';

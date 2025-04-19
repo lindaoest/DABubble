@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FormsModule } from '@angular/forms';
-import { FirestoreService } from '../shared/services/firestore/firestore.service';
+import { FirestoreService } from '../core/services/firestore/firestore.service';
 import { Member } from '../../models/member.class';
 import { Router, RouterModule } from '@angular/router';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";

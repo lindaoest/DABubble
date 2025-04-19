@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FirestoreService } from '../../services/firestore/firestore.service';
+import { FirestoreService } from '../../../core/services/firestore/firestore.service';
 import { Member } from '../../../../models/member.class';
-import { GlobalVariablesService } from '../../services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../core/services/global-variables/global-variables.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

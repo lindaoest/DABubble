@@ -4,7 +4,7 @@ import { MembersBoxComponent } from '../../../shared/components/members-box/memb
 import { WritingBoxComponent } from '../../../shared/components/writing-box/writing-box.component';
 import { TopBarContainerComponent } from '../../../shared/components/top-bars/top-bar-container/top-bar-container.component';
 import { CommonModule } from '@angular/common';
-import { FirestoreService } from '../../../shared/services/firestore/firestore.service';
+import { FirestoreService } from '../../../core/services/firestore/firestore.service';
 import { Member } from '../../../../models/member.class';
 
 @Component({

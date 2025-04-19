@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { GlobalVariablesService } from '../../../services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '../../../../core/services/global-variables/global-variables.service';
 import { ProfileComponent } from '../../overlays/profile/profile.component';
 import { Subscription } from 'rxjs';
-import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { FirestoreService } from '../../../../core/services/firestore/firestore.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Member } from '../../../../../models/member.class';
 
